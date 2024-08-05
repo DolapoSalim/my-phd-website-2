@@ -482,12 +482,12 @@ main {
 
 body.dark .header {
   background-image: linear-gradient(#0000008b, #000000e6),
-    url("assets/images/hero-bg.webp");
+    url("assets/images/hero-bg.png");
 }
 
 body.light .header {
-  background-image: linear-gradient(#ffffffa2, #ffffffe6),
-    url("assets/images/hero-bg-light.webp");
+  background-image: linear-gradient(#ffffffef, #ffffff83),
+    url("assets/images/hero-bg.png");
 }
 
 .header-textbox {
@@ -501,7 +501,7 @@ body.light .header {
 }
 
 .header-text {
-  font-size: var(--text-large);
+  font-size: var(--text-medium);
   font-weight: 400;
   max-inline-size: 745px;
   margin-block-start: var(--gutter-micro);
@@ -538,8 +538,96 @@ body.light .header {
 }
 
 /* --------------------------------- */
-/* ----- Clients -----*/
+/* ----- About, Service, Clients -----*/
 /* --------------------------------- */
+
+.about-section {
+    padding-top: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* About Wrapper */
+.about {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items:center; /* Align items to the top */
+    gap: 5px; /* Space between image and caption */
+    flex-wrap: wrap; /* Wrap to the next line on smaller screens */
+}
+
+/* About Image Holder */
+.about-img-holder {
+    flex: 1; /* Allows the image holder to grow and shrink */
+}
+
+.about-img {
+    width: 100%; /* Make the image responsive */
+    max-width: 400px; /* Maximum width for the image */
+    border-radius: 12px; /* Optional: rounded corners for the image */
+}
+
+/* About Caption */
+.about-caption {
+    flex: 1; /* Allows the caption to grow and shrink */
+    text-align: justify; /* Align text to  */
+    max-width: 700px; /* Maximum width for the caption */
+}
+
+.h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.btn-rounded {
+    border-radius: 50px;
+    padding: 10px 20px;
+    align-content: center;
+}
+
+.btn-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+}
+
+.mt-4 {
+    display: block;
+    margin-inline-start: 35%;
+    border: 1px solid var(--border-dark);
+    inline-size: 200px;
+    padding-block: var(--gutter-nano);
+    border-radius: var(--gutter-large);
+    text-decoration: none;
+    background-color: var(--bg-color-secondary);
+    color: var(--important);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn-rounded:hover,
+.btn-rounded:focus {
+  border-color: var(--important);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .about {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .about-img-holder, .about-caption {
+        max-width: 100%;
+    }
+}
+
+/* Service card */
+
 
 .logos {
   display: flex;
@@ -567,8 +655,8 @@ body.light .header {
 .logo {
   position: absolute;
   top: 0;
-  max-block-size: 60px;
-  max-inline-size: 150px;
+  max-block-size: 500px;
+  max-inline-size: 500px;
   transition: all 2.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 

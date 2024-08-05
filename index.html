@@ -14,7 +14,7 @@
     />
 
     <!-- Google / Search Engine Tags -->
-<meta itemprop="name" content="Syed Mohsin's Portfolio">
+<meta itemprop="name" content="Dolapo's Phd Journey">
 <meta itemprop="description" content="Welcome to my portfolio website. I am a front-end web developer and I specialize in creating user-friendly, responsive and accessible websites. Explore my projects, open-source work and contact me for any inquiries or collaborations.">
 
 <!-- Reference screenshot of updated site's header in place of content -->
@@ -31,7 +31,7 @@
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Syed Mohsin's Portfolio">
+<meta name="twitter:title" content="Dolapo's Phd Journey">
 <meta name="twitter:description" content="Welcome to my portfolio website. I am a front-end web developer and I specialize in creating user-friendly, responsive and accessible websites. Explore my projects, open-source work and contact me for any inquiries or collaborations.">
 
 <!-- Reference screenshot of updated site's header in content -->
@@ -41,7 +41,7 @@
 <!-- Update favicon href attribute with image of yourself -->
     <link
       rel="shortcut icon"
-      href="assets/images/favicons.png"
+      href="assets/images/favicons.jpg"
       type="image/png"
     />
 
@@ -59,7 +59,7 @@
     <script src="script.js" defer></script>
 
     <!-- Your name here -->
-    <title>Dolapo's Portfolio</title>
+    <title>Dolapo's PhD Journey</title>
   </head>
 
   <body>
@@ -80,11 +80,11 @@
       <nav class="nav hidden">
         <ol class="nav-items">
           <li class="nav-item"><a href="#">Home</a></li>
-          <li class="nav-item"><a href="#work">My Work</a></li>
-          <li class="nav-item"><a href="#blog">See Blog</a></li>
-          <li class="nav-item"><a href="#skills">My Skills</a></li>
+          <li class="nav-item"><a href="#work"> About me</a></li>
+          <li class="nav-item"><a href="#blog">About my PhD</a></li>
+          <li class="nav-item"><a href="#skills">Publications</a></li>
           <li class="nav-item">
-            <a href="#contact" data-focused="last-focused">Contact</a>
+            <a href="#contact" data-focused="last-focused">Contact/Q&A</a>
           </li>
         </ol>
       </nav>
@@ -94,107 +94,77 @@
           <!-- Replace with your name and job title -->
           <h1 class="h1">
             <span>Hi, I'm Dolapo Salim</span>
-            <span>Frontend Web Developer/UX Designer</span>
           </h1>
 
           <!-- Add a small introductory paragraph about yourself -->
           <p class="header-text">
-            A frontend software developer and interface designer who builds
-            interesting, rich, user-friendly and responsive websites.
+            A PhD candidate at the University of Pisa's Department of Biology. 
+                My doctorate research focuses on using innovative techniques to evaluate biodiversity
+                stability in complex marine environments. Passionate about marine biology,
+                I aim to advance our understanding and conservation of marine ecosystems.
           </p>
 
           <div class="header-btns">
-            <a href="#contact" class="btn btn-cta">Hire me</a>
-            <a href="#work" class="btn btn-secondary">See my work</a>
+            <a href="#about" class="btn btn-cta">About me</a>
+            <a href="#articles" class="btn btn-secondary">Read my publications</a>
           </div>
         </div>
       </div>
     </header>
 
     <main>
-      <section class="client">
+        <!-- about section -->
+      <section class="about-section" id="about">
+        <!-- container -->
+        <div class="container text-center">
+            <!-- about wrapper -->
+            <div class="about">
+                <div class="about-img-holder">
+                    <img src="assets/images/passport photo.jpg" class="about-img" alt="Dolapo Headshot Image" style="width:70%">
+                </div>
+                <div class="about-caption">
+                    <h2 class="h2">About Me</h2>
+                    <p>
+                        A marine biologist and researcher with a strong academic foundation in Coastal and Marine Biology
+                        and Ecology. I bring a wealth of experience in research, development, and innovation within the field of
+                        fisheries, aquaculture, and marine biology. Expertise in Quantitative Ecology, Community Dynamics, Climate
+                        Change, and Sustainability & Conservation. Proven track record in contributing to impactful projects, from
+                        marine pollution monitoring to behavioral biology studies. Skilled in data analysis, data visualization, and
+                        programming languages such as Python and R. Adept at conducting laboratory experiments, field research,
+                        and teaching, with a commitment to fostering awareness of fisheries and ocean conservation. Recognized for
+                        academic achievements with prestigious awards and actively engaged in professional affiliations. A dynamic
+                        and dedicated professional poised to make meaningful contributions to the advancement of fisheries, marine
+                        science, and environmental sustainability              
+                    </p>
+                    <button class="btn-rounded btn btn-outline-primary mt-4">Download CV</button>
+                </div>              
+            </div><!-- end of about wrapper -->
+        </div><!-- end of container -->
+    </section> <!-- end of about section -->
+
+
+      <section id="client" class= "about">
         <div class="container">
-          <h2 class="h2">Trusted by</h2>
+          <h2 class="h2">Educational Journey</h2>
           <div class="logos">
             <!-- Replace alt with client/company name and src attributes of images with path to relative img of client logo -->
             <div class="logo-group">
               <img
                 loading="lazy"
-                src="assets/images/trusted-by/stripe.svg"
-                alt="Ideacraft"
-                class="logo hide to-top"
-              />
-
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/datastax.svg"
-                alt="Golden grid"
-                class="logo"
-              />
-
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/coke.svg"
-                alt="Theia"
-                class="logo hide to-bottom"
-              />
-            </div>
-            <div class="logo-group">
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/gm.svg"
-                alt="General motors"
-                class="logo hide to-top"
-              />
-
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/shares.svg"
-                alt="Chippy"
-                class="logo"
-              />
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/shopify.svg"
-                alt="Shopify"
-                class="logo hide to-bottom"
-              />
-            </div>
-            <div class="logo-group">
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/agency-elevation.svg"
-                alt="Agency elevation"
-                class="logo hide to-top"
-              /><img
-                loading="lazy"
-                src="assets/images/trusted-by/gitlab.svg"
-                alt="Ron jones"
-                class="logo"
-              /><img
-                loading="lazy"
-                src="assets/images/trusted-by/duolingo.svg"
-                alt="Mighty furniture's"
-                class="logo hide to-bottom"
-              />
-            </div>
-            <div class="logo-group">
-              <img
-                loading="lazy"
-                src="assets/images/trusted-by/coyote.svg"
-                alt="Bulls eye"
+                src="assets/images/fuoye.png"
+                alt="fuoye"
                 class="logo hide to-top"
               />
               <img
                 loading="lazy"
-                src="assets/images/trusted-by/astrato.svg"
-                alt="Chippy"
+                src="assets/images/UniSalento-Universita-del-Salento.svg.png"
+                alt="Salento"
                 class="logo"
               />
               <img
                 loading="lazy"
-                src="assets/images/trusted-by/mercado.svg"
-                alt="Fastlane"
+                src="assets/images/unipisa.png"
+                alt="Pisa"
                 class="logo hide to-bottom"
               />
             </div>
@@ -346,7 +316,7 @@
 
       <!-- I write blog posts on dev.to at https://dev.to/devsyedmohsin. I have linked my articles accordingly, so please update the article title, description, and link accordingly. For example, if you write an article on Medium, link your article to Medium. Also, don't forget to update the reaction count. -->
 
-      <section class="article">
+      <section class="article" id="articles">
         <div class="container">
           <h2 class="h2" id="blog">My Articles</h2>
           <div class="article-boxes">
