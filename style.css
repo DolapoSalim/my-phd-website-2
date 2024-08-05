@@ -696,6 +696,95 @@ body.light .logo {
   filter: grayscale(100%) opacity(0.6);
 }
 
+
+
+
+/* rotating dv */
+#rotating-section {
+    position:;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    height: 500px; /* Adjust height as needed */
+}
+
+.logos-wrapper {
+    position: relative;
+    height: 100%;
+    display: flex; /* Adjusted for horizontal layout */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center items vertically */
+}
+
+.rotating-div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
+    box-sizing: border-box;
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.rotating-div img {
+    max-width: 20%; /* Adjust as needed */
+    height: auto;
+    margin-right: 50px; /* Space between image and text */
+}
+
+.rotating-div p {
+    max-width: 700px; /* Adjust as needed */
+    margin-left: 20px; /* Adjust margin as needed */
+    font-stretch: 125%;
+    line-height: 1.2;
+    color: var(--important);
+    text-align: justify;
+}
+
+.fuoye {
+    padding-right: 175px;
+    max-height: max-content;
+}
+
+.edufont {
+    font-size: var(--h1);
+  }
+
+/* Hide and transform classes */
+.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.to-top {
+    transform: translateY(-100%);
+}
+
+.to-bottom {
+    transform: translateY(100%);
+}
+
+.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
+
 /* --------------------------------- */
 /* ----- Work -----*/
 /* --------------------------------- */
