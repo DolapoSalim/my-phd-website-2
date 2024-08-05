@@ -111,4 +111,35 @@ logosWrappers.forEach(async (logoWrapper, i) => {
   }, 5600);
 });
 
+
 yearEl.textContent = new Date().getFullYear();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const rotatingWrappers = document.querySelectorAll(".logos-wrapper");
+
+    const sleep = (number) => new Promise((res) => setTimeout(res, number));
+
+    rotatingWrappers.forEach(async (wrapper, i) => {
+        const items = Array.from(wrapper.children);
+        await sleep(1400 * i); // Delay to start after previous wrapper
+
+        let currentIndex = 0;
+
+        setInterval(() => {
+            // Hide all elements
+            items.forEach(item => {
+                item.classList.add("hide");
+                item.classList.remove("show", "to-top", "to-bottom");
+            });
+
+            // Show the next element
+            items[currentIndex].classList.remove("hide");
+            items[currentIndex].classList.add("show");
+
+            // Rotate index
+            currentIndex = (currentIndex + 1) % items.length;
+        }, 5600); // Change interval as needed
+    });
+});
+
+
