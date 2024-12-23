@@ -108,7 +108,7 @@ body {
 
 /* Improve media defaults */
 
-picture,
+picture
 svg,
 img {
   display: block;
@@ -538,16 +538,19 @@ body.light .header {
 }
 
 /* --------------------------------- */
-/* ----- About, Service, Clients -----*/
+/* ----- About -----*/
 /* --------------------------------- */
-
+/* About Section Styling */
 .about-section {
     padding-top: 0;
+    background-color: var(--bg-color-primary);
 }
 
+/* Container Setup */
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: var(--gutter-medium);
     text-align: center;
 }
 
@@ -555,74 +558,88 @@ body.light .header {
 .about {
     display: flex;
     justify-content: center; /* Center the content horizontally */
-    align-items:center; /* Align items to the top */
+    align-items: center; /* Align items to the top */
     gap: 5px; /* Space between image and caption */
     flex-wrap: wrap; /* Wrap to the next line on smaller screens */
 }
 
 /* About Image Holder */
 .about-img-holder {
-    flex: 1; /* Allows the image holder to grow and shrink */
+    width: 100%;
+    max-width: 400px; /* Adjust size for larger screens */
+    height: 400px; /* Ensure the height is the same as width */
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
 }
 
+/* About Image Styling */
 .about-img {
-    width: 100%; /* Make the image responsive */
-    max-width: 400px; /* Maximum width for the image */
-    border-radius: 12px; /* Optional: rounded corners for the image */
+    width: 100%;
+    height: 100%;
+    border-radius: 10px; /* Rounded corners instead of full circle */
+    object-fit: cover; /* Ensures image maintains aspect ratio */
+    transition: transform 0.3s ease-in-out;
+}
+
+.about-img:hover {
+    transform: scale(1.05); /* Slight zoom effect */
 }
 
 /* About Caption */
 .about-caption {
-    flex: 1; /* Allows the caption to grow and shrink */
-    text-align: justify; /* Align text to  */
-    max-width: 700px; /* Maximum width for the caption */
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Header Styling */
+.about-caption header {
+    margin-bottom: 1.5rem;
 }
 
 .h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: var(--h2);
+    font-weight: bold;
+    color: var(--important);
+    margin-bottom: var(--gutter-small);
 }
 
+/* Paragraph Styling */
+.about-caption p {
+    font-size: var(--text-medium);
+    line-height: 1.6;
+    color: var(--body);
+    margin-bottom: var(--gutter-small);
+}
+
+/* Button Styling */
 .btn-rounded {
     border-radius: 50px;
-    padding: 10px 20px;
-    align-content: center;
-}
-
-.btn-outline-primary {
-    border: 2px solid #007bff;
-    color: #007bff;
-}
-
-.mt-4 {
-    display: block;
-    margin-inline-start: 35%;
-    border: 1px solid var(--border-dark);
-    inline-size: 200px;
-    padding-block: var(--gutter-nano);
-    border-radius: var(--gutter-large);
-    text-decoration: none;
-    background-color: var(--bg-color-secondary);
+    padding: 0.5rem 2rem;
+    font-size: var(--text-medium);
     color: var(--important);
-    cursor: pointer;
-    margin-top: 20px;
+    border: 2px solid var(--primary-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn-rounded:hover,
-.btn-rounded:focus {
-  border-color: var(--important);
+.btn-rounded:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color-primary);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .about {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+    .about-img-holder {
+        max-width: 300px; /* Reduce max width for smaller screens */
+        height: 300px; /* Maintain square aspect */
     }
+}
 
-    .about-img-holder, .about-caption {
-        max-width: 100%;
+@media (max-width: 480px) {
+    .about-img-holder {
+        max-width: 250px; /* Even smaller max width for very small screens */
+        height: 250px; /* Keep it square */
     }
 }
 
@@ -699,472 +716,195 @@ body.light .logo {
 
 
 
-/* rotating dv */
-#rotating-section {
-    position:;
-    width: 100%;
-    margin: 0;
-    overflow: hidden;
-    height: 500px; /* Adjust height as needed */
+/* Education Timeline */
+.testimonials {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    position: relative;
+    gap: 2rem;
+    color: var(--body); /* Text color based on theme */
 }
 
-.logos-wrapper {
+/* Add timeline line */
+.testimonials::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--border); /* Border color based on theme */
+    z-index: 0;
+    transition: height 0.3s ease, background-color 0.3s ease;
+}
+
+/* Each educational stage */
+.testimonial {
     position: relative;
-    height: 100%;
-    display: flex; /* Adjusted for horizontal layout */
+    background: var(--bg-color-secondary); /* Background based on theme */
+    padding: 1rem;
+    border: 1px solid var(--border); /* Use theme border color */
+    border-radius: 8px;
+    text-align: center;
+    width: calc(33.333% - 1.5rem); /* Adjusted for 3 equal sections */
+    z-index: 1;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center items vertically */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.rotating-div {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
-    box-sizing: border-box;
-    padding: 10px;
-    opacity: 0;
-    visibility: hidden;
+/* Hover effect for educational stages */
+.testimonial:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow); /* Shadow effect based on theme */
 }
 
-.rotating-div img {
-    max-width: 20%; /* Adjust as needed */
-    height: auto;
-    margin-right: 50px; /* Space between image and text */
+/* Testimonial content */
+.testimonial .testimonial-text {
+    margin-bottom: 1rem;
+    font-size: var(--text-small); /* Font size based on theme */
+    color: var(--body); /* Text color based on theme */
 }
 
-.rotating-div p {
-    max-width: 700px; /* Adjust as needed */
-    margin-left: 20px; /* Adjust margin as needed */
-    font-stretch: 125%;
-    line-height: 1.2;
-    color: var(--important);
-    text-align: justify;
+.testimonial .testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--border); /* Border around image */
 }
 
-.fuoye {
-    padding-right: 175px;
-    max-height: max-content;
+.testimonial .testimonial-author-name {
+    font-weight: bold;
+    margin: 0.2rem 0;
+    color: var(--important); /* Name text color (usually white or black based on theme) */
 }
 
-.edufont {
-    font-size: var(--h1);
-  }
-
-/* Hide and transform classes */
-.hide {
-    opacity: 0;
-    visibility: hidden;
+.testimonial .testimonial-author-job {
+    font-size: var(--text-small); /* Font size for the job title */
+    color: var(--sub); /* Secondary text color */
 }
 
-.to-top {
-    transform: translateY(-100%);
-}
+/* Responsive design adjustments */
 
-.to-bottom {
-    transform: translateY(100%);
-}
-
-.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-
-
-
-
-
-
-
-
-
-
-/* --------------------------------- */
-/* ----- Work -----*/
-/* --------------------------------- */
-
-.work-boxes {
-  padding-block-start: var(--gutter-x-large);
-}
-
-.work-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* Tablet and larger screens */
 @media (max-width: 1045px) {
-  .work-boxes {
-    max-inline-size: fit-content;
-    margin-inline: auto;
-  }
+    .testimonials {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .work-box {
-    flex-direction: column-reverse;
-    align-items: flex-start;
-  }
+    .testimonials::before {
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+    }
 
-  .work-img {
-    margin-block-end: var(--gutter-medium);
-  }
+    .testimonial {
+        width: 100%; /* Full width for smaller screens */
+        margin: 1rem 0;
+        text-align: center;
+    }
 }
 
-.work-box:not(:last-child) {
-  margin-block-end: var(--gutter-huge);
+/* Mobile screens */
+@media (max-width: 768px) {
+    .testimonials {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .testimonials::before {
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+    }
+
+    .testimonial {
+        width: 100%; /* Stack testimonials vertically */
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .testimonial .testimonial-author img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .testimonial .testimonial-author-name {
+        font-size: var(--text-small);
+    }
+
+    .testimonial .testimonial-author-job {
+        font-size: var(--text-small);
+    }
 }
 
-@media (max-width: 1285px) {
-  .work-box:not(:last-child) {
-    margin-block-end: 8rem;
-  }
-}
-
-.work-img,
-.work-textbox {
-  flex-basis: 49%;
-}
-
-.work-img {
-  max-inline-size: 785px;
-  transition: 0.6s all;
-}
-
-body.light .work-img {
-  box-shadow: var(--shadow);
-}
-
-.work-textbox {
-  max-inline-size: 445px;
-}
-
-@media (max-width: 885px) {
-  .work h2 {
-    margin-block-start: 45px;
-  }
-}
-
+/* Smaller mobile screens */
 @media (max-width: 485px) {
-  .work h2 {
-    margin-block-start: 0;
-  }
+    .testimonials {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .testimonials::before {
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+    }
+
+    .testimonial {
+        width: 100%; /* Full width for very small screens */
+        margin: 1rem 0;
+    }
+
+    .testimonial .testimonial-text {
+        font-size: var(--text-small); /* Ensure readability on smaller screens */
+    }
 }
 
-.work-text {
-  margin-block: var(--gutter-micro);
-}
 
-.work-technologies {
-  list-style-position: inside;
-  list-style-type: disc;
-  margin-block-end: var(--gutter-x-small);
-}
-
-.work-links {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gutter-x-small);
-}
-
-.work-links img {
-  block-size: 28px;
-  inline-size: 28px;
-}
-
-body.dark .work-links img {
-  filter: invert(1);
-}
-
-/* Github icon */
-
-.work-links > a:last-child {
-  transition: 0.3s transform ease-in;
-}
-
-.work-links > a:last-child:hover,
-.work-links > a:last-child:focus {
-  transform: scale(1.1);
-}
-
-.work-text,
-.contact-text,
-.work-technologies {
-  font-weight: 300;
-}
-
-.work-textbox h3,
-.work-text,
-.work-technologies,
-.work-links {
-  --delay: 0.2s;
-  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-play-state: paused;
-}
-
-.work-text {
-  animation-delay: var(--delay);
-}
-
-.work-technologies {
-  animation-delay: calc(var(--delay) * 1.5);
-}
-
-.work-links {
-  animation-delay: calc(var(--delay) * 2);
-}
-
-@keyframes slide-up {
-  from {
-    transform: translateY(45px);
-    opacity: 0;
-  }
-
-  to {
-    transform: none;
-    opacity: 1;
-  }
-}
-
-/* --------------------------------- */
-/* ----- Articles -----*/
-/* --------------------------------- */
-
-.article-boxes {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 3.5%;
-  margin-block-start: var(--gutter-x-large);
-}
-
-.article-box {
-  flex-basis: 31%;
-  border: 1px solid var(--border);
-  padding: var(--gutter-medium) var(--gutter-small);
-  border-radius: var(--gutter-nano);
-  background-color: var(--bg-color-secondary);
-}
-
-.article-textbox {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.article-text {
-  font-size: var(--text-small);
-  margin-block: var(--gutter-x-small);
-}
-
-.article-info {
-  display: flex;
-  justify-content: space-between;
-  margin-block-start: auto;
-}
-
-.reaction-count {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gutter-nano);
-  font-size: initial;
-}
-
-@media (max-width: 985px) {
-  .article-boxes {
-    max-inline-size: 685px;
-    margin-inline: auto;
-    justify-content: center;
-    gap: 4%;
-  }
-
-  .article-box:nth-of-type(2),
-  .article-box:nth-of-type(3) {
-    flex-basis: 48%;
-  }
-
-  .article-box:last-child {
-    display: none;
-  }
-}
-
-@media (max-width: 650px) {
-  .article-box:nth-child(2),
-  .article-box:nth-child(3),
-  .article-box:last-child {
-    flex-basis: 100%;
-  }
-
-  .featured-article {
-    margin-block-end: 0;
-  }
-
-  .article-box:not(:last-child) {
-    margin-block-end: var(--gutter-x-small);
-  }
-
-  .article-box:last-child {
-    display: block;
-  }
-}
 
 /* --------------------------------- */
 /* ----- Featured article -----*/
 /* --------------------------------- */
 
 .featured-article {
-  flex-basis: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-block-end: 44.8px;
-}
-
-@media (max-width: 985px) {
-  .featured-article {
-    margin-block-end: 24.4px;
-    flex-direction: column-reverse;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-block-end: 44.8px;
   }
-}
-
-.featured-article .article-textbox {
-  flex-basis: 44%;
-}
-
-.featured-article h3 {
-  margin-block-start: var(--gutter-x-small);
-}
-
-.featured-article .article-illustration {
-  flex-basis: 50%;
-}
-
-.article-illustration img {
-  border-radius: var(--gutter-nano);
-}
-
-.featured-article .article-text {
-  font-size: var(--text-medium);
-}
-
-.featured-article .article-info {
-  justify-content: flex-start;
-  gap: var(--gutter-medium);
-}
-
-/* --------------------------------- */
-/* ----- Testimonials -----*/
-/* --------------------------------- */
-
-.testimonials {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  margin-block-start: var(--gutter-x-large);
-  list-style-type: none;
-  background-image: linear-gradient(
-    rgba(88, 88, 88, 0.297),
-    rgba(214, 214, 214, 0.082)
-  );
-}
-
-@media (max-width: 1100px) {
-  .testimonials {
-    grid-template-columns: repeat(2, 1fr);
+  
+  @media (max-width: 985px) {
+    .featured-article {
+      margin-block-end: 24.4px;
+    }
   }
-}
-
-@media (max-width: 645px) {
-  .testimonials {
-    grid-template-columns: 1fr;
+  
+  .featured-article .article-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Ensure it adapts to the container width */
   }
-}
-
-.testimonial {
-  display: flex;
-  flex-direction: column;
-  padding: var(--gutter-small);
-  background-color: var(--bg-color-primary);
-}
-
-.testimonial-text {
-  font-size: var(--text-small);
-  margin-block-end: var(--gutter-x-small);
-}
-
-.testimonial-author {
-  margin-block-start: auto;
-  display: flex;
-  align-items: center;
-  gap: var(--gutter-micro);
-}
-
-.testimonial-author-name {
-  margin-block-end: 0.3rem;
-}
-
-.testimonial-author-name,
-.testimonial-author-job {
-  font-size: initial;
-}
-
-.testimonial-author > img {
-  block-size: 52px;
-  inline-size: 52px;
-  border-radius: 50%;
-  background-color: var(--bg-color-secondary);
-}
-
-/* --------------------------------- */
-/* ----- Skills -----*/
-/* --------------------------------- */
-
-.skills-imgs {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  gap: var(--gutter-x-large);
-  padding-block-start: var(--gutter-x-large);
-}
-
-.skills-img {
-  block-size: 135px;
-  inline-size: 135px;
-}
-
-@media (max-width: 1100px) {
-  .skills-img {
-    block-size: 100px;
-    inline-size: 100px;
+  
+  .article-illustration img {
+    max-width: 100%; /* Scales the image to fit within the container */
+    height: auto;    /* Maintains the aspect ratio */
+    border-radius: var(--gutter-nano);
+    margin: 0 auto;  /* Centers the image horizontally */
   }
-}
-
-@media (max-width: 810px) {
-  .skills-img {
-    block-size: 85px;
-    inline-size: 85px;
-  }
-}
-
-@media (max-width: 675px) {
-  .skills-imgs {
-    gap: var(--gutter-large);
-  }
-  .skills-img {
-    block-size: 70px;
-    inline-size: 70px;
-  }
-}
-
-@media (max-width: 340px) {
-  .skills-img {
-    block-size: 55px;
-    inline-size: 55px;
-  }
-}
+  
 
 /* --------------------------------- */
 /* ----- Contact -----*/
