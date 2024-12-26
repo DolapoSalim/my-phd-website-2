@@ -895,14 +895,15 @@ body.light .logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%; /* Ensure it adapts to the container width */
+    width: 50%; /* Ensure it adapts to the container width */
   }
   
   .article-illustration img {
-    max-width: 100%; /* Scales the image to fit within the container */
+    max-width: 50%; /* Scales the image to fit within the container */
     height: auto;    /* Maintains the aspect ratio */
     border-radius: var(--gutter-nano);
     margin: 0 auto;  /* Centers the image horizontally */
+    border-radius: 20px;
   }
   
 
