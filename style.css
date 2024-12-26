@@ -1171,3 +1171,39 @@ input:checked {
   --thumb-position: 100%;
   background-color: var(--track-active);
 }
+
+
+/* COUNTDOWN */
+#phd-countdown {
+    padding: var(--gutter-large) 0;
+    background-color: var(--bg-color-primary);
+    color: var(--important);
+    text-align: center;
+}
+
+.countdown-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--gutter-medium);
+    border: 2px solid var(--border-dark);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.countdown-container h2 {
+    font-size: var(--h2);
+    margin-bottom: var(--gutter-small);
+}
+
+.countdown-timer {
+    font-size: var(--text-large);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.countdown-timer span {
+    color: var(--primary-color);
+    font-size: var(--h3);
+}
