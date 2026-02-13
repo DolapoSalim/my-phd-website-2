@@ -175,47 +175,31 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ================================
-// CAROUSEL FUNCTIONALITY
+// CAROUSEL FUNCTIONALITY - Removed
+// Using native scroll with scrollbar
 // ================================
 
+// Scroll-based reveal animations for sections
 document.addEventListener("DOMContentLoaded", function () {
-  const carousel = document.querySelector(".article-carousel");
-  const prevBtn = document.querySelector(".carousel-btn-prev");
-  const nextBtn = document.querySelector(".carousel-btn-next");
+  const sections = document.querySelectorAll("section:not(:first-child)");
+  
+  const revealOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -100px 0px"
+  };
 
-  if (!carousel || !prevBtn || !nextBtn) return;
-
-  const cardWidth = 350; // Approximate width of a card
-  const scrollAmount = cardWidth + 20; // Card width + gap
-
-  prevBtn.addEventListener("click", () => {
-    carousel.scrollBy({
-      left: -scrollAmount,
-      behavior: "smooth",
+  const revealOnScroll = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
     });
+  }, revealOptions);
+
+  sections.forEach(section => {
+    section.style.opacity = "0";
+    section.style.transform = "translateY(20px)";
+    revealOnScroll.observe(section);
   });
-
-  nextBtn.addEventListener("click", () => {
-    carousel.scrollBy({
-      left: scrollAmount,
-      behavior: "smooth",
-    });
-  });
-
-  // Optional: Update button visibility based on scroll position
-  function updateButtonStates() {
-    const isAtStart = carousel.scrollLeft === 0;
-    const isAtEnd =
-      carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
-
-    prevBtn.disabled = isAtStart;
-    nextBtn.disabled = isAtEnd;
-
-    // Optional: add visual feedback
-    prevBtn.style.opacity = isAtStart ? "0.5" : "1";
-    nextBtn.style.opacity = isAtEnd ? "0.5" : "1";
-  }
-
-  carousel.addEventListener("scroll", updateButtonStates);
-  updateButtonStates(); // Initial check
 });
