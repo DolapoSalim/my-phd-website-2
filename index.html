@@ -84,6 +84,8 @@
           <li class="nav-item"><a href="#about"> About me</a></li>
           <li class="nav-item"><a href="#education">Education</a></li>
           <li class="nav-item"><a href="#articles">News/Updates</a></li>
+          <li class="nav-item"><a href="#skills">Skills</a></li>
+          <li class="nav-item"><a href="#software">Software</a></li>
           <li class="nav-item">
             <a href="#contact" data-focused="last-focused">Contact/Q&A</a>
           </li>
@@ -189,44 +191,46 @@
         </div>
       </section>
       
-    
-
-
-      <section class="article" id="articles">
-        <div class="container">
-          <h2 class="h2" id="blog">Update on my PhD</h2>
-          <div class="article-boxes">
-            <picture class="article-illustration">
-                <img
-                  src="assets/images/image.png"
-                  alt="MacBook Pro"
-                  loading="lazy"
-                />
-                </picture>
-        <br>
-        <article class="article-box">
-          <div class="article-textbox">
-            <div>
-              <h3 class="h4">FEATURED ON BIOBOOST+ 
-            </h3>
-              <p class="article-text">
-                As part of my phd program, I will be part of the EU project titled <strong>BioBoost+</strong>.
-               My contribution to the project was featured on the BioBoost+ website. As I will be working on
-               WP 1: Improving Species Image Recognition and Processing
-              </p>
-            </div>
-            <div class="article-info">
-              <a href="https://bioboostplus.eu/scientific/20" class="link" target="_blank" rel="noopener"
-                >Continue reading</a>
-            </div>
+    <!-- NEWS SECTION WITH HORIZONTAL CAROUSEL -->
+    <section class="article" id="articles">
+      <div class="container">
+        <h2 class="h2" id="blog">Update on my PhD</h2>
+        
+        <!-- Carousel Navigation -->
+        <div class="carousel-nav">
+          <button class="carousel-btn carousel-btn-prev" aria-label="Previous news">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="carousel-btn carousel-btn-next" aria-label="Next news">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
         </div>
-        </article>
-        <br>
-        <article class="article-box">
-              <div class="article-textbox">
+
+        <!-- Carousel Container -->
+        <div class="carousel-wrapper">
+          <div class="article-carousel">
+            <article class="article-card">
+              <div class="article-card-inner">
                 <div>
-                  <h3 class="h4">CONSORTIUM BIANNUAL MEETING
-                </h3>
+                  <h3 class="h4">FEATURED ON BIOBOOST+</h3>
+                  <p class="article-text">
+                    As part of my phd program, I will be part of the EU project titled <strong>BioBoost+</strong>.
+                    My contribution to the project was featured on the BioBoost+ website. As I will be working on
+                    WP 1: Improving Species Image Recognition and Processing
+                  </p>
+                </div>
+                <a href="https://bioboostplus.eu/scientific/20" class="link" target="_blank" rel="noopener">Continue reading</a>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-card-inner">
+                <div>
+                  <h3 class="h4">CONSORTIUM BIANNUAL MEETING</h3>
                   <p class="article-text">
                     As part of my phd program, I will be part of the EU Horizon project titled <strong>BioEcoOcean</strong>.
                     The BioEcoOcean Consortium held its biannual meeting online on November 18-19, 2024.
@@ -234,49 +238,228 @@
                     who joined the team as part of the project.
                   </p>
                 </div>
-                <div class="article-info">
-                  <a href="https://bioecoocean.org/news/the-bioecoocean-consortium-biannual-meeting-held-in-november-2024/" class="link" target="_blank" rel="noopener"
-                    >Continue reading</a>
-                </div>
-            </div>
-        </article>
-            <br>
-            <article class="article-box">
-              <div class="article-textbox">
+                <a href="https://bioecoocean.org/news/the-bioecoocean-consortium-biannual-meeting-held-in-november-2024/" class="link" target="_blank" rel="noopener">Continue reading</a>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-card-inner">
                 <div>
-                  <h3 class="h4">
-                    READ ABOUT MY RESEARCH
-                  </h3>
+                  <h3 class="h4">READ ABOUT MY RESEARCH</h3>
                   <p class="article-text">
                     The goal of this PhD is to understand ecosystem stability using emerging AI imaging techniques.
                   </p>
                 </div>
-                <div class="article-info">
-                  <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a?pvs=4" class="link" target="_blank" rel="noopener"
-                    >Continue reading</a>
-                </div>
+                <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a?pvs=4" class="link" target="_blank" rel="noopener">Continue reading</a>
               </div>
             </article>
-            <br>
-            <article class="article-box">
-              <div class="article-textbox">
+
+            <article class="article-card">
+              <div class="article-card-inner">
                 <div>
                   <h3 class="h4">Dolapo, WRITE MORE CODE!!</h3>
-                  <div class="article-text">
-                    In other to improve my coding skills and enable an easy development of my research thesis, I will be
+                  <p class="article-text">
+                    In order to improve my coding skills and enable an easy development of my research thesis, I will be
                     working and writing on new codes routinely, which will be made available publicly on my GitHub account.
-                  </div>
+                  </p>
                 </div>
-                <div class="article-info">
-                  <a href="https://github.com/DolapoSalim?tab=repositories" class="link" target="_blank" rel="noopener"
-                    >GitHub Repository here</a>
-                </div>
+                <a href="https://github.com/DolapoSalim?tab=repositories" class="link" target="_blank" rel="noopener">GitHub Repository here</a>
               </div>
             </article>
           </div>
         </div>
-        </section>
-      </section>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section class="skills-section" id="skills">
+      <div class="container">
+        <h2 class="h2">Technical Skills & Expertise</h2>
+        
+        <div class="skills-grid">
+          <!-- Programming Languages -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Programming Languages</h3>
+            <div class="skill-items">
+              <div class="skill-item">
+                <span class="skill-name">Python</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 95%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">R</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 85%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">JavaScript</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 75%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">SQL</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 80%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Research & Data Analysis -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Research & Analysis</h3>
+            <div class="skill-items">
+              <div class="skill-item">
+                <span class="skill-name">Data Visualization</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 90%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Machine Learning</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 85%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Remote Sensing</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 88%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Statistical Analysis</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 92%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expertise -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Research Expertise</h3>
+            <div class="skill-items">
+              <div class="skill-item">
+                <span class="skill-name">Marine Ecology</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 95%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Biodiversity Assessment</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 90%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Climate Change Impact</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 88%;"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Ecosystem Modeling</span>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 85%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOFTWARE & PROJECTS SECTION -->
+    <section class="software-section" id="software">
+      <div class="container">
+        <h2 class="h2">Software & Projects</h2>
+        <p class="software-intro">Developed tools and applications for marine research and data analysis</p>
+        
+        <div class="software-grid">
+          <div class="software-card">
+            <div class="software-card-header">
+              <h3 class="software-title">AI Image Recognition for Species</h3>
+              <span class="software-tag">Machine Learning</span>
+            </div>
+            <p class="software-description">
+              Developing advanced AI models for automated species identification in marine imagery. Part of the BioBoost+ project, this tool improves species recognition accuracy for biodiversity monitoring.
+            </p>
+            <div class="software-links">
+              <a href="https://github.com/DolapoSalim" target="_blank" rel="noopener" class="software-link">View on GitHub</a>
+            </div>
+          </div>
+
+          <div class="software-card">
+            <div class="software-card-header">
+              <h3 class="software-title">Marine Data Analysis Toolkit</h3>
+              <span class="software-tag">Python/R</span>
+            </div>
+            <p class="software-description">
+              A comprehensive toolkit for analyzing complex marine ecological data. Includes statistical models, visualization functions, and utilities for ecosystem stability assessment.
+            </p>
+            <div class="software-links">
+              <a href="https://github.com/DolapoSalim" target="_blank" rel="noopener" class="software-link">View on GitHub</a>
+            </div>
+          </div>
+
+          <div class="software-card">
+            <div class="software-card-header">
+              <h3 class="software-title">Remote Sensing Pipeline</h3>
+              <span class="software-tag">GIS & Satellite Data</span>
+            </div>
+            <p class="software-description">
+              Automated pipeline for processing satellite and remote sensing data for coastal monitoring. Enables real-time tracking of marine biodiversity changes using emerging technologies.
+            </p>
+            <div class="software-links">
+              <a href="https://github.com/DolapoSalim" target="_blank" rel="noopener" class="software-link">View on GitHub</a>
+            </div>
+          </div>
+
+          <div class="software-card">
+            <div class="software-card-header">
+              <h3 class="software-title">Biodiversity Dashboard</h3>
+              <span class="software-tag">Web App</span>
+            </div>
+            <p class="software-description">
+              Interactive web dashboard for visualizing marine biodiversity metrics and ecosystem health indicators. Built with modern web technologies for accessible data exploration.
+            </p>
+            <div class="software-links">
+              <a href="https://github.com/DolapoSalim" target="_blank" rel="noopener" class="software-link">View on GitHub</a>
+            </div>
+          </div>
+
+          <div class="software-card">
+            <div class="software-card-header">
+              <h3 class="software-title">Climate Impact Modeling</h3>
+              <span class="software-tag">Simulation</span>
+            </div>
+            <p class="software-description">
+              Simulation models for assessing climate change impacts on marine ecosystems. Integrates ecological and oceanographic data for predictive analysis.
+            </p>
+            <div class="software-links">
+              <a href="https://github.com/DolapoSalim" target="_blank" rel="noopener" class="software-link">View on GitHub</a>
+            </div>
+          </div>
+
+          <div class="software-card">
+            <div class="software-card-header">
+              <h3 class="software-title">Personal Portfolio Website</h3>
+              <span class="software-tag">Frontend</span>
+            </div>
+            <p class="software-description">
+              This website showcasing my PhD journey, research projects, and technical skills. Built with HTML5, CSS3, and vanilla JavaScript for optimal performance.
+            </p>
+            <div class="software-links">
+              <a href="https://github.com/DolapoSalim" target="_blank" rel="noopener" class="software-link">View on GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
       <!-- countdown section -->
       <section id="phd-countdown">
