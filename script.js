@@ -111,7 +111,6 @@ logosWrappers.forEach(async (logoWrapper, i) => {
   }, 5600);
 });
 
-
 yearEl.textContent = new Date().getFullYear();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -141,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5600); // Change interval as needed
     });
 });
-
 
 // #To create the countdown
 document.addEventListener("DOMContentLoaded", function () {
@@ -174,4 +172,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize the countdown
   updateCountdown();
+});
+
+// ================================
+// CAROUSEL FUNCTIONALITY
+// ================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  const carousel = document.querySelector(".article-carousel");
+  const prevBtn = document.querySelector(".carousel-btn-prev");
+  const nextBtn = document.querySelector(".carousel-btn-next");
+
+  if (!carousel || !prevBtn || !nextBtn) return;
+
+  const cardWidth = 350; // Approximate width of a card
+  const scrollAmount = cardWidth + 20; // Card width + gap
+
+  prevBtn.addEventListener("click", () => {
+    carousel.scrollBy({
+      left: -scrollAmount,
+      behavior: "smooth",
+    });
+  });
+
+  nextBtn.addEventListener("click", () => {
+    carousel.scrollBy({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+  });
+
+  // Optional: Update button visibility based on scroll position
+  function updateButtonStates() {
+    const isAtStart = carousel.scrollLeft === 0;
+    const isAtEnd =
+      carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
+
+    prevBtn.disabled = isAtStart;
+    nextBtn.disabled = isAtEnd;
+
+    // Optional: add visual feedback
+    prevBtn.style.opacity = isAtStart ? "0.5" : "1";
+    nextBtn.style.opacity = isAtEnd ? "0.5" : "1";
+  }
+
+  carousel.addEventListener("scroll", updateButtonStates);
+  updateButtonStates(); // Initial check
 });
