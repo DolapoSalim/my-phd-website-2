@@ -361,7 +361,22 @@ body.light .link::after {
 /* --------------------------------- */
 
 section:not(:first-child) {
-  padding-block-start: var(--gutter-huge);
+  padding-block-start: 8rem;
+  padding-block-end: 2rem;
+  scroll-margin-top: 5rem;
+  animation: fadeInSection 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 section:first-child {
@@ -882,41 +897,53 @@ body.light .logo {
   margin-block-start: var(--gutter-large);
   overflow: hidden;
   border-radius: var(--gutter-nano);
+  scroll-behavior: smooth;
 }
 
 .article-carousel {
   display: flex;
   gap: var(--gutter-medium);
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-behavior: smooth;
   padding-block: var(--gutter-small);
-  scroll-padding-inline: var(--gutter-small);
+  padding-inline: var(--gutter-small);
+  scroll-snap-type: x mandatory;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-color) transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .article-carousel::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
 }
 
 .article-carousel::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-color-primary);
+  border-radius: 10px;
 }
 
 .article-carousel::-webkit-scrollbar-thumb {
   background-color: var(--accent-color);
   border-radius: 10px;
+  border: 2px solid var(--bg-color-primary);
+}
+
+.article-carousel::-webkit-scrollbar-thumb:hover {
+  background-color: #ff9cc5;
 }
 
 .article-card {
-  flex: 0 0 calc(100% / 1.5 - var(--gutter-medium));
+  flex: 0 0 calc(100% / 2.2);
   min-width: 320px;
-  max-width: 600px;
+  max-width: 450px;
   background-color: var(--bg-color-secondary);
   border: 1px solid var(--border-dark);
   border-radius: var(--gutter-nano);
   overflow: hidden;
   transition: all 0.3s ease-in-out;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .article-card:hover {
@@ -925,18 +952,37 @@ body.light .logo {
   border-color: var(--accent-color);
 }
 
+.article-card-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, var(--accent-color), #ff9cc5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  overflow: hidden;
+}
+
+.article-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .article-card-inner {
   padding: var(--gutter-large);
   display: flex;
   flex-direction: column;
   gap: var(--gutter-medium);
-  height: 100%;
+  height: auto;
 }
 
 .article-card h3 {
   color: var(--important);
   font-size: var(--h4);
   margin-bottom: var(--gutter-nano);
+  line-height: 1.3;
 }
 
 .article-card .article-text {
@@ -949,52 +995,15 @@ body.light .logo {
 .article-card .link {
   margin-top: auto;
   align-self: flex-start;
+  font-size: 0.95rem;
 }
 
-/* Carousel Navigation Buttons */
-.carousel-nav {
-  position: absolute;
-  top: -60px;
-  right: 0;
-  display: flex;
-  gap: var(--gutter-small);
-  z-index: 10;
-}
-
-.carousel-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border: 2px solid var(--border-dark);
-  border-radius: 50%;
-  background-color: var(--bg-color-secondary);
-  color: var(--important);
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.carousel-btn:hover {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: white;
-  transform: scale(1.1);
-}
-
-.carousel-btn svg {
-  width: 20px;
-  height: 20px;
-}
+/* Removed carousel nav buttons - using scroll bar instead */
 
 @media (max-width: 768px) {
   .article-card {
-    flex: 0 0 calc(100% / 1.2 - var(--gutter-medium));
-    max-width: 500px;
-  }
-
-  .carousel-nav {
-    top: -70px;
+    flex: 0 0 calc(100% / 1.5);
+    max-width: 400px;
   }
 }
 
@@ -1005,13 +1014,12 @@ body.light .logo {
     max-width: unset;
   }
 
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
-  }
-
   .article-card-inner {
     padding: var(--gutter-medium);
+  }
+
+  .article-card-image {
+    height: 150px;
   }
 }
 
@@ -1025,8 +1033,8 @@ body.light .logo {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--gutter-x-large);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter-large);
   margin-block-start: var(--gutter-x-large);
 }
 
@@ -1095,6 +1103,13 @@ body.light .logo {
   }
 }
 
+@media (max-width: 1200px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gutter-medium);
+  }
+}
+
 @media (max-width: 768px) {
   .skills-grid {
     grid-template-columns: 1fr;
@@ -1132,6 +1147,7 @@ body.light .logo {
   transition: all 0.3s cubic-bezier(0.86, 0, 0.07, 1);
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 }
 
 .software-card:hover {
@@ -1142,27 +1158,35 @@ body.light .logo {
 
 .software-card-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
   gap: var(--gutter-small);
   margin-bottom: var(--gutter-medium);
+  text-align: center;
+  width: 100%;
 }
 
 .software-title {
   font-size: var(--h4);
   color: var(--important);
   margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+  width: 100%;
 }
 
 .software-tag {
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 6px 12px;
   background: linear-gradient(135deg, var(--accent-color), #ff9cc5);
   color: white;
   border-radius: 20px;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .software-description {
@@ -1171,12 +1195,14 @@ body.light .logo {
   line-height: 1.6;
   margin-bottom: var(--gutter-medium);
   flex-grow: 1;
+  text-align: center;
 }
 
 .software-links {
   display: flex;
   gap: var(--gutter-small);
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .software-link {
@@ -1190,6 +1216,7 @@ body.light .logo {
   border-radius: 6px;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .software-link:hover {
@@ -1203,6 +1230,26 @@ body.light .logo {
   .software-grid {
     grid-template-columns: 1fr;
     gap: var(--gutter-medium);
+  }
+
+  .software-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 485px) {
+  .software-title {
+    font-size: 1.2rem;
+  }
+
+  .software-tag {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+
+  .software-link {
+    font-size: 0.95rem;
+    padding: 8px 12px;
   }
 }
 
