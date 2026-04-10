@@ -253,9 +253,9 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
     const n=document.getElementById('cn').value;
     const em=document.getElementById('ce').value;
     const m=document.getElementById('cm').value;
-    window.location.href=`mailto:dolapo.olatoye@phd.unipi.it?subject=${encodeURIComponent('Message from '+n)}&body=${encodeURIComponent('From: '+n+'\nEmail: '+em+'\n\n'+m)}`;
+    window.location.href=`mailto:dolaposalim@gmail.com?subject=${encodeURIComponent('Message from '+n)}&body=${encodeURIComponent('From: '+n+'\nEmail: '+em+'\n\n'+m)}`;
     const fb=document.getElementById('cfMsg');
-    fb.textContent='✓ Opening your email client…';
+    fb.textContent='Opening your email client…';
     fb.style.display='block';
   });
 })();
