@@ -7,480 +7,16 @@
 <meta name="description" content="PhD Candidate, University of Pisa. AI and Computer Vision for marine biodiversity monitoring."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
-<style>
-/* ─────────────────────────────────────────
-   TOKENS
-───────────────────────────────────────── */
-:root {
-  --ease: cubic-bezier(0.4,0,0.2,1);
-  --t:    0.32s;
-  --bg:        #06090d;
-  --bg1:       #080c12;
-  --bg2:       #0b1018;
-  --surface:   #0e151f;
-  --surface2:  #111a25;
-  --border:    rgba(168,197,190,0.08);
-  --border2:   rgba(168,197,190,0.16);
-  --text:      #dde8e5;
-  --text2:     #7a9e97;
-  --text3:     #3d5f59;
-  --accent:    #a8c5be;
-  --accent-d:  #6fa09a;
-  --gold:      #c9aa6e;
-  --glow:      rgba(168,197,190,0.06);
-  --nav-bg:    rgba(6,9,13,0.88);
-  --shadow:    0 4px 40px rgba(0,0,0,0.6);
-}
-[data-theme="light"] {
-  --bg:        #f4f7f6;
-  --bg1:       #edf2f0;
-  --bg2:       #e5ede9;
-  --surface:   #ffffff;
-  --surface2:  #f8fbfa;
-  --border:    rgba(0,80,70,0.1);
-  --border2:   rgba(0,80,70,0.2);
-  --text:      #0d1f1c;
-  --text2:     #3a6560;
-  --text3:     #8ab3ae;
-  --accent:    #2d7a70;
-  --accent-d:  #1d5e55;
-  --gold:      #8a6a20;
-  --glow:      rgba(45,122,112,0.07);
-  --nav-bg:    rgba(244,247,246,0.9);
-  --shadow:    0 4px 28px rgba(0,60,55,0.1);
-}
-/* ─────────────────────────────────────────
-   RESET
-───────────────────────────────────────── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{
-  font-family:'Lato',sans-serif;
-  background:var(--bg);color:var(--text);
-  line-height:1.72;overflow-x:hidden;
-  transition:background var(--t) var(--ease),color var(--t) var(--ease);
-}
-::selection{background:var(--accent);color:var(--bg)}
-a{color:var(--accent);text-decoration:none;transition:color var(--t) var(--ease)}
-a:hover{color:var(--accent-d)}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--text3);border-radius:2px}
-/* ─────────────────────────────────────────
-   NAV
-───────────────────────────────────────── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:var(--nav-bg);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  transition:background var(--t) var(--ease);
-}
-.nav-inner{
-  max-width:1280px;margin:0 auto;padding:0 2.5rem;
-  height:58px;display:flex;align-items:center;justify-content:space-between;
-}
-.nav-logo{font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:400;letter-spacing:0.08em;color:var(--text2)}
-.nav-logo b{color:var(--accent);font-weight:500}
-.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none}
-.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:400;letter-spacing:0.06em;color:var(--text2);transition:color var(--t) var(--ease)}
-.nav-links a:hover{color:var(--text)}
-.nav-right{display:flex;align-items:center;gap:1rem}
-.theme-btn{
-  background:none;border:1px solid var(--border2);border-radius:2px;
-  padding:0.3rem 0.7rem;cursor:pointer;
-  font-family:'JetBrains Mono',monospace;font-size:0.68rem;
-  color:var(--text2);letter-spacing:0.05em;
-  transition:all var(--t) var(--ease);
-}
-.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
-.hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.hbg span{display:block;width:20px;height:1.5px;background:var(--text2);transition:all var(--t) var(--ease)}
-.hbg.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.hbg.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.hbg.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mob-nav{
-  display:none;position:fixed;top:58px;left:0;right:0;z-index:199;
-  background:var(--nav-bg);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  padding:1.8rem 2.5rem;flex-direction:column;gap:1.4rem;
-}
-.mob-nav.open{display:flex}
-.mob-nav a{font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--text2);letter-spacing:0.04em}
-/* ─────────────────────────────────────────
-   LAYOUT
-───────────────────────────────────────── */
-.container{max-width:1280px;margin:0 auto;padding:0 2.5rem}
-section{padding:7rem 0;position:relative}
-.sec-label{
-  font-family:'JetBrains Mono',monospace;font-size:0.66rem;
-  font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:0.9rem;
-  display:flex;align-items:center;gap:0.7rem;
-}
-.sec-label::before{content:'';display:block;width:16px;height:1px;background:var(--accent)}
-.sec-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.1rem,4vw,3.2rem);
-  font-weight:400;color:var(--text);line-height:1.12;
-  margin-bottom:0.9rem;
-}
-.sec-sub{color:var(--text2);font-size:0.94rem;max-width:520px;margin-bottom:3.5rem;font-weight:300}
-/* ─────────────────────────────────────────
-   HERO
-───────────────────────────────────────── */
-#hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding-top:58px;overflow:hidden;position:relative;
-}
-#cloud-canvas{
-  position:absolute;inset:0;width:100%;height:100%;
-  pointer-events:none;z-index:0;opacity:0.55;
-}
-[data-theme="light"] #cloud-canvas{opacity:0.28}
-.hero-wrap{
-  position:relative;z-index:1;
-  display:grid;grid-template-columns:1fr 360px;
-  gap:4rem;align-items:center;width:100%;
-}
-.hero-kicker{
-  font-family:'JetBrains Mono',monospace;font-size:0.7rem;
-  letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--text3);margin-bottom:1.6rem;
-  display:flex;align-items:center;gap:0.8rem;
-}
-.dot-live{
-  width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;
-  animation:livepulse 2.4s ease-in-out infinite;
-}
-@keyframes livepulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(168,197,190,0.45)}
-  50%{box-shadow:0 0 0 6px rgba(168,197,190,0)}
-}
-.hero-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(3rem,7vw,5.8rem);
-  font-weight:300;line-height:1.02;
-  color:var(--text);margin-bottom:0.6rem;letter-spacing:-0.01em;
-}
-.hero-name em{font-style:italic;color:var(--accent)}
-.hero-tagline{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.1rem,2vw,1.4rem);
-  font-weight:300;font-style:italic;
-  color:var(--text2);margin-bottom:2rem;
-}
-.hero-tagline b{font-style:normal;font-weight:400;color:var(--text)}
-.hero-bio{
-  color:var(--text2);font-size:0.93rem;font-weight:300;
-  max-width:500px;margin-bottom:2.4rem;line-height:1.85;
-}
-.hero-bio strong{color:var(--text);font-weight:400}
-.hero-ctas{display:flex;gap:0.9rem;flex-wrap:wrap}
-.btn{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.74rem;
-  letter-spacing:0.05em;padding:0.7rem 1.4rem;
-  border-radius:2px;transition:all var(--t) var(--ease);cursor:pointer;
-}
-.btn-fill{background:var(--accent);color:var(--bg);border:1px solid var(--accent);font-weight:500}
-.btn-fill:hover{background:var(--accent-d);border-color:var(--accent-d);color:var(--bg);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
-/* Profile panel */
-.hero-panel{position:relative;align-self:center}
-.profile-img-wrap{
-  width:100%;aspect-ratio:3/4;border-radius:3px;overflow:hidden;
-  border:1px solid var(--border2);position:relative;
-}
-.profile-img-wrap::before,.profile-img-wrap::after{
-  content:'';position:absolute;width:14px;height:14px;z-index:2;
-}
-.profile-img-wrap::before{top:-1px;left:-1px;border-top:1.5px solid var(--accent);border-left:1.5px solid var(--accent)}
-.profile-img-wrap::after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--accent);border-right:1.5px solid var(--accent)}
-.profile-img-wrap img{
-  width:100%;height:100%;object-fit:cover;
-  filter:grayscale(30%) contrast(1.04) brightness(0.95);
-  transition:filter 0.6s var(--ease);
-}
-.profile-img-wrap:hover img{filter:grayscale(5%) contrast(1) brightness(1)}
-.profile-meta{margin-top:1rem;display:flex;flex-direction:column;gap:0.4rem}
-.meta-row{
-  font-family:'JetBrains Mono',monospace;font-size:0.67rem;
-  letter-spacing:0.06em;color:var(--text3);
-  display:flex;align-items:baseline;gap:0.6rem;
-}
-.meta-row span{color:var(--text2)}
-/* ─────────────────────────────────────────
-   ABOUT
-───────────────────────────────────────── */
-#about{background:var(--bg1)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
-.about-text p{color:var(--text2);font-size:0.93rem;font-weight:300;line-height:1.88;margin-bottom:1.3rem}
-.about-text p strong{color:var(--text);font-weight:400}
-.about-actions{margin-top:1.8rem;display:flex;gap:0.8rem;flex-wrap:wrap}
-.stats-block{
-  display:grid;grid-template-columns:1fr 1fr;gap:1px;
-  background:var(--border);border:1px solid var(--border);
-  border-radius:3px;overflow:hidden;
-}
-.stat{background:var(--surface);padding:1.6rem;transition:background var(--t) var(--ease)}
-.stat:hover{background:var(--surface2)}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;color:var(--accent);letter-spacing:-0.02em}
-.stat-l{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-top:0.3rem}
-.affils{margin-top:2rem}
-.affil-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.8rem}
-.affil{
-  border:1px solid var(--border);border-radius:2px;
-  padding:0.35rem 0.75rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.66rem;
-  letter-spacing:0.05em;color:var(--text2);
-  display:flex;align-items:center;gap:0.4rem;
-}
-.affil::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
-/* ─────────────────────────────────────────
-   EDUCATION
-───────────────────────────────────────── */
-#education{background:var(--bg)}
-.tl{position:relative;padding-left:2.2rem}
-.tl::before{
-  content:'';position:absolute;left:0;top:0.5rem;bottom:0;
-  width:1px;background:linear-gradient(to bottom,var(--accent),transparent);
-}
-.tl-item{
-  position:relative;padding-bottom:3.2rem;
-  opacity:0;transform:translateX(-12px);
-  transition:opacity 0.55s var(--ease),transform 0.55s var(--ease);
-}
-.tl-item.vis{opacity:1;transform:none}
-.tl-item::before{
-  content:'';position:absolute;left:-2.55rem;top:0.45rem;
-  width:7px;height:7px;background:var(--bg);
-  border:1.5px solid var(--accent);border-radius:50%;
-}
-.tl-year{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:0.4rem}
-.tl-degree{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:var(--text);margin-bottom:0.15rem;line-height:1.3}
-.tl-inst{font-size:0.88rem;color:var(--text2);font-weight:300;margin-bottom:0.5rem}
-.tl-note{font-size:0.83rem;color:var(--text3);font-style:italic;line-height:1.6}
-.tl-note strong{color:var(--gold);font-style:normal;font-weight:400}
-/* ─────────────────────────────────────────
-   SKILLS
-───────────────────────────────────────── */
-#skills{background:var(--bg1)}
-.skills-layout{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--border);border:1px solid var(--border);
-  border-radius:3px;overflow:hidden;
-}
-.sg{background:var(--surface);padding:1.6rem;transition:background var(--t) var(--ease)}
-.sg:hover{background:var(--surface2)}
-.sg-title{
-  font-family:'JetBrains Mono',monospace;font-size:0.64rem;
-  letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);
-  margin-bottom:1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);
-}
-.tags{display:flex;flex-wrap:wrap;gap:0.45rem}
-.tag{
-  font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.02em;
-  color:var(--text2);border:1px solid var(--border);border-radius:2px;
-  padding:0.25rem 0.6rem;transition:all var(--t) var(--ease);
-}
-.tag:hover{border-color:var(--accent);color:var(--accent)}
-/* ─────────────────────────────────────────
-   PUBLICATIONS
-───────────────────────────────────────── */
-#publications{background:var(--bg)}
-.pub-list{display:flex;flex-direction:column;gap:1.2rem}
-.pub{
-  background:var(--surface);border:1px solid var(--border);border-radius:3px;
-  padding:1.6rem 1.8rem;
-  display:grid;grid-template-columns:auto 1fr;gap:0 1.6rem;
-  transition:border-color var(--t) var(--ease),transform var(--t) var(--ease);
-  opacity:0;transform:translateY(12px);
-}
-.pub.vis{opacity:1;transform:none}
-.pub:hover{border-color:var(--border2);transform:translateX(3px)}
-.pub-year{
-  font-family:'JetBrains Mono',monospace;font-size:0.68rem;
-  letter-spacing:0.06em;color:var(--accent);
-  padding-top:0.15rem;white-space:nowrap;
-}
-.pub-type{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.4rem}
-.pub-title{font-size:0.95rem;font-weight:400;color:var(--text);margin-bottom:0.4rem;line-height:1.5}
-.pub-authors{font-size:0.82rem;color:var(--text3);margin-bottom:0.3rem;line-height:1.6;font-weight:300}
-.pub-authors em{color:var(--accent);font-style:normal;font-weight:400}
-.pub-journal{font-size:0.82rem;color:var(--text2);font-style:italic;margin-bottom:0.8rem;font-weight:300}
-.pub-doi{
-  display:inline-flex;align-items:center;gap:0.4rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.68rem;
-  color:var(--text2);border:1px solid var(--border);
-  padding:0.25rem 0.6rem;border-radius:2px;letter-spacing:0.03em;
-  transition:all var(--t) var(--ease);
-}
-.pub-doi:hover{border-color:var(--accent);color:var(--accent)}
-/* ─────────────────────────────────────────
-   PROJECTS — 3D CAROUSEL
-───────────────────────────────────────── */
-#projects{background:var(--bg1);overflow:hidden}
-.carousel-outer{
-  width:100%;
-  perspective:1600px;
-  perspective-origin:50% 50%;
-  cursor:grab;user-select:none;
-  padding:3rem 0 4rem;
-  overflow:hidden;
-}
-.carousel-outer:active{cursor:grabbing}
-.carousel-stage{
-  position:relative;width:100%;height:370px;
-  transform-style:preserve-3d;
-}
-.p-card{
-  position:absolute;
-  width:276px;height:320px;
-  top:0;left:50%;margin-left:-138px;
-  background:var(--surface);
-  border:1px solid var(--border);border-radius:3px;
-  padding:1.4rem;
-  display:flex;flex-direction:column;gap:0.7rem;
-  backface-visibility:hidden;
-  will-change:transform;
-  transition:border-color var(--t) var(--ease),box-shadow var(--t) var(--ease);
-}
-.p-card:hover{border-color:var(--border2);box-shadow:var(--shadow)}
-.p-card-top{display:flex;align-items:center;justify-content:space-between}
-.p-card-icon{
-  width:30px;height:30px;font-size:1rem;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--bg);border:1px solid var(--border);border-radius:2px;flex-shrink:0;
-}
-.p-stars{font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:var(--gold)}
-.p-name{font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.p-desc{font-size:0.8rem;color:var(--text2);font-weight:300;line-height:1.65;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
-.p-footer{display:flex;align-items:center;justify-content:space-between;padding-top:0.7rem;border-top:1px solid var(--border)}
-.p-lang{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.04em;color:var(--text3);display:flex;align-items:center;gap:0.3rem}
-.ld{width:6px;height:6px;border-radius:50%;display:inline-block}
-.ld-Python{background:#3572A5}.ld-R{background:#198CE7}
-.ld-JavaScript{background:#f0d060}.ld-Jupyter{background:#DA5B0B}
-.ld-HTML{background:#e34c26}.ld-Shell{background:#89e051}
-.ld-CSS{background:#6e5494}.ld-TypeScript{background:#2b7489}
-.ld-other{background:var(--accent)}
-.p-link{font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:var(--accent);letter-spacing:0.04em;display:flex;align-items:center;gap:0.3rem;transition:gap var(--t) var(--ease)}
-.p-link:hover{gap:0.5rem}
-.carousel-ctrls{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-top:1.5rem}
-.c-btn{
-  background:var(--surface);border:1px solid var(--border);border-radius:2px;
-  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--text2);transition:all var(--t) var(--ease);
-}
-.c-btn:hover{border-color:var(--accent);color:var(--accent)}
-.c-hint{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.06em;color:var(--text3)}
-.repo-loading,.repo-error{
-  text-align:center;padding:4rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text3);
-}
-/* ─────────────────────────────────────────
-   NEWS
-───────────────────────────────────────── */
-#news{background:var(--bg)}
-.news-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--border);border:1px solid var(--border);
-  border-radius:3px;overflow:hidden;
-}
-.n-card{background:var(--surface);padding:1.8rem;transition:background var(--t) var(--ease)}
-.n-card:hover{background:var(--surface2)}
-.n-date{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.7rem}
-.n-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--text);margin-bottom:0.6rem;line-height:1.35}
-.n-body{font-size:0.83rem;color:var(--text2);font-weight:300;line-height:1.72;margin-bottom:1rem}
-.n-link{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;color:var(--text2);transition:color var(--t) var(--ease)}
-.n-link:hover{color:var(--accent)}
-/* ─────────────────────────────────────────
-   CONTACT
-───────────────────────────────────────── */
-#contact{background:var(--bg1)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
-.c-info p{color:var(--text2);font-size:0.93rem;font-weight:300;line-height:1.85;margin-bottom:2rem}
-.socials{display:flex;flex-direction:column;gap:0.6rem}
-.soc{
-  display:flex;align-items:center;gap:0.9rem;
-  font-size:0.84rem;color:var(--text2);font-weight:300;
-  padding:0.65rem 0.9rem;border:1px solid var(--border);border-radius:2px;
-  background:var(--surface);transition:all var(--t) var(--ease);
-}
-.soc:hover{border-color:var(--border2);color:var(--accent);transform:translateX(3px)}
-.soc svg{flex-shrink:0;color:var(--text3);transition:color var(--t) var(--ease)}
-.soc:hover svg{color:var(--accent)}
-.soc-rg{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;flex-shrink:0;color:var(--text3);width:15px;text-align:center}
-.cf{display:flex;flex-direction:column;gap:1rem}
-.fg{display:flex;flex-direction:column;gap:0.4rem}
-.fg label{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
-.fg input,.fg textarea{
-  background:var(--surface);border:1px solid var(--border);border-radius:2px;
-  padding:0.7rem 0.9rem;color:var(--text);
-  font-family:'Lato',sans-serif;font-size:0.88rem;font-weight:300;
-  outline:none;resize:vertical;transition:border-color var(--t) var(--ease);
-}
-.fg input:focus,.fg textarea:focus{border-color:var(--accent)}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--text3)}
-.cf-submit{
-  align-self:flex-start;background:none;
-  border:1px solid var(--border2);border-radius:2px;
-  padding:0.7rem 1.4rem;cursor:pointer;
-  font-family:'JetBrains Mono',monospace;font-size:0.74rem;
-  letter-spacing:0.05em;color:var(--text2);
-  transition:all var(--t) var(--ease);
-}
-.cf-submit:hover{border-color:var(--accent);color:var(--accent)}
-.cf-msg{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);margin-top:0.4rem;display:none}
-/* ─────────────────────────────────────────
-   FOOTER
-───────────────────────────────────────── */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
-.footer-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.f-logo{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;color:var(--text3)}
-.f-logo b{color:var(--accent)}
-.f-copy{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.04em;color:var(--text3)}
-/* ─────────────────────────────────────────
-   SCROLL FADE
-───────────────────────────────────────── */
-.fi{opacity:0;transform:translateY(16px);transition:opacity 0.6s var(--ease),transform 0.6s var(--ease)}
-.fi.vis{opacity:1;transform:none}
-/* ─────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────── */
-@media(max-width:1024px){
-  .skills-layout{grid-template-columns:1fr 1fr}
-  .news-grid{grid-template-columns:1fr}
-}
-@media(max-width:900px){
-  .hero-wrap{grid-template-columns:1fr}
-  .hero-panel{display:none}
-  .about-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-}
-@media(max-width:768px){
-  .nav-links{display:none}.hbg{display:flex}
-  section{padding:4.5rem 0}
-  .skills-layout{grid-template-columns:1fr}
-  .pub{grid-template-columns:1fr;gap:0.3rem}
-}
-@media(max-width:480px){
-  .hero-ctas{flex-direction:column}
-  .btn{width:100%;justify-content:center}
-  .stats-block{grid-template-columns:1fr 1fr}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
-<!-- NAV ─────────────────────────────── -->
 <nav>
   <div class="nav-inner">
     <div class="nav-logo"><b>ODS</b> · research</div>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
+      <li><a href="#cv-demo">research</a></li>
       <li><a href="#education">education</a></li>
       <li><a href="#publications">publications</a></li>
       <li><a href="#projects">projects</a></li>
@@ -490,19 +26,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
     </ul>
     <div class="nav-right">
       <button class="theme-btn" id="themeBtn">light mode</button>
-      <button class="hbg" id="hbg" aria-label="menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="hbg" id="hbg" aria-label="menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 <div class="mob-nav" id="mobNav">
-  <a href="#about">about</a><a href="#education">education</a>
-  <a href="#publications">publications</a><a href="#projects">projects</a>
-  <a href="#skills">skills</a><a href="#news">news</a><a href="#contact">contact</a>
+  <a href="#about">about</a><a href="#cv-demo">research</a>
+  <a href="#education">education</a><a href="#publications">publications</a>
+  <a href="#projects">projects</a><a href="#skills">skills</a>
+  <a href="#news">news</a><a href="#contact">contact</a>
 </div>
 
-<!-- HERO ────────────────────────────── -->
 <section id="hero">
   <canvas id="cloud-canvas"></canvas>
   <div class="container">
@@ -511,12 +45,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
         <div class="hero-kicker"><span class="dot-live"></span>PhD Candidate &nbsp;·&nbsp; University of Pisa &nbsp;·&nbsp; Italy</div>
         <h1 class="hero-name">Olatoye<br><em>Dolapo Salim</em></h1>
         <p class="hero-tagline"><b>Computer Vision</b> for Marine Ecology</p>
-        <p class="hero-bio">
-          Leveraging deep learning, remote sensing, and AI to decode
-          <strong>biodiversity stability</strong> in complex marine environments.
-          Part of the EU Horizon <strong>BioEcoOcean</strong> project,
-          funded by the University of Pisa.
-        </p>
+        <p class="hero-bio">Leveraging <strong>AI</strong>, deep learning, and remote sensing to decode biodiversity stability in complex marine environments. Part of the EU Horizon <strong>BioEcoOcean</strong> project, funded by the University of Pisa.</p>
         <div class="hero-ctas">
           <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="btn btn-fill">Publications</a>
           <a href="https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true" target="_blank" class="btn btn-ghost">Download CV</a>
@@ -525,8 +54,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
       </div>
       <div class="hero-panel">
         <div class="profile-img-wrap">
-          <img src="assets/images/profile picture.png" alt="Olatoye Dolapo Salim"
-               onerror="this.parentElement.style.background='var(--surface2)';this.style.display='none'"/>
+          <img src="assets/images/profile picture.png" alt="Olatoye Dolapo Salim" onerror="this.parentElement.style.background='var(--surface2)';this.style.display='none'"/>
         </div>
         <div class="profile-meta">
           <div class="meta-row">loc <span>Pisa, Tuscany, Italy</span></div>
@@ -538,30 +66,34 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </section>
 
-<!-- ABOUT ───────────────────────────── -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
       <div class="fi">
         <div class="sec-label">About</div>
-        <h2 class="sec-title">Marine Biologist<br>& AI Researcher</h2>
+        <h2 class="sec-title">Marine Biologist<br>&amp; AI Researcher</h2>
         <div class="about-text">
-          <p>I am a PhD candidate at the <strong>University of Pisa's Department of Biology</strong>, where my work sits at the intersection of computer vision, remote sensing, and marine ecology. My doctorate focuses on evaluating <strong>biodiversity stability in complex marine environments</strong> using AI and emerging sensing technologies.</p>
-          <p>I hold an MSc in <strong>Coastal & Marine Biology and Ecology</strong> from Università del Salento (110/110 — Unisalento4Talents Scholar) and a BSc in <strong>Fisheries and Aquaculture</strong> from Federal University Oye-Ekiti, Nigeria, graduating as the best student of my department.</p>
-          <p>My PhD is funded by the <strong>BioEcoOcean EU Horizon project</strong>. I also contribute to <strong>BioBoost+</strong>, where my work focuses on automated species image recognition for biodiversity monitoring.</p>
+          <p>I am a PhD candidate at the <strong>University of Pisa's Department of Biology</strong>, working at the intersection of marine ecology and machine intelligence. My research centres on applying <b>AI and emerging imaging technologies</b> — particularly computer vision and deep learning — to evaluate <strong>biodiversity stability in complex marine environments</strong>.</p>
+          <p>My work spans the full pipeline: from collecting and annotating underwater imagery, training <strong>object detection and classification models</strong>, to integrating outputs with ecological data for biodiversity assessment. I believe <strong>scalable, automated vision systems</strong> are key to monitoring ocean health at the speed the climate crisis demands.</p>
+          <p>I hold an MSc in <strong>Coastal &amp; Marine Biology and Ecology</strong> from Università del Salento (110/110 — Unisalento4Talents Scholar) and a BSc in <strong>Fisheries and Aquaculture</strong> from Federal University Oye-Ekiti, Nigeria, graduating as <strong>best student of my department</strong>. My PhD is funded by the <strong>BioEcoOcean EU Horizon project</strong>.</p>
         </div>
         <div class="about-actions">
-          <a href="https://bioecoocean.org/" target="_blank" class="btn btn-ghost" style="font-size:0.7rem;padding:0.5rem 1rem">BioEcoOcean ↗</a>
-          <a href="https://bioboostplus.eu/scientific/20" target="_blank" class="btn btn-ghost" style="font-size:0.7rem;padding:0.5rem 1rem">BioBoost+ ↗</a>
-          <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" target="_blank" class="btn btn-ghost" style="font-size:0.7rem;padding:0.5rem 1rem">Research Notes ↗</a>
+          <a href="https://bioecoocean.org/" target="_blank" class="btn btn-ghost btn-sm">BioEcoOcean ↗</a>
+          <a href="https://bioboostplus.eu/scientific/20" target="_blank" class="btn btn-ghost btn-sm">BioBoost+ ↗</a>
+          <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" target="_blank" class="btn btn-ghost btn-sm">Research Notes ↗</a>
         </div>
       </div>
       <div class="fi" style="transition-delay:0.1s">
         <div class="stats-block">
           <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Publications</div></div>
-          <div class="stat"><div class="stat-n">2</div><div class="stat-l">EU Projects</div></div>
+          <div class="stat"><div class="stat-n">3</div><div class="stat-l">EU Projects</div></div>
           <div class="stat"><div class="stat-n">110</div><div class="stat-l">MSc Grade /110</div></div>
           <div class="stat"><div class="stat-n">3</div><div class="stat-l">Countries</div></div>
+        </div>
+        <div class="award-block">
+          <div class="award-label">Academic Awards</div>
+          <div class="award-item"><strong>Best Graduating Student</strong> — Dept. of Fisheries &amp; Aquaculture, Federal University Oye-Ekiti, 2019</div>
+          <div class="award-item"><strong>Unisalento4Talents Scholarship</strong> — Università del Salento, MSc 2021–2023</div>
         </div>
         <div class="affils">
           <div class="sec-label" style="margin-bottom:0.7rem">Affiliations</div>
@@ -569,7 +101,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
             <div class="affil">University of Pisa</div>
             <div class="affil">BioEcoOcean · EU Horizon</div>
             <div class="affil">BioBoost+</div>
-            <div class="affil">BEING SEA-EU</div>
+            <div class="affil">AMBULANT · BEING SEA-EU</div>
           </div>
         </div>
       </div>
@@ -577,7 +109,32 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </section>
 
-<!-- EDUCATION ───────────────────────── -->
+<section id="cv-demo">
+  <div class="container">
+    <div class="sec-label">Computer Vision in Action</div>
+    <div class="demo-grid">
+      <div class="demo-text fi">
+        <h3>Automated Species<br>Detection &amp; Tracking</h3>
+        <p>This demo shows a real-time <strong>YOLO-based object detection and tracking</strong> pipeline applied to underwater video footage. Each species is automatically identified, labelled, and assigned a persistent tracking ID across frames.</p>
+        <p>This system is part of ongoing work under the <strong>BioBoost+ EU project</strong>, contributing to scalable, AI-driven biodiversity monitoring — reducing the need for manual video annotation by field researchers.</p>
+        <div class="demo-tags">
+          <span class="demo-tag">YOLOv8</span><span class="demo-tag">Object Tracking</span>
+          <span class="demo-tag">Species Detection</span><span class="demo-tag">Python</span>
+          <span class="demo-tag">OpenCV</span><span class="demo-tag">BioBoost+</span>
+        </div>
+      </div>
+      <div class="fi" style="transition-delay:0.12s">
+        <div class="demo-video-wrap">
+          <video autoplay muted loop playsinline preload="metadata" src="assets/video/demo.mp4"></video>
+          <div class="demo-overlay">
+            <div class="demo-badge">Live Demo — Species Detection</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="education">
   <div class="container">
     <div class="sec-label">Education</div>
@@ -592,7 +149,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
       </div>
       <div class="tl-item">
         <div class="tl-year">2021 – 2023</div>
-        <div class="tl-degree">MSc in Coastal & Marine Biology and Ecology</div>
+        <div class="tl-degree">MSc in Coastal &amp; Marine Biology and Ecology</div>
         <div class="tl-inst">Università del Salento, Italy</div>
         <div class="tl-note"><strong>Grade: 110/110</strong> · Awarded the <strong>Unisalento4Talents Scholarship.</strong></div>
       </div>
@@ -600,37 +157,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
         <div class="tl-year">2015 – 2019</div>
         <div class="tl-degree">BSc in Fisheries and Aquaculture</div>
         <div class="tl-inst">Federal University Oye-Ekiti, Nigeria</div>
-        <div class="tl-note"><strong>Best Graduating Student</strong> of the Department of Fisheries and Aquaculture (2018/2019).</div>
+        <div class="tl-note"><strong>Best Graduating Student</strong> — Department of Fisheries and Aquaculture, 2018/2019.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS ──────────────────────────── -->
-<section id="skills">
-  <div class="container">
-    <div class="sec-label">Skills</div>
-    <h2 class="sec-title">Technical Expertise</h2>
-    <p class="sec-sub">A cross-disciplinary stack spanning AI engineering and field marine science.</p>
-    <div class="skills-layout">
-      <div class="sg fi"><div class="sg-title">Programming & Data</div><div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">JavaScript</span><span class="tag">SQL</span><span class="tag">Bash</span><span class="tag">MATLAB</span></div></div>
-      <div class="sg fi" style="transition-delay:.05s"><div class="sg-title">Computer Vision & AI</div><div class="tags"><span class="tag">YOLOv8/v11</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">CNNs</span><span class="tag">ViT</span><span class="tag">Object Detection</span><span class="tag">Segmentation</span></div></div>
-      <div class="sg fi" style="transition-delay:.1s"><div class="sg-title">Remote Sensing & GIS</div><div class="tags"><span class="tag">Satellite Imagery</span><span class="tag">QGIS</span><span class="tag">Earth Engine</span><span class="tag">Hyperspectral</span><span class="tag">Coastal Monitoring</span></div></div>
-      <div class="sg fi" style="transition-delay:.15s"><div class="sg-title">Marine Science</div><div class="tags"><span class="tag">Marine Ecology</span><span class="tag">Biodiversity Assessment</span><span class="tag">Benthic Ecology</span><span class="tag">Fisheries</span><span class="tag">Ecosystem Modelling</span><span class="tag">Climate Impact</span></div></div>
-      <div class="sg fi" style="transition-delay:.2s"><div class="sg-title">Data Science</div><div class="tags"><span class="tag">Statistical Analysis</span><span class="tag">Data Visualisation</span><span class="tag">Multivariate Analysis</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span></div></div>
-      <div class="sg fi" style="transition-delay:.25s"><div class="sg-title">Tools & Platforms</div><div class="tags"><span class="tag">Git / GitHub</span><span class="tag">Docker</span><span class="tag">HPC / Cluster</span><span class="tag">CVAT</span><span class="tag">Label Studio</span><span class="tag">Netlify</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PUBLICATIONS ─────────────────────── -->
 <section id="publications">
   <div class="container">
     <div class="sec-label">Publications</div>
     <h2 class="sec-title">Research Output</h2>
     <p class="sec-sub">Peer-reviewed articles and conference contributions, newest first.</p>
     <div class="pub-list">
-
       <div class="pub fi">
         <div class="pub-year">2026</div>
         <div>
@@ -641,8 +179,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
           <a href="https://doi.org/10.1016/j.ecolind.2026.114622" target="_blank" class="pub-doi">DOI 10.1016/j.ecolind.2026.114622 ↗</a>
         </div>
       </div>
-
-      <div class="pub fi" style="transition-delay:.07s">
+      <div class="pub fi" style="transition-delay:0.08s">
         <div class="pub-year">2024</div>
         <div>
           <div class="pub-type">Poster · BEING SEA-EU / AMBULANT</div>
@@ -651,8 +188,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
           <div class="pub-journal">AquaBioTech Group &amp; Malta College of Arts, Science and Technology</div>
         </div>
       </div>
-
-      <div class="pub fi" style="transition-delay:.14s">
+      <div class="pub fi" style="transition-delay:0.16s">
         <div class="pub-year">2020</div>
         <div>
           <div class="pub-type">Research Article · Applied Tropical Agriculture</div>
@@ -661,72 +197,73 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
           <div class="pub-journal">Applied Tropical Agriculture, 25(2), pp. 68–74</div>
         </div>
       </div>
-
     </div>
-    <div style="margin-top:2rem">
-      <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="btn btn-ghost">Full list on ResearchGate ↗</a>
+    <div style="margin-top:2rem"><a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="btn btn-ghost">Full list on ResearchGate ↗</a></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="sec-label">Skills</div>
+    <h2 class="sec-title">Technical Expertise</h2>
+    <p class="sec-sub">A cross-disciplinary stack spanning AI engineering and field marine science.</p>
+    <div class="skills-layout">
+      <div class="sg fi"><div class="sg-title">Programming &amp; Data</div><div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">JavaScript</span><span class="tag">Bash</span></div></div>
+      <div class="sg fi" style="transition-delay:.05s"><div class="sg-title">Computer Vision &amp; AI</div><div class="tags"><span class="tag">YOLO</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">CNNs</span><span class="tag">ViT</span><span class="tag">Object Detection</span><span class="tag">Segmentation</span><span class="tag">Claude AI</span></div></div>
+      <div class="sg fi" style="transition-delay:.1s"><div class="sg-title">Tools &amp; Platforms</div><div class="tags"><span class="tag">Roboflow</span><span class="tag">Streamlit</span><span class="tag">Git / GitHub</span><span class="tag">Docker</span><span class="tag">HPC / Cluster</span><span class="tag">CVAT</span><span class="tag">Label Studio</span></div></div>
+      <div class="sg fi" style="transition-delay:.15s"><div class="sg-title">Remote Sensing &amp; GIS</div><div class="tags"><span class="tag">Satellite Imagery</span><span class="tag">QGIS</span><span class="tag">Google Earth Engine</span><span class="tag">Hyperspectral</span><span class="tag">Coastal Monitoring</span></div></div>
+      <div class="sg fi" style="transition-delay:.2s"><div class="sg-title">Marine Science</div><div class="tags"><span class="tag">Marine Ecology</span><span class="tag">Biodiversity Assessment</span><span class="tag">Benthic Ecology</span><span class="tag">Fisheries</span><span class="tag">Ecosystem Modelling</span><span class="tag">Climate Impact</span></div></div>
+      <div class="sg fi" style="transition-delay:.25s"><div class="sg-title">Data Science</div><div class="tags"><span class="tag">Statistical Analysis</span><span class="tag">Data Visualisation</span><span class="tag">Multivariate Analysis</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS ─────────────────────────── -->
 <section id="projects">
   <div class="container">
     <div class="sec-label">Projects</div>
-    <h2 class="sec-title">Code & Repositories</h2>
-    <p class="sec-sub">Live from GitHub. Drag to rotate the cylinder and explore.</p>
+    <h2 class="sec-title">Code &amp; Repositories</h2>
+    <p class="sec-sub">Drag left/right to rotate. Cards recede into the screen like a cylinder viewed from above.</p>
   </div>
-
   <div class="carousel-outer" id="carouselOuter">
     <div class="carousel-stage" id="carouselStage">
-      <div class="repo-loading" id="repoLoading">Fetching repositories<span id="ldots"></span></div>
+      <div class="repo-loading" id="repoLoading">Loading repositories<span id="ldots"></span></div>
     </div>
   </div>
-
-  <div class="carousel-ctrls" id="carouselCtrls" style="display:none">
-    <button class="c-btn" id="cPrev" aria-label="Previous">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <span class="c-hint">drag or click arrows to rotate</span>
-    <button class="c-btn" id="cNext" aria-label="Next">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+  <div class="carousel-ctrls" id="carouselCtrls">
+    <button class="c-btn" id="cPrev" aria-label="Previous"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <span class="c-hint">drag or use arrows to rotate</span>
+    <button class="c-btn" id="cNext" aria-label="Next"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
   </div>
-
   <div class="container" style="margin-top:2rem">
     <a href="https://github.com/DolapoSalim?tab=repositories" target="_blank" class="btn btn-ghost">View all on GitHub ↗</a>
   </div>
 </section>
 
-<!-- NEWS ─────────────────────────────── -->
 <section id="news">
   <div class="container">
-    <div class="sec-label">News & Updates</div>
+    <div class="sec-label">News &amp; Updates</div>
     <h2 class="sec-title">Latest</h2>
-    <div class="news-grid">
-      <div class="n-card fi">
-        <div class="n-date">2024</div>
-        <div class="n-title">Featured on BioBoost+</div>
-        <div class="n-body">My contribution to the EU BioBoost+ project — automated species image recognition — was featured on the project's official website.</div>
-        <a href="https://bioboostplus.eu/scientific/20" target="_blank" class="n-link">Read article ↗</a>
-      </div>
-      <div class="n-card fi" style="transition-delay:.08s">
-        <div class="n-date">November 2024</div>
-        <div class="n-title">BioEcoOcean Consortium Biannual Meeting</div>
-        <div class="n-body">Participated in the BioEcoOcean EU Horizon consortium's biannual meeting, held online November 18–19, 2024.</div>
-        <a href="https://bioecoocean.org/news/the-bioecoocean-consortium-biannual-meeting-held-in-november-2024/" target="_blank" class="n-link">Read more ↗</a>
-      </div>
-      <div class="n-card fi" style="transition-delay:.16s">
-        <div class="n-date">Ongoing</div>
-        <div class="n-title">PhD Research: AI for Marine Biodiversity</div>
-        <div class="n-body">Developing AI imaging pipelines and sensor fusion methods to assess ecosystem stability in the Mediterranean and beyond.</div>
-        <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" target="_blank" class="n-link">Research notes ↗</a>
-      </div>
+    <p class="sec-sub">Research milestones, project updates, and field dispatches.</p>
+    <div class="news-list">
+      <a href="https://bioboostplus.eu/scientific/20" target="_blank" class="news-item fi">
+        <div class="news-date">2024</div>
+        <div><div class="news-title">Featured on BioBoost+</div><div class="news-body">My contribution to the EU BioBoost+ project — automated species image recognition — was featured on the project's official website.</div></div>
+        <div class="news-arrow">↗</div>
+      </a>
+      <a href="https://bioecoocean.org/news/the-bioecoocean-consortium-biannual-meeting-held-in-november-2024/" target="_blank" class="news-item fi" style="transition-delay:0.06s">
+        <div class="news-date">Nov 2024</div>
+        <div><div class="news-title">BioEcoOcean Consortium Biannual Meeting</div><div class="news-body">Participated in the BioEcoOcean EU Horizon consortium's biannual meeting held online on November 18–19, 2024.</div></div>
+        <div class="news-arrow">↗</div>
+      </a>
+      <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" target="_blank" class="news-item fi" style="transition-delay:0.12s">
+        <div class="news-date">Ongoing</div>
+        <div><div class="news-title">PhD Research: AI for Marine Biodiversity</div><div class="news-body">Developing AI imaging pipelines and sensor fusion methods to assess ecosystem stability in the Mediterranean and beyond.</div></div>
+        <div class="news-arrow">↗</div>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- CONTACT ──────────────────────────── -->
 <section id="contact">
   <div class="container">
     <div class="sec-label">Contact</div>
@@ -735,28 +272,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
       <div class="fi">
         <div class="c-info"><p>Available for academic collaborations, consulting, speaking, and research inquiries — especially at the intersection of computer vision, marine science, and biodiversity monitoring.</p></div>
         <div class="socials">
-          <a href="https://github.com/DolapoSalim" target="_blank" class="soc">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-            github.com/DolapoSalim
-          </a>
-          <a href="https://www.linkedin.com/in/dolapoolatoye/" target="_blank" class="soc">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            linkedin.com/in/dolapoolatoye
-          </a>
-          <a href="https://x.com/dolapo_salim" target="_blank" class="soc">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            @dolapo_salim
-          </a>
-          <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="soc">
-            <span class="soc-rg">RG</span>ResearchGate Profile
-          </a>
+          <a href="https://github.com/DolapoSalim" target="_blank" class="soc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>github.com/DolapoSalim</a>
+          <a href="https://www.linkedin.com/in/dolapoolatoye/" target="_blank" class="soc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>linkedin.com/in/dolapoolatoye</a>
+          <a href="https://x.com/dolapo_salim" target="_blank" class="soc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@dolapo_salim</a>
+          <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="soc"><span class="soc-rg">RG</span>ResearchGate Profile</a>
         </div>
       </div>
-      <div class="fi" style="transition-delay:.1s">
+      <div class="fi" style="transition-delay:0.1s">
         <form class="cf" id="cf">
           <div class="fg"><label for="cn">Name</label><input type="text" id="cn" placeholder="Your name" required/></div>
           <div class="fg"><label for="ce">Email</label><input type="email" id="ce" placeholder="your@email.com" required/></div>
-          <div class="fg"><label for="cm">Message</label><textarea id="cm" rows="5" placeholder="How can I help you?" required></textarea></div>
+          <div class="fg"><label for="cm">Message</label><textarea id="cm" rows="5" placeholder="How can I help?" required></textarea></div>
           <button type="submit" class="cf-submit">Send message →</button>
           <p class="cf-msg" id="cfMsg"></p>
         </form>
@@ -765,7 +291,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </section>
 
-<!-- FOOTER ───────────────────────────── -->
 <footer>
   <div class="container">
     <div class="footer-row">
@@ -776,252 +301,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </footer>
 
-<script>
-/* ─── THEME ─────────────────────────── */
-const html = document.documentElement;
-const themeBtn = document.getElementById('themeBtn');
-const saved = localStorage.getItem('ods-theme') || 'dark';
-html.setAttribute('data-theme', saved);
-themeBtn.textContent = saved === 'dark' ? 'light mode' : 'dark mode';
-themeBtn.addEventListener('click', () => {
-  const n = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', n);
-  localStorage.setItem('ods-theme', n);
-  themeBtn.textContent = n === 'dark' ? 'light mode' : 'dark mode';
-});
-
-/* ─── HAMBURGER ─────────────────────── */
-const hbg = document.getElementById('hbg');
-const mobNav = document.getElementById('mobNav');
-hbg.addEventListener('click', () => { hbg.classList.toggle('open'); mobNav.classList.toggle('open'); });
-mobNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  hbg.classList.remove('open'); mobNav.classList.remove('open');
-}));
-
-/* ─── INTERSECTION OBSERVER ─────────── */
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fi, .tl-item, .pub').forEach(el => io.observe(el));
-
-/* ─── POINT CLOUD (WebGL) ───────────── */
-(function() {
-  const canvas = document.getElementById('cloud-canvas');
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-  if (!gl) return;
-
-  const N = 650;
-  const pos   = new Float32Array(N * 3);
-  const sizes = new Float32Array(N);
-
-  // Ellipsoidal distribution — denser toward center, thinner edges
-  for (let i = 0; i < N; i++) {
-    const u = Math.random(), v = Math.random(), w = Math.random();
-    const r = Math.cbrt(u); // cube root for uniform sphere volume
-    const theta = 2 * Math.PI * v;
-    const phi   = Math.acos(2 * w - 1);
-    pos[i*3]   = r * Math.sin(phi) * Math.cos(theta) * 1.8;
-    pos[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 1.0;
-    pos[i*3+2] = r * Math.cos(phi) * 0.7;
-    sizes[i]   = 0.8 + Math.random() * 2.4;
-  }
-
-  const vSrc = `
-    attribute vec3 a;
-    attribute float s;
-    uniform mat4 mvp;
-    uniform vec2 mouse;
-    uniform float t;
-    varying float depth;
-    void main(){
-      vec3 p = a;
-      p.x += sin(t*0.00028 + a.y*2.8) * 0.018;
-      p.y += cos(t*0.00035 + a.x*2.1) * 0.012;
-      p.x += mouse.x * (-p.z+0.4) * 0.1;
-      p.y += mouse.y * (-p.z+0.4) * 0.07;
-      vec4 vp = mvp * vec4(p,1.0);
-      gl_Position = vp;
-      depth = (p.z+1.0)*0.5;
-      gl_PointSize = s * (0.35 + depth*0.95);
-    }
-  `;
-  const fSrc = `
-    precision mediump float;
-    varying float depth;
-    uniform vec3 col;
-    void main(){
-      vec2 uv = gl_PointCoord - 0.5;
-      if(dot(uv,uv)>0.25) discard;
-      float a = (0.25 - dot(uv,uv)) * 4.0;
-      gl_FragColor = vec4(col, a*(0.12 + depth*0.5));
-    }
-  `;
-
-  function mkS(type, src){
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src); gl.compileShader(s); return s;
-  }
-  const prog = gl.createProgram();
-  gl.attachShader(prog, mkS(gl.VERTEX_SHADER, vSrc));
-  gl.attachShader(prog, mkS(gl.FRAGMENT_SHADER, fSrc));
-  gl.linkProgram(prog); gl.useProgram(prog);
-
-  const pb = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, pb); gl.bufferData(gl.ARRAY_BUFFER, pos, gl.STATIC_DRAW);
-  const sb = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, sb); gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
-
-  const uA = gl.getAttribLocation(prog,'a'), uS = gl.getAttribLocation(prog,'s');
-  const uMVP = gl.getUniformLocation(prog,'mvp');
-  const uMouse = gl.getUniformLocation(prog,'mouse');
-  const uT = gl.getUniformLocation(prog,'t');
-  const uCol = gl.getUniformLocation(prog,'col');
-
-  function persp(fov,asp,n,f){
-    const x = 1/Math.tan(fov*.5);
-    return new Float32Array([x/asp,0,0,0,0,x,0,0,0,0,(f+n)/(n-f),-1,0,0,2*f*n/(n-f),0]);
-  }
-
-  let mouse = [0,0];
-  window.addEventListener('mousemove', e => {
-    mouse[0] = (e.clientX/window.innerWidth - .5)*2;
-    mouse[1] = -(e.clientY/window.innerHeight - .5)*2;
-  });
-
-  function resize(){
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    gl.viewport(0,0,canvas.width,canvas.height);
-  }
-  resize(); window.addEventListener('resize', resize);
-  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-  function frame(t){
-    gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
-    const asp = canvas.width/canvas.height;
-    const m = persp(0.52, asp, 0.1, 10);
-    // Translate Z
-    m[14] += -2.6;
-    gl.uniformMatrix4fv(uMVP, false, m);
-    gl.uniform2fv(uMouse, mouse);
-    gl.uniform1f(uT, t);
-    const isDark = html.getAttribute('data-theme') !== 'light';
-    gl.uniform3fv(uCol, isDark ? [0.66,0.77,0.74] : [0.18,0.48,0.44]);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, pb);
-    gl.enableVertexAttribArray(uA);
-    gl.vertexAttribPointer(uA,3,gl.FLOAT,false,0,0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, sb);
-    gl.enableVertexAttribArray(uS);
-    gl.vertexAttribPointer(uS,1,gl.FLOAT,false,0,0);
-
-    gl.drawArrays(gl.POINTS, 0, N);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
-
-/* ─── GITHUB CAROUSEL ───────────────── */
-const ICONS = {
-  python:'🐍',machine:'🤖',vision:'👁',detect:'🔍',marine:'🌊',
-  fish:'🐟',ecology:'🌿',remote:'🛰',data:'📊',species:'🦀',
-  model:'🧠',web:'🌐',notebook:'📓',pipeline:'⚙',analysis:'📈',
-  image:'🖼',deep:'🧬',learn:'📚'
-};
-function repoIcon(n,d){
-  const s=(n+' '+(d||'')).toLowerCase();
-  for(const[k,v] of Object.entries(ICONS)) if(s.includes(k)) return v;
-  return '📁';
-}
-
-let angle=0, target=0, count=0, RADIUS=420, raf2=null, drag=false, x0=0, a0=0;
-
-const stage = document.getElementById('carouselStage');
-
-function setAngle(a){ stage.style.transform=`rotateY(${a}deg)`; }
-function tick(){
-  angle += (target-angle)*0.1;
-  setAngle(angle);
-  if(Math.abs(target-angle)>0.04) raf2=requestAnimationFrame(tick);
-  else { angle=target; setAngle(angle); raf2=null; }
-}
-function step(dir){ target+=dir*(360/count); if(!raf2) raf2=requestAnimationFrame(tick); }
-
-function initDrag(){
-  const vp=document.getElementById('carouselOuter');
-  vp.addEventListener('mousedown',e=>{drag=true;x0=e.clientX;a0=target;if(raf2){cancelAnimationFrame(raf2);raf2=null;}angle=target;});
-  window.addEventListener('mousemove',e=>{if(!drag)return;target=a0+(e.clientX-x0)*0.3;angle=target;setAngle(angle);});
-  window.addEventListener('mouseup',()=>{drag=false;});
-  vp.addEventListener('touchstart',e=>{drag=true;x0=e.touches[0].clientX;a0=target;angle=target;if(raf2){cancelAnimationFrame(raf2);raf2=null;}},{passive:true});
-  vp.addEventListener('touchmove',e=>{if(!drag)return;target=a0+(e.touches[0].clientX-x0)*0.3;angle=target;setAngle(angle);},{passive:true});
-  vp.addEventListener('touchend',()=>{drag=false;});
-  document.getElementById('cPrev').addEventListener('click',()=>step(-1));
-  document.getElementById('cNext').addEventListener('click',()=>step(1));
-}
-
-async function loadRepos(){
-  const ldots=document.getElementById('ldots');
-  let dn=0; const di=setInterval(()=>{if(ldots) ldots.textContent='.'.repeat(++dn%4);},400);
-  try{
-    const res=await fetch('https://api.github.com/users/DolapoSalim/repos?sort=updated&per_page=30&type=public');
-    clearInterval(di);
-    if(!res.ok) throw new Error();
-    const repos=await res.json();
-    const filtered=repos.filter(r=>!r.fork && r.name!=='my-phd-website-2').slice(0,10);
-    if(!filtered.length) throw new Error();
-
-    document.getElementById('repoLoading').remove();
-    count=filtered.length;
-    RADIUS=Math.max(380, count*54);
-
-    stage.style.transformOrigin=`50% 50% ${-RADIUS}px`;
-    stage.style.transform='rotateY(0deg)';
-
-    filtered.forEach((repo,i)=>{
-      const theta=i*(360/count);
-      const lang=repo.language||'';
-      const ldClass=lang?`ld-${lang.replace(/[^a-zA-Z]/g,'')}`:'ld-other';
-      const icon=repoIcon(repo.name,repo.description);
-
-      const card=document.createElement('div');
-      card.className='p-card fi';
-      card.style.transform=`rotateY(${-theta}deg) translateZ(${RADIUS}px)`;
-      card.innerHTML=`
-        <div class="p-card-top">
-          <div class="p-card-icon">${icon}</div>
-          ${repo.stargazers_count>0?`<div class="p-stars">★ ${repo.stargazers_count}</div>`:''}
-        </div>
-        <div class="p-name">${repo.name}</div>
-        <div class="p-desc">${repo.description||'No description available.'}</div>
-        <div class="p-footer">
-          ${lang?`<div class="p-lang"><span class="ld ${ldClass}"></span>${lang}</div>`:'<div></div>'}
-          <a href="${repo.html_url}" target="_blank" class="p-link" onclick="event.stopPropagation()">View ↗</a>
-        </div>
-      `;
-      stage.appendChild(card);
-      setTimeout(()=>io.observe(card),60);
-    });
-
-    document.getElementById('carouselCtrls').style.display='flex';
-    initDrag();
-  }catch(e){
-    clearInterval(di);
-    stage.innerHTML=`<div class="repo-error">Could not load repositories. <a href="https://github.com/DolapoSalim?tab=repositories" target="_blank" style="color:var(--accent)">View on GitHub ↗</a></div>`;
-  }
-}
-loadRepos();
-
-/* ─── CONTACT ───────────────────────── */
-document.getElementById('cf').addEventListener('submit',e=>{
-  e.preventDefault();
-  const n=document.getElementById('cn').value;
-  const em=document.getElementById('ce').value;
-  const m=document.getElementById('cm').value;
-  window.location.href=`mailto:dolapo.olatoye@phd.unipi.it?subject=${encodeURIComponent('Message from '+n)}&body=${encodeURIComponent('From: '+n+'\nEmail: '+em+'\n\n'+m)}`;
-  const msg=document.getElementById('cfMsg');
-  msg.textContent='✓ Opening your email client…';
-  msg.style.display='block';
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
