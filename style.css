@@ -150,10 +150,10 @@ section { padding:7rem 0; position:relative }
 /* Profile as blended hero background */
 #hero::before {
   content:''; position:absolute; inset:0; z-index:0;
-  background-image:url('assets/images/profile picture.png');
+  background-image:url('assets/images/hero-bg.png');
   background-size:cover; background-position:center top;
   opacity:var(--hero-img-opacity);
-  filter:blur(2px) grayscale(60%);
+  filter:blur(2px) grayscale(10%);
   transition:opacity var(--t) var(--ease);
 }
 #hero::after {
