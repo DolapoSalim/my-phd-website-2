@@ -54,10 +54,10 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
   let W = 0, H = 0;
 
   function resize(){
-    /* Use the hero section's actual pixel dimensions */
     const hero = document.getElementById('hero');
     W = canvas.width  = hero ? hero.offsetWidth  : window.innerWidth;
     H = canvas.height = hero ? hero.offsetHeight : window.innerHeight;
+    updateRect();
   }
 
   /* ── accent colour — single teal, two shades for dark/light ── */
@@ -70,20 +70,27 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
   /* ── particle shapes: dot, ring, bbox (corner brackets) ── */
   const SHAPES = ['dot','dot','dot','ring','ring','bbox'];
 
-  /* ── mouse: world coords, always current ── */
+  /* ── mouse coords — cached rect so scroll doesn't break coords ── */
   const mouse = { x: -9999, y: -9999, active: false };
+  let canvasRect = { left: 0, top: 0 };
+
+  function updateRect(){
+    canvasRect = canvas.getBoundingClientRect();
+  }
+
+  /* Recompute rect on resize and scroll — NOT on every mousemove */
+  window.addEventListener('resize', updateRect);
+  window.addEventListener('scroll', updateRect, { passive: true });
 
   window.addEventListener('mousemove', e => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
+    mouse.x = e.clientX - canvasRect.left;
+    mouse.y = e.clientY - canvasRect.top;
     mouse.active = true;
   });
   window.addEventListener('touchmove', e => {
     if (!e.touches.length) return;
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.touches[0].clientX - r.left;
-    mouse.y = e.touches[0].clientY - r.top;
+    mouse.x = e.touches[0].clientX - canvasRect.left;
+    mouse.y = e.touches[0].clientY - canvasRect.top;
     mouse.active = true;
   }, { passive: true });
   window.addEventListener('touchend',  () => { mouse.active = false; });
@@ -196,33 +203,33 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
   }
 
   /* ── animation loop ── */
-  const ATTRACT_R = 180;   /* px — radius mouse influences */
-  const ATTRACT_F = 0.06;  /* pull strength (fraction of distance per frame) */
-  const RETURN_F  = 0.018; /* spring back to home */
-  const DAMPING   = 0.90;
+  const ATTRACT_R = 900;    /* px — radius mouse pulls particles */
+  const ATTRACT_F = 1.82;   /* pull strength — strong enough to visibly move */
+  const RETURN_F  = 0.0008; /* spring back to home — much weaker than attraction */
+  const DAMPING   = 0.99;   /* velocity friction each frame */
 
   function frame(){
     ctx.clearRect(0, 0, W, H);
     const c = accentRGB();
 
     for (const p of pts){
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const d  = Math.sqrt(dx * dx + dy * dy);
+      const near = mouse.active && d < ATTRACT_R;
 
-      /* ── 1. Mouse attraction ── */
-      if (mouse.active){
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < ATTRACT_R && d > 1){
-          /* Linear falloff: full pull at cursor, zero at edge of radius */
-          const t = 1 - d / ATTRACT_R;
-          p.vx += (dx / d) * ATTRACT_F * t;
-          p.vy += (dy / d) * ATTRACT_F * t;
-        }
+      /* ── 1. Mouse attraction — only when mouse is close ── */
+      if (near && d > 1){
+        const t = 1 - d / ATTRACT_R;   /* 1 at cursor, 0 at edge */
+        p.vx += (dx / d) * ATTRACT_F * t;
+        p.vy += (dy / d) * ATTRACT_F * t;
       }
 
-      /* ── 2. Spring back toward home (ox,oy) when mouse is away ── */
-      p.vx += (p.ox - p.x) * RETURN_F;
-      p.vy += (p.oy - p.y) * RETURN_F;
+      /* ── 2. Gentle home spring — reduced when mouse is nearby so
+              attraction wins cleanly ── */
+      const springScale = near ? 0.1 : 1.0;
+      p.vx += (p.ox - p.x) * RETURN_F * springScale;
+      p.vy += (p.oy - p.y) * RETURN_F * springScale;
 
       /* ── 3. Dampen + integrate ── */
       p.vx *= DAMPING;
@@ -231,7 +238,7 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
       p.y  += p.vy;
       p.angle += p.spin;
 
-      /* ── 4. If wrapped, reset home to new position ── */
+      /* ── 4. Soft edge wrap — reset home on wrap ── */
       const pad = p.size + 4;
       if (p.x < -pad)    { p.x = W + pad; p.ox = p.x; }
       if (p.x > W + pad) { p.x = -pad;    p.ox = p.x; }
@@ -250,6 +257,7 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
 
   /* Start — init must run first so W/H are set before spawning */
   init();
+  updateRect();   /* cache canvas position before first mousemove */
   requestAnimationFrame(frame);
 })();
 
