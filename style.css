@@ -45,7 +45,7 @@
 html { scroll-behavior:smooth }
 body {
   font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:18px;
+  font-size:19px;
   background:var(--bg);
   color:var(--text);
   line-height:1.72;
@@ -116,11 +116,11 @@ section { padding:7rem 0; position:relative }
 .sec-label::before { content:''; display:block; width:18px; height:1.5px; background:var(--accent) }
 .sec-title {
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.3rem,4.5vw,3.6rem);
+  font-size:clamp(2.4rem,4vw,3.2rem);
   font-weight:700; color:var(--text); line-height:1.1;
   margin-bottom:1rem; letter-spacing:-0.02em;
 }
-.sec-sub { color:var(--text2); font-size:1.05rem; max-width:540px; margin-bottom:3.5rem; line-height:1.75 }
+.sec-sub { color:var(--text2); font-size:1.1rem; max-width:540px; margin-bottom:3.5rem; line-height:1.78 }
 
 /* ════════════════════════════════════════
    BUTTONS
@@ -164,10 +164,15 @@ section { padding:7rem 0; position:relative }
   background:linear-gradient(105deg, var(--bg) 42%, rgba(242,246,245,0.78) 72%, rgba(242,246,245,0.48) 100%);
 }
 
-/* Marine canvas — above bg, pointer-events needed for mouse flee */
+/* Particle canvas — fills hero, sits above bg layer, below text */
 #marine-canvas {
-  position:absolute; inset:0; z-index:2;
-  cursor:default;
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  display:block;
+  z-index:2;
+  pointer-events:none;
 }
 
 .hero-wrap {
@@ -190,7 +195,7 @@ section { padding:7rem 0; position:relative }
 }
 .hero-name {
   font-family:'Playfair Display',serif;
-  font-size:clamp(3.2rem,7.5vw,6rem);
+  font-size:clamp(3.2rem,7vw,5.6rem);
   font-weight:700; line-height:1.0; color:var(--text);
   margin-bottom:0.6rem; letter-spacing:-0.02em;
 }
@@ -248,7 +253,7 @@ section { padding:7rem 0; position:relative }
 ════════════════════════════════════════ */
 #about { background:var(--bg1) }
 .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start }
-.about-text p { font-size:1.05rem; color:var(--text2); line-height:1.88; margin-bottom:1.35rem }
+.about-text p { font-size:1.08rem; color:var(--text2); line-height:1.88; margin-bottom:1.35rem }
 .about-text p strong { color:var(--text); font-weight:700 }
 .about-text p b { color:var(--accent); font-weight:700 }
 .about-actions { margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap }
@@ -292,10 +297,10 @@ section { padding:7rem 0; position:relative }
 #cv-demo { background:var(--bg) }
 .demo-grid { display:grid; grid-template-columns:1fr 1.35fr; gap:4rem; align-items:center }
 .demo-text h3 {
-  font-family:'Playfair Display',serif; font-size:2.1rem; font-weight:700;
+  font-family:'Playfair Display',serif; font-size:clamp(2.4rem,4vw,3.2rem); font-weight:700;
   color:var(--text); margin-bottom:1rem; line-height:1.2;
 }
-.demo-text p { font-size:1.05rem; color:var(--text2); line-height:1.85; margin-bottom:1rem }
+.demo-text p { font-size:1.08rem; color:var(--text2); line-height:1.85; margin-bottom:1rem }
 .demo-text p strong { color:var(--text); font-weight:600 }
 .demo-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.3rem }
 .demo-tag {
@@ -346,7 +351,7 @@ section { padding:7rem 0; position:relative }
 }
 .tl-year { font-size:0.74rem; font-weight:700; letter-spacing:0.1em; color:var(--accent); text-transform:uppercase; margin-bottom:0.35rem }
 .tl-degree {
-  font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:600;
+  font-family:'Playfair Display',serif; font-size:1.65rem; font-weight:600;
   color:var(--text); line-height:1.25; margin-bottom:0.2rem;
 }
 .tl-inst { font-size:1rem; color:var(--text2); margin-bottom:0.5rem }
@@ -390,8 +395,8 @@ section { padding:7rem 0; position:relative }
 .pub:hover { border-color:var(--border2); transform:translateY(-2px); box-shadow:var(--shadow) }
 .pub-year { font-size:0.74rem; font-weight:700; letter-spacing:0.06em; color:var(--accent); padding-top:0.15rem; white-space:nowrap }
 .pub-type { font-size:0.68rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); margin-bottom:0.4rem }
-.pub-title { font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:0.4rem; line-height:1.5 }
-.pub-authors { font-size:0.9rem; color:var(--text3); margin-bottom:0.3rem; line-height:1.65 }
+.pub-title { font-size:1.08rem; font-weight:600; color:var(--text); margin-bottom:0.4rem; line-height:1.5 }
+.pub-authors { font-size:0.95rem; color:var(--text3); margin-bottom:0.3rem; line-height:1.65 }
 .pub-authors em { color:var(--accent); font-style:normal; font-weight:600 }
 .pub-journal { font-size:0.9rem; color:var(--text2); font-style:italic; margin-bottom:0.9rem }
 .pub-doi {
@@ -419,8 +424,8 @@ section { padding:7rem 0; position:relative }
 .proj-item:hover { border-color:var(--border2); transform:translateY(-2px); box-shadow:var(--shadow) }
 .proj-year { font-size:1.3rem; padding-top:0.05rem; line-height:1 }
 .proj-type { font-size:0.68rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); margin-bottom:0.35rem }
-.proj-title { font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:0.4rem }
-.proj-desc { font-size:0.92rem; color:var(--text2); line-height:1.72; margin-bottom:0.7rem }
+.proj-title { font-size:1.08rem; font-weight:600; color:var(--text); margin-bottom:0.4rem }
+.proj-desc { font-size:0.97rem; color:var(--text2); line-height:1.72; margin-bottom:0.7rem }
 .proj-meta { display:flex; align-items:center; gap:1rem; flex-wrap:wrap }
 .proj-lang { font-size:0.76rem; font-weight:500; color:var(--text3); display:flex; align-items:center; gap:0.35rem }
 .proj-stars { font-size:0.76rem; font-weight:500; color:var(--gold) }
@@ -455,8 +460,8 @@ section { padding:7rem 0; position:relative }
 .news-item.vis { opacity:1; transform:none }
 .news-item:hover { background:var(--surface2) }
 .news-date { font-size:0.74rem; font-weight:700; letter-spacing:0.08em; color:var(--accent); padding-top:0.22rem }
-.news-title { font-size:1.02rem; font-weight:600; color:var(--text); margin-bottom:0.3rem; line-height:1.45 }
-.news-body { font-size:0.92rem; color:var(--text2); line-height:1.7 }
+.news-title { font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:0.3rem; line-height:1.45 }
+.news-body { font-size:0.97rem; color:var(--text2); line-height:1.7 }
 .news-arrow { font-size:0.9rem; color:var(--text3); padding-top:0.22rem; transition:color var(--t) var(--ease), transform var(--t) var(--ease) }
 .news-item:hover .news-arrow { color:var(--accent); transform:translateX(3px) }
 
@@ -465,7 +470,7 @@ section { padding:7rem 0; position:relative }
 ════════════════════════════════════════ */
 #contact { background:var(--bg) }
 .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start }
-.c-info p { font-size:1.05rem; color:var(--text2); line-height:1.88; margin-bottom:2rem }
+.c-info p { font-size:1.08rem; color:var(--text2); line-height:1.88; margin-bottom:2rem }
 .socials { display:flex; flex-direction:column; gap:0.65rem }
 .soc {
   display:flex; align-items:center; gap:1rem; font-size:0.95rem; font-weight:500;
