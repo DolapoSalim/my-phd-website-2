@@ -333,7 +333,7 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
     const m=document.getElementById('cm').value;
     window.location.href=`mailto:dolapo.olatoye@phd.unipi.it?subject=${encodeURIComponent('Message from '+n)}&body=${encodeURIComponent('From: '+n+'\nEmail: '+em+'\n\n'+m)}`;
     const fb=document.getElementById('cfMsg');
-    fb.textContent='✓ Opening your email client…';
+    fb.textContent='Opening your email client…';
     fb.style.display='block';
   });
 })();
