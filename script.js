@@ -264,14 +264,13 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
 /* PROJECTS LIST */
 (function initProjects(){
   const PROJECTS=[
-    {name:'Filadentification',year:'2024',desc:'AI-powered species identification pipeline for marine organisms. Combines image classification models with taxonomic matching for rapid field identification.',tags:['Python','YOLO','Computer Vision'],icon:'🔬',url:'https://github.com/DolapoSalim'},
-    {name:'EcoQuad',year:'2024',desc:'Quadrat-based ecological survey tool with automated species counting via computer vision. Designed for benthic monitoring and streamlining field data collection.',tags:['Python','OpenCV','Ecology'],icon:'🌿',url:'https://github.com/DolapoSalim'},
-    {name:'YOLO-label-Converter',year:'2023',desc:'Converts annotation formats (COCO, Pascal VOC, CSV) to YOLO-compatible labels. Supports batch processing and custom class remapping for detection training pipelines.',tags:['Python','Annotation','YOLO'],icon:'⚙',url:'https://github.com/DolapoSalim'},
-    {name:'Voting-Ensemble-Model',year:'2024',desc:'Hard and soft voting ensemble framework combining multiple classifiers. Improves species prediction accuracy and robustness on imbalanced marine biodiversity datasets.',tags:['Python','Machine Learning','Ensemble'],icon:'🤖',url:'https://github.com/DolapoSalim'},
-    {name:'Hierarchical-Clustering-Dendrogram',year:'2023',desc:'R-based hierarchical clustering and dendrogram visualisation for ecological community analysis, biodiversity grouping, and habitat similarity studies.',tags:['R','Statistics','Ecology'],icon:'📊',url:'https://github.com/DolapoSalim'},
-    {name:'PyObis',year:'2024',desc:'Python wrapper for the OBIS (Ocean Biodiversity Information System) API. Fetch, filter, and analyse global marine species occurrence data programmatically.',tags:['Python','API','Biodiversity'],icon:'🌊',url:'https://github.com/DolapoSalim'},
-    {name:'SMR-with-Python',year:'2023',desc:'Standard Metabolic Rate analysis pipeline in Python: data ingestion, outlier detection, Q10 temperature coefficient calculation, and automated PDF reporting for respirometry experiments.',tags:['Python','Data Analysis','Physiology'],icon:'📈',url:'https://github.com/DolapoSalim'},
-    {name:'OCR-Analysis-of-ChatGPT-Chat',year:'2024',desc:'OCR pipeline extracting and analysing text from exported ChatGPT conversation screenshots, enabling topic mining, keyword frequency analysis, and AI usage pattern exploration.',tags:['Python','OCR','NLP'],icon:'📝',url:'https://github.com/DolapoSalim'},
+    {name:'EcoQuad',year:'2026',desc:'Quadrat-based ecological survey tool with automated species counting via computer vision. Designed for benthic monitoring and streamlining field data collection.',tags:['Python', 'OpenCV', 'Ecology'],url:'https://github.com/DolapoSalim'},
+    {name:'GraphRAG-MarineMind',year:'2026',desc:'A deterministic Graph-RAG system for interpreting imaging-based ecological variables and environmental monitoring data',tags:['GraphRAG', 'Python', 'Machine Learning'],url:'https://github.com/DolapoSalim'},
+    {name:'YOLO-label-Converter',year:'2025',desc:'Converts annotation formats (COCO, Pascal VOC, CSV) to YOLO-compatible labels. Supports batch processing and custom class remapping for detection training pipelines.',tags:['Python', 'Annotation', 'YOLO'],url:'https://github.com/DolapoSalim'},
+    {name:'Voting-Ensemble-Model',year:'2025',desc:'Hard and soft voting ensemble framework combining multiple classifiers. Improves species prediction accuracy and robustness on imbalanced marine biodiversity datasets.',tags:['Python', 'Machine Learning', 'Ensemble'],url:'https://github.com/DolapoSalim'},
+    {name:'Hierarchical-Clustering-Dendrogram',year:'2024',desc:'R-based hierarchical clustering and dendrogram visualisation for ecological community analysis, biodiversity grouping, and habitat similarity studies.',tags:['R', 'Statistics', 'Ecology'],url:'https://github.com/DolapoSalim'},
+    {name:'PyObis',year:'2025',desc:'Python wrapper for the OBIS (Ocean Biodiversity Information System) API. Fetch, filter, and analyse global marine species occurrence data programmatically.',tags:['Python', 'API', 'Biodiversity'],url:'https://github.com/DolapoSalim'},
+    {name:'OCR-Analysis-of-ChatGPT-Chat',year:'2024',desc:'OCR pipeline extracting and analysing text from exported ChatGPT conversation screenshots, enabling topic mining, keyword frequency analysis, and AI usage pattern exploration.',tags:['Python', 'OCR', 'NLP'],url:'https://github.com/DolapoSalim'},
   ];
 
   const list=document.getElementById('projectsList');
@@ -284,9 +283,9 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
     item.innerHTML=`
       <div class="proj-year">${proj.year}</div>
       <div class="proj-body">
-        <div class="proj-title"><span class="proj-icon">${proj.icon}</span>${proj.name}</div>
+        <div class="proj-title"><span class="proj-icon"></span>${proj.name}</div>
         <div class="proj-desc">${proj.desc}</div>
-        <div class="proj-tags">${proj.tags.map(t=>`<span class="ptag">${t}</span>`).join('')}</div>
+        <div class="proj-tags">${proj.tags.map(t=>`<span class="ptag">•${t} </span>`).join('')}</div>
       </div>
       <a href="${proj.url}" target="_blank" class="proj-link" aria-label="View ${proj.name}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
