@@ -173,6 +173,7 @@ function initCardTilt(scope){
   if (!cards.length) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return; /* tilt/spotlight is a mouse-only nicety — skip on touch */
 
   const MAX_TILT = 5;     /* degrees — kept gentle for a research site */
   const LIFT     = -4;    /* px translateY on hover */
