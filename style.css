@@ -62,6 +62,33 @@ body {
   overflow-x:hidden;
   transition:background var(--t) var(--ease), color var(--t) var(--ease);
 }
+
+/* ── Depth-tint overlay — a fixed full-viewport wash that subtly
+     shifts deeper/darker teal as you scroll down the page, evoking
+     descent through ocean light-zones (epipelagic → aphotic).
+     JS sets --depth (0–1) on <body> as scroll progress; this overlay
+     reads it. Sits behind all content, pointer-events disabled. ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 0%,
+    rgba(42,122,111, calc(var(--depth, 0) * 0.10)) 0%,
+    rgba(6,9,13,     calc(var(--depth, 0) * 0.55)) 100%);
+  transition:background 0.05s linear;
+}
+[data-theme="light"] body::before {
+  background:radial-gradient(ellipse at 50% 0%,
+    rgba(42,122,111, calc(var(--depth, 0) * 0.07)) 0%,
+    rgba(180,210,205, calc(var(--depth, 0) * 0.35)) 100%);
+}
+@media (prefers-reduced-motion:reduce) { body::before { display:none } }
+/* Stack real content above the fixed depth-tint layer.
+   `section` already has position:relative (see base section rule), so it
+   only needs z-index here. `.mob-nav` and `footer` need both, since
+   neither sets position elsewhere. nav is excluded: it already sets
+   position:fixed + z-index:200 on its own. */
+section { z-index:1 }
+.mob-nav, footer { position:relative; z-index:1 }
 ::selection { background:var(--accent); color:var(--bg) }
 a { color:var(--accent); text-decoration:none; transition:color var(--t) var(--ease) }
 a:hover { color:var(--accent-d) }
@@ -227,7 +254,7 @@ section { padding:7rem 0; position:relative }
   font-weight:700; line-height:1.0; color:var(--text);
   margin-bottom:0.6rem; letter-spacing:-0.02em;
 }
-.hero-name em { font-style:italic; color:var(--accent); font-weight:400 }
+.hero-name em { font-style:normal; color:var(--accent); font-weight:400 }
 
 /* ── Hero name: per-letter reveal + shine sweep ── */
 .hero-name .hn-char {
@@ -314,6 +341,19 @@ section { padding:7rem 0; position:relative }
 .about-text p { font-size:1.08rem; color:var(--text2); line-height:1.88; margin-bottom:1.35rem }
 .about-text p strong { color:var(--text); font-weight:700 }
 .about-text p b { color:var(--accent); font-weight:700 }
+
+/* ── "Surfacing" reveal — paragraphs start dim & blurred (as if seen
+     through deep water) and sharpen continuously as they scroll
+     through the viewport's reading band. Driven by JS setting
+     --surface (0–1) per-paragraph on every scroll tick. ── */
+.about-text p {
+  opacity:calc(0.35 + var(--surface, 0) * 0.65);
+  filter:blur(calc((1 - var(--surface, 0)) * 3px));
+  transform:translateY(calc((1 - var(--surface, 0)) * 10px));
+}
+@media (prefers-reduced-motion:reduce) {
+  .about-text p { opacity:1; filter:none; transform:none }
+}
 .about-actions { margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap }
 .stats-block {
   display:grid; grid-template-columns:1fr 1fr; gap:1px;
@@ -404,6 +444,24 @@ section { padding:7rem 0; position:relative }
   content:''; position:absolute; left:0; top:0.5rem; bottom:0;
   width:1.5px; background:linear-gradient(to bottom, var(--accent), transparent);
 }
+/* ── "dive gauge" — fills in as you scroll through the timeline,
+     a depth-tracking line with a small glowing tip, set via JS
+     updating --dive-progress (0–1) on .tl ── */
+.tl-progress {
+  position:absolute; left:0; top:0.5rem; width:1.5px;
+  height:calc(var(--dive-progress, 0) * 100%);
+  background:var(--gold);
+  box-shadow:0 0 8px 1px rgba(201,170,110,0.55);
+  transition:height 0.05s linear;
+  pointer-events:none;
+}
+.tl-progress::after {
+  content:''; position:absolute; left:50%; bottom:0; transform:translate(-50%,50%);
+  width:7px; height:7px; border-radius:50%;
+  background:var(--gold); box-shadow:0 0 10px 2px rgba(201,170,110,0.6);
+  opacity:var(--dive-progress, 0);
+}
+@media (prefers-reduced-motion:reduce) { .tl-progress { display:none } }
 .tl-item {
   position:relative; padding-bottom:3.4rem;
   opacity:0; transform:translateX(-14px);

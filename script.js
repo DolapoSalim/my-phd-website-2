@@ -209,26 +209,25 @@ function initCardTilt(scope){
 initCardTilt();
 
 /* ═══════════════════════════════════════════════════════
-   MARINE PARTICLE PHYSICS  (Canvas 2D)
-   Fish, bubbles, and plankton float with buoyancy.
-   Mouse causes repulsion — like Anti-Gravity but marine.
-   Particles are drawn on a canvas behind the hero text.
-═══════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════
-   CV-THEMED PARTICLE SYSTEM
-   ───────────────────────────────────────────────────────────
-   Geometric particles in the site's single accent colour:
-   dots, rings, and corner-bracket "bounding-box" shapes —
-   the visual language of computer vision annotation.
+   MARINE FIELD  (Canvas 2D)
+   ───────────────────────────────────────────────────────
+   A small school of procedurally-drawn fish swims with
+   light boids behaviour (separation / alignment / cohesion),
+   bubbles rise with a buoyant wobble, and fine plankton dust
+   drifts in the background. A few CV-style bounding boxes
+   sparsely "track" a nearby fish — a nod to the detection
+   work, kept secondary to the marine motif.
 
-   Particles drift slowly. On mouse/touch move they ATTRACT
-   toward the cursor (like Antigravity), then slowly drift
-   back. All drawn in one muted teal tone — no colours.
-═══════════════════════════════════════════════════════════ */
+   On cursor approach, fish startle and scatter outward
+   (a real shoaling response) rather than being attracted —
+   then drift back into loose schooling once the cursor moves
+   away. Everything renders in the site's single accent hue.
+═══════════════════════════════════════════════════════ */
 (function initParticles(){
   const canvas = document.getElementById('marine-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── sizing ── */
   let W = 0, H = 0;
@@ -247,18 +246,13 @@ initCardTilt();
       : '168,197,190';  /* muted teal-white for dark bg */
   }
 
-  /* ── particle shapes: dot, ring, bbox (corner brackets) ── */
-  const SHAPES = ['dot','dot','dot','ring','ring','bbox'];
-
   /* ── mouse coords — cached rect so scroll doesn't break coords ── */
   const mouse = { x: -9999, y: -9999, active: false };
   let canvasRect = { left: 0, top: 0 };
 
-  function updateRect(){
-    canvasRect = canvas.getBoundingClientRect();
-  }
+  function updateRect(){ canvasRect = canvas.getBoundingClientRect(); }
 
-  /* Recompute rect on resize and scroll — NOT on every mousemove */
+  window.addEventListener('resize', () => { resize(); });
   window.addEventListener('resize', updateRect);
   window.addEventListener('scroll', updateRect, { passive: true });
 
@@ -273,171 +267,252 @@ initCardTilt();
     mouse.y = e.touches[0].clientY - canvasRect.top;
     mouse.active = true;
   }, { passive: true });
-  window.addEventListener('touchend',  () => { mouse.active = false; });
+  window.addEventListener('touchend', () => { mouse.active = false; });
   document.addEventListener('mouseleave', () => { mouse.active = false; });
 
-  /* ── particle factory ── */
-  function make(){
-    const shape = SHAPES[Math.floor(Math.random() * SHAPES.length)];
-    const size  = shape === 'bbox'
-      ? 18 + Math.random() * 28
-      : shape === 'ring'
-        ? 4  + Math.random() * 8
-        : 2  + Math.random() * 3;
-    const x = Math.random() * W;
-    const y = Math.random() * H;
+  /* ── FISH ── boids-lite: separation + alignment + cohesion ── */
+  const FISH_COUNT = reduced ? 0 : 9;
+  const fish = [];
+
+  function makeFish(){
+    const x = Math.random() * W, y = Math.random() * H;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 0.35 + Math.random() * 0.25;
     return {
-      x,  y,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      ox: x,   /* ← home X = spawn X, NOT 0 */
-      oy: y,   /* ← home Y = spawn Y, NOT 0 */
-      shape, size,
-      alpha: 0.18 + Math.random() * 0.38,
-      angle: Math.random() * Math.PI * 2,
-      spin:  (Math.random() - 0.5) * 0.003,
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      len: 9 + Math.random() * 7,        /* body length, px */
+      wob: Math.random() * Math.PI * 2,  /* swim-undulation phase */
+      alpha: 0.4 + Math.random() * 0.3,
+      scatter: 0                          /* 0–1, startle intensity */
     };
   }
 
-  /* ── init particles after we know W and H ── */
-  const COUNT = 65;
-  const pts   = [];
-
-  function init(){
-    resize();
-    pts.length = 0;
-    for (let i = 0; i < COUNT; i++) pts.push(make());
+  function initFish(){
+    fish.length = 0;
+    for (let i = 0; i < FISH_COUNT; i++) fish.push(makeFish());
   }
 
-  window.addEventListener('resize', () => { resize(); });
+  function stepFish(t){
+    const VIEW = 70;      /* px — radius fish react to neighbours within */
+    const SEP_R = 26;     /* px — personal space before separation kicks in */
+    const MAX_SPD = 0.9;
+    const STARTLE_R = 110; /* px — cursor radius that triggers a startle */
 
-  /* ── draw helpers ── */
-  function drawDot(p, c){
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${c},${p.alpha})`;
-    ctx.fill();
+    fish.forEach(f=>{
+      let sepX=0, sepY=0, aliX=0, aliY=0, cohX=0, cohY=0, n=0;
+      fish.forEach(o=>{
+        if (o===f) return;
+        const dx=f.x-o.x, dy=f.y-o.y, d=Math.hypot(dx,dy);
+        if (d < VIEW && d > 0.001){
+          n++;
+          aliX += o.vx; aliY += o.vy;
+          cohX += o.x;  cohY += o.y;
+          if (d < SEP_R){ sepX += dx/d; sepY += dy/d; }
+        }
+      });
+      if (n>0){
+        aliX/=n; aliY/=n; cohX = cohX/n - f.x; cohY = cohY/n - f.y;
+        f.vx += aliX*0.012 + cohX*0.0006 + sepX*0.05;
+        f.vy += aliY*0.012 + cohY*0.0006 + sepY*0.05;
+      }
+
+      /* startle: scatter away from the cursor, then relax back */
+      const mdx = f.x - mouse.x, mdy = f.y - mouse.y, mdist = Math.hypot(mdx,mdy);
+      if (mouse.active && mdist < STARTLE_R && mdist > 0.001){
+        const k = (1 - mdist/STARTLE_R);
+        f.vx += (mdx/mdist) * k * 1.1;
+        f.vy += (mdy/mdist) * k * 1.1;
+        f.scatter = Math.min(1, f.scatter + k*0.4);
+      } else {
+        f.scatter *= 0.96;
+      }
+
+      /* swim undulation — tiny lateral wobble perpendicular to heading */
+      f.wob += 0.12 + f.scatter*0.15;
+      const heading = Math.atan2(f.vy, f.vx);
+      const wobAmt = Math.sin(f.wob) * 0.18;
+      f.vx += Math.cos(heading + Math.PI/2) * wobAmt * 0.05;
+      f.vy += Math.sin(heading + Math.PI/2) * wobAmt * 0.05;
+
+      /* speed clamp + gentle base cruise so fish never fully stop */
+      const spd = Math.hypot(f.vx,f.vy) || 0.001;
+      const target = Math.min(MAX_SPD, Math.max(0.28, spd));
+      f.vx = (f.vx/spd) * target;
+      f.vy = (f.vy/spd) * target;
+
+      f.x += f.vx; f.y += f.vy;
+
+      /* soft wrap with margin, so fish "swim back in" rather than vanish */
+      const m = 24;
+      if (f.x < -m) f.x = W + m; if (f.x > W + m) f.x = -m;
+      if (f.y < -m) f.y = H + m; if (f.y > H + m) f.y = -m;
+    });
   }
 
-  function drawRing(p, c){
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(${c},${p.alpha})`;
-    ctx.lineWidth   = 1;
-    ctx.stroke();
-    /* tiny centre dot */
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${c},${p.alpha * 0.7})`;
-    ctx.fill();
-  }
-
-  function drawBbox(p, c){
-    /* corner-bracket "bounding box" — the CV annotation symbol */
-    const s  = p.size;        /* half-size of the box */
-    const arm = s * 0.38;     /* length of each bracket arm */
-    const lw  = 1.2;
+  function drawFish(f, c){
+    const heading = Math.atan2(f.vy, f.vx);
     ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.angle);
-    ctx.strokeStyle = `rgba(${c},${p.alpha})`;
-    ctx.lineWidth   = lw;
+    ctx.translate(f.x, f.y);
+    ctx.rotate(heading);
+    ctx.globalAlpha = f.alpha;
+    ctx.fillStyle = `rgb(${c})`;
+    const L = f.len, Wd = L*0.42;
+    /* body: simple tapered ellipse via bezier */
     ctx.beginPath();
-    /* top-left */
-    ctx.moveTo(-s + arm, -s);  ctx.lineTo(-s, -s); ctx.lineTo(-s, -s + arm);
-    /* top-right */
-    ctx.moveTo( s - arm, -s);  ctx.lineTo( s, -s); ctx.lineTo( s, -s + arm);
-    /* bottom-right */
-    ctx.moveTo( s - arm,  s);  ctx.lineTo( s,  s); ctx.lineTo( s,  s - arm);
-    /* bottom-left */
-    ctx.moveTo(-s + arm,  s);  ctx.lineTo(-s,  s); ctx.lineTo(-s,  s - arm);
-    ctx.stroke();
-    /* subtle cross-hair centre */
-    ctx.globalAlpha = p.alpha * 0.35;
+    ctx.moveTo(L*0.55, 0);
+    ctx.quadraticCurveTo(L*0.15, -Wd,  -L*0.5, -Wd*0.35);
+    ctx.quadraticCurveTo(L*0.15,  Wd,   L*0.55, 0);
+    ctx.fill();
+    /* tail fin */
+    const tailWag = Math.sin(f.wob*1.6) * Wd*0.32;
     ctx.beginPath();
-    ctx.moveTo(-4, 0); ctx.lineTo(4, 0);
-    ctx.moveTo(0, -4); ctx.lineTo(0, 4);
-    ctx.stroke();
+    ctx.moveTo(-L*0.48, 0);
+    ctx.lineTo(-L*0.82, -Wd*0.5 + tailWag);
+    ctx.lineTo(-L*0.82,  Wd*0.5 + tailWag);
+    ctx.closePath();
+    ctx.fill();
     ctx.restore();
   }
 
-  /* ── draw connecting lines between nearby particles ── */
-  function drawConnections(c){
-    const LINK_DIST = 90;
-    ctx.lineWidth = 0.4;
-    for (let i = 0; i < pts.length; i++){
-      for (let j = i + 1; j < pts.length; j++){
-        const dx = pts[i].x - pts[j].x;
-        const dy = pts[i].y - pts[j].y;
-        const d  = Math.sqrt(dx*dx + dy*dy);
-        if (d < LINK_DIST){
-          const a = (1 - d / LINK_DIST) * 0.12;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(${c},${a})`;
-          ctx.moveTo(pts[i].x, pts[i].y);
-          ctx.lineTo(pts[j].x, pts[j].y);
-          ctx.stroke();
-        }
-      }
+  /* ── BUBBLES ── rise with buoyant wobble ── */
+  const BUBBLE_COUNT = reduced ? 0 : 16;
+  const bubbles = [];
+
+  function makeBubble(){
+    return {
+      x: Math.random()*W,
+      y: H + Math.random()*60,
+      r: 1.2 + Math.random()*3.2,
+      speed: 0.18 + Math.random()*0.5,
+      wob: Math.random()*Math.PI*2,
+      wobSpeed: 0.01 + Math.random()*0.02,
+      alpha: 0.12 + Math.random()*0.22
+    };
+  }
+  function initBubbles(){
+    bubbles.length = 0;
+    for (let i=0;i<BUBBLE_COUNT;i++){
+      const b = makeBubble();
+      b.y = Math.random()*H; /* scatter initial Y so they don't all start at the bottom */
+      bubbles.push(b);
     }
+  }
+  function stepBubbles(){
+    bubbles.forEach(b=>{
+      b.wob += b.wobSpeed;
+      b.y -= b.speed;
+      b.x += Math.sin(b.wob) * 0.4;
+      if (b.y < -10){ Object.assign(b, makeBubble()); b.y = H + 10; }
+    });
+  }
+  function drawBubble(b, c){
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(${c},${b.alpha})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  /* ── PLANKTON DUST ── slow ambient drift ── */
+  const DUST_COUNT = reduced ? 0 : 36;
+  const dust = [];
+  function makeDust(){
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.06, vy: (Math.random()-0.5)*0.06,
+      r: 0.6 + Math.random()*1.1,
+      alpha: 0.08 + Math.random()*0.16
+    };
+  }
+  function initDust(){
+    dust.length = 0;
+    for (let i=0;i<DUST_COUNT;i++) dust.push(makeDust());
+  }
+  function stepDust(){
+    dust.forEach(d=>{
+      d.x += d.vx; d.y += d.vy;
+      if (d.x<0) d.x=W; if (d.x>W) d.x=0;
+      if (d.y<0) d.y=H; if (d.y>H) d.y=0;
+    });
+  }
+  function drawDust(d, c){
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${c},${d.alpha})`;
+    ctx.fill();
+  }
+
+  /* ── CV BOUNDING BOXES ── sparse, occasionally "locks onto" a fish ── */
+  const BBOX_COUNT = reduced ? 0 : 3;
+  const bboxes = [];
+  function makeBbox(){
+    return { targetIdx: Math.floor(Math.random()*Math.max(1,fish.length)), life: 0, dwell: 90 + Math.random()*120, locked:false };
+  }
+  function initBboxes(){
+    bboxes.length=0;
+    for (let i=0;i<BBOX_COUNT;i++) bboxes.push(makeBbox());
+  }
+  function stepDrawBboxes(c){
+    if (!fish.length) return;
+    bboxes.forEach(b=>{
+      b.life++;
+      if (b.life > b.dwell){
+        b.life = 0; b.dwell = 90 + Math.random()*150;
+        b.targetIdx = Math.floor(Math.random()*fish.length);
+      }
+      const f = fish[b.targetIdx];
+      if (!f) return;
+      const s = f.len * 2.1;
+      const fadeIn = Math.min(1, b.life/20);
+      const fadeOut = Math.min(1, (b.dwell-b.life)/20);
+      const a = 0.22 * Math.min(fadeIn, fadeOut);
+      if (a <= 0.005) return;
+      const arm = s*0.22, lw = 1;
+      ctx.save();
+      ctx.translate(f.x, f.y);
+      ctx.strokeStyle = `rgba(${c},${a})`;
+      ctx.lineWidth = lw;
+      ctx.beginPath();
+      ctx.moveTo(-s+arm,-s); ctx.lineTo(-s,-s); ctx.lineTo(-s,-s+arm);
+      ctx.moveTo( s-arm,-s); ctx.lineTo( s,-s); ctx.lineTo( s,-s+arm);
+      ctx.moveTo( s-arm, s); ctx.lineTo( s, s); ctx.lineTo( s, s-arm);
+      ctx.moveTo(-s+arm, s); ctx.lineTo(-s, s); ctx.lineTo(-s, s-arm);
+      ctx.stroke();
+      ctx.restore();
+    });
   }
 
   /* ── animation loop ── */
-  const ATTRACT_R = 900;    /* px — radius mouse pulls particles */
-  const ATTRACT_F = 1.82;   /* pull strength — strong enough to visibly move */
-  const RETURN_F  = 0.0008; /* spring back to home — much weaker than attraction */
-  const DAMPING   = 0.99;   /* velocity friction each frame */
-
-  function frame(){
-    ctx.clearRect(0, 0, W, H);
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
     const c = accentRGB();
 
-    for (const p of pts){
-      const dx = mouse.x - p.x;
-      const dy = mouse.y - p.y;
-      const d  = Math.sqrt(dx * dx + dy * dy);
-      const near = mouse.active && d < ATTRACT_R;
+    stepDust();  dust.forEach(d=>drawDust(d,c));
+    stepBubbles(); bubbles.forEach(b=>drawBubble(b,c));
+    stepFish(t); fish.forEach(f=>drawFish(f,c));
+    stepDrawBboxes(c);
 
-      /* ── 1. Mouse attraction — only when mouse is close ── */
-      if (near && d > 1){
-        const t = 1 - d / ATTRACT_R;   /* 1 at cursor, 0 at edge */
-        p.vx += (dx / d) * ATTRACT_F * t;
-        p.vy += (dy / d) * ATTRACT_F * t;
-      }
-
-      /* ── 2. Gentle home spring — reduced when mouse is nearby so
-              attraction wins cleanly ── */
-      const springScale = near ? 0.1 : 1.0;
-      p.vx += (p.ox - p.x) * RETURN_F * springScale;
-      p.vy += (p.oy - p.y) * RETURN_F * springScale;
-
-      /* ── 3. Dampen + integrate ── */
-      p.vx *= DAMPING;
-      p.vy *= DAMPING;
-      p.x  += p.vx;
-      p.y  += p.vy;
-      p.angle += p.spin;
-
-      /* ── 4. Soft edge wrap — reset home on wrap ── */
-      const pad = p.size + 4;
-      if (p.x < -pad)    { p.x = W + pad; p.ox = p.x; }
-      if (p.x > W + pad) { p.x = -pad;    p.ox = p.x; }
-      if (p.y < -pad)    { p.y = H + pad; p.oy = p.y; }
-      if (p.y > H + pad) { p.y = -pad;    p.oy = p.y; }
-
-      /* ── 5. Draw ── */
-      if      (p.shape === 'dot')  drawDot(p, c);
-      else if (p.shape === 'ring') drawRing(p, c);
-      else                         drawBbox(p, c);
-    }
-
-    drawConnections(c);
     requestAnimationFrame(frame);
   }
 
-  /* Start — init must run first so W/H are set before spawning */
-  init();
-  updateRect();   /* cache canvas position before first mousemove */
+  function initAll(){
+    resize();
+    initFish();
+    initBubbles();
+    initDust();
+    initBboxes();
+  }
+
+  initAll();
+  updateRect();
+  if (reduced){
+    /* Single static-ish frame for reduced motion — draw once, no rAF loop */
+    const c = accentRGB();
+    dust.forEach(d=>drawDust(d,c));
+    return;
+  }
   requestAnimationFrame(frame);
 })();
 
@@ -776,6 +851,82 @@ initCardTilt();
       });
     })
     .catch(()=>{});
+})();
+
+/* ═══════════════════════════════════════════════════════
+   SCROLL-DRIVEN DEPTH EFFECTS
+   ───────────────────────────────────────────────────────
+   One rAF-throttled scroll listener drives three continuous
+   (not one-shot) effects, all themed around descending
+   through ocean depth as the page scrolls:
+
+   1. Depth-tint  — body::before wash darkens/deepens with
+      overall scroll progress down the page (--depth, 0–1).
+   2. Surfacing   — each .about-text paragraph sharpens from
+      blurred/dim to fully clear as it crosses the reading
+      band of the viewport (--surface per-paragraph, 0–1).
+   3. Dive gauge  — the education timeline's accent line
+      fills in proportionally to scroll progress through that
+      section, like a depth gauge (--dive-progress, 0–1).
+═══════════════════════════════════════════════════════ */
+(function initScrollDepthEffects(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return; /* CSS already provides static fallback values */
+
+  const aboutParas = document.querySelectorAll('.about-text p');
+  const diveTrack   = document.getElementById('diveTimeline');
+  const diveBar     = document.getElementById('diveProgress');
+
+  function clamp01(v){ return Math.max(0, Math.min(1, v)); }
+
+  function update(){
+    const vh = window.innerHeight;
+    const docH = document.documentElement.scrollHeight - vh;
+
+    /* 1. Depth tint — overall page scroll progress, eased so it
+          deepens faster in the back half of the page. */
+    const pageProgress = docH > 0 ? clamp01(window.scrollY / docH) : 0;
+    document.body.style.setProperty('--depth', String(Math.pow(pageProgress, 0.7).toFixed(3)));
+
+    /* 2. Surfacing paragraphs — each one tracks its own position
+          through a "reading band" (roughly the middle 60% of the
+          viewport), independent of the others. */
+    aboutParas.forEach(p=>{
+      const r = p.getBoundingClientRect();
+      const bandTop = vh * 0.85;   /* paragraph starts revealing here */
+      const bandBottom = vh * 0.35; /* fully revealed by here */
+      const center = r.top + r.height/2;
+      let t;
+      if (center >= bandTop) t = 0;
+      else if (center <= bandBottom) t = 1;
+      else t = (bandTop - center) / (bandTop - bandBottom);
+      p.style.setProperty('--surface', t.toFixed(3));
+    });
+
+    /* 3. Dive gauge — fills from 0 to 1 as the timeline section
+          scrolls through the viewport. */
+    if (diveTrack && diveBar){
+      const r = diveTrack.getBoundingClientRect();
+      const start = vh * 0.8;             /* begin filling */
+      const end   = r.height * 0.15;       /* fully filled with a little headroom */
+      let t;
+      const traveled = start - r.top;
+      const total = (r.height) - end + start;
+      t = clamp01(traveled / Math.max(1, total));
+      diveTrack.style.setProperty('--dive-progress', t.toFixed(3));
+    }
+  }
+
+  let ticking = false;
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(()=>{ update(); ticking = false; });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update(); /* run once on load so above-the-fold state is correct immediately */
 })();
 
 /* CONTACT */
