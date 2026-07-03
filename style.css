@@ -20,15 +20,21 @@
   --shadow:   0 8px 56px rgba(0,0,0,0.7);
   --hero-img-opacity: 0.18;
 
-  /* Academic/Archival type system:
-     - serif-display → EB Garamond, for headings/titles (drama, gravitas)
-     - serif-body     → Crimson Text, for reading prose (legible, classic)
-     - sans-ui        → Plus Jakarta Sans, for nav/buttons/uppercase micro-labels
-                         only — small-caps UI text reads more clearly in a sans
-                         than a serif at 11-13px, so this is kept deliberately. */
-  --serif-display: 'EB Garamond', 'Playfair Display', serif;
-  --serif-body:    'Crimson Text', Georgia, serif;
-  --sans-ui:        'Plus Jakarta Sans', sans-serif;
+  /* Type system: Poppins throughout, doing the job a serif/sans pairing
+     used to do via weight contrast instead of a second typeface —
+     ExtraBold/Bold for display headings, Regular/Medium for reading
+     body, SemiBold for compact UI labels. A single complementary
+     font (--mono-accent) is reserved for citation-style data points
+     (DOI / publication years) only, where a monospaced look reads
+     more "archival record" than Poppins would — used sparingly. */
+  --display: 'Poppins', sans-serif;
+  --body:    'Poppins', sans-serif;
+  --sans-ui: 'Poppins', sans-serif;
+  --mono-accent: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Back-compat aliases so existing selectors keep working unchanged */
+  --serif-display: var(--display);
+  --serif-body:    var(--body);
 }
 [data-theme="light"] {
   --bg:       #f2f6f5;
@@ -152,12 +158,11 @@ section { padding:7rem 0; position:relative }
   color:var(--accent); margin-bottom:0.85rem;
   display:flex; align-items:center; gap:0.7rem;
 }
-.sec-label::before { content:''; display:block; width:18px; height:1.5px; background:var(--accent) }
 .sec-title {
-  font-family:var(--serif-display);
+  font-family:var(--display);
   font-size:clamp(2.4rem,4vw,3.2rem);
-  font-weight:700; color:var(--text); line-height:1.1;
-  margin-bottom:1rem; letter-spacing:-0.02em;
+  font-weight:800; color:var(--text); line-height:1.1;
+  margin-bottom:1rem; letter-spacing:-0.03em;
   perspective:600px;
 }
 .sec-sub { color:var(--text2); font-size:1.1rem; max-width:540px; margin-bottom:3.5rem; line-height:1.78 }
@@ -201,6 +206,39 @@ section { padding:7rem 0; position:relative }
 #hero {
   min-height:100vh; display:flex; align-items:center;
   padding-top:62px; overflow:hidden; position:relative;
+  cursor:none;
+}
+
+/* ── Fish cursor — replaces the system pointer while inside #hero.
+     JS lerps its position toward the real cursor each frame and
+     rotates it to face the direction of travel, so it reads as
+     "swimming" rather than just sliding. Hidden on touch devices,
+     where there's no persistent pointer to replace. ── */
+#fish-cursor {
+  position:fixed; top:0; left:0; z-index:50;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  transition:opacity 0.25s var(--ease);
+  will-change:transform;
+}
+#fish-cursor.fc-active { opacity:1 }
+#fish-cursor svg { display:block; overflow:visible }
+.fc-body, .fc-tail {
+  fill:rgb(168,197,190);
+  transition:fill 0.25s var(--ease);
+}
+[data-theme="light"] .fc-body, [data-theme="light"] .fc-tail { fill:rgb(42,122,111) }
+.fc-eye { fill:var(--bg) }
+#fish-cursor.fc-hover .fc-body,
+#fish-cursor.fc-hover .fc-tail { fill:var(--gold) }
+@media (hover:none), (pointer:coarse) {
+  #hero { cursor:auto }
+  #fish-cursor { display:none }
+}
+@media (prefers-reduced-motion:reduce) {
+  #hero { cursor:auto }
+  #fish-cursor { display:none }
 }
 /* Profile as blended hero background */
 #hero::before {
@@ -249,10 +287,10 @@ section { padding:7rem 0; position:relative }
   50%      { box-shadow:0 0 0 8px rgba(168,197,190,0) }
 }
 .hero-name {
-  font-family:var(--serif-display);
+  font-family:var(--display);
   font-size:clamp(3.2rem,7vw,5.6rem);
-  font-weight:700; line-height:1.0; color:var(--text);
-  margin-bottom:0.6rem; letter-spacing:-0.02em;
+  font-weight:800; line-height:1.0; color:var(--text);
+  margin-bottom:0.6rem; letter-spacing:-0.03em;
 }
 .hero-name em { font-style:normal; color:var(--accent); font-weight:400 }
 
@@ -355,20 +393,8 @@ section { padding:7rem 0; position:relative }
   .about-text p { opacity:1; filter:none; transform:none }
 }
 .about-actions { margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap }
-.stats-block {
-  display:grid; grid-template-columns:1fr 1fr; gap:1px;
-  background:var(--border); border:1px solid var(--border);
-  border-radius:12px; overflow:hidden;
-}
-.stat { background:var(--surface); padding:1.7rem; transition:background var(--t) var(--ease) }
-.stat:hover { background:var(--surface2) }
-.stat-n {
-  font-family:var(--serif-display);
-  font-size:3.4rem; font-weight:700; line-height:1; color:var(--accent); letter-spacing:-0.03em;
-}
-.stat-l { font-size:0.75rem; font-weight:600; letter-spacing:0.1em; font-family:var(--sans-ui); text-transform:uppercase; color:var(--text3); margin-top:0.35rem }
 .award-block {
-  margin-top:1.5rem; background:var(--surface); border:1px solid var(--border);
+  margin-top:0; background:var(--surface); border:1px solid var(--border);
   border-left:3px solid var(--gold); border-radius:0 10px 10px 0; padding:1.3rem 1.5rem;
 }
 .award-label { font-size:0.68rem; font-weight:700; letter-spacing:0.12em; font-family:var(--sans-ui); text-transform:uppercase; color:var(--gold); margin-bottom:0.6rem }
@@ -473,7 +499,7 @@ section { padding:7rem 0; position:relative }
   width:10px; height:10px; background:var(--bg1);
   border:2px solid var(--accent); border-radius:50%;
 }
-.tl-year { font-size:0.74rem; font-weight:700; letter-spacing:0.1em; color:var(--accent); font-family:var(--sans-ui); text-transform:uppercase; margin-bottom:0.35rem }
+.tl-year { font-family:var(--mono-accent); font-size:0.72rem; font-weight:500; letter-spacing:0.04em; color:var(--accent); text-transform:uppercase; margin-bottom:0.35rem }
 .tl-degree {
   font-family:var(--serif-display); font-size:1.65rem; font-weight:600;
   color:var(--text); line-height:1.25; margin-bottom:0.2rem;
@@ -529,38 +555,51 @@ section { padding:7rem 0; position:relative }
 .pub:hover { border-color:var(--border2); box-shadow:var(--shadow) }
 .pub:hover::before { opacity:1 }
 .pub > * { position:relative; z-index:1 }
-.pub-year { font-size:0.74rem; font-weight:700; letter-spacing:0.06em; color:var(--accent); padding-top:0.15rem; white-space:nowrap }
+.pub-year { font-family:var(--mono-accent); font-size:0.74rem; font-weight:500; letter-spacing:0.04em; color:var(--accent); padding-top:0.15rem; white-space:nowrap }
 .pub-type { font-size:0.68rem; font-weight:700; letter-spacing:0.12em; font-family:var(--sans-ui); text-transform:uppercase; color:var(--text3); margin-bottom:0.4rem }
 .pub-title { font-size:1.08rem; font-weight:600; color:var(--text); margin-bottom:0.4rem; line-height:1.5 }
 .pub-authors { font-size:0.95rem; color:var(--text3); margin-bottom:0.3rem; line-height:1.65 }
 .pub-authors em { color:var(--accent); font-style:normal; font-weight:600 }
 .pub-journal { font-size:0.9rem; color:var(--text2); font-style:italic; margin-bottom:0.9rem }
 .pub-doi {
-  font-family:var(--sans-ui);
+  font-family:var(--mono-accent);
   display:inline-flex; align-items:center; gap:0.4rem;
-  font-size:0.76rem; font-weight:600; color:var(--text2);
+  font-size:0.74rem; font-weight:500; color:var(--text2);
   border:1px solid var(--border); padding:0.3rem 0.75rem; border-radius:100px;
   transition:all var(--t) var(--ease); background:var(--surface);
 }
 .pub-doi:hover { border-color:var(--accent); color:var(--accent) }
 
 /* ════════════════════════════════════════
-   PROJECTS  — list like publications
+   PROJECTS  — ScrollStack: cards pin and stack
+   as you scroll, each shrinking/blurring slightly
+   beneath the next (ported from React Bits'
+   ScrollStack, driven by native window scroll
+   instead of Lenis — see initScrollStack in JS).
 ════════════════════════════════════════ */
 #projects { background:var(--bg) }
-.proj-list { display:flex; flex-direction:column; gap:1.1rem }
+.scroll-stack-inner { position:relative; padding-bottom:36rem }
+.scroll-stack-end { width:100%; height:1px }
 .proj-item {
   background:var(--surface); border:1px solid var(--border); border-radius:10px;
   padding:1.6rem 1.9rem;
   display:grid; grid-template-columns:2.5rem 1fr auto;
   gap:0 1.4rem; align-items:start;
-  transition:border-color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform 0.4s var(--ease);
+  transition:border-color var(--t) var(--ease), box-shadow var(--t) var(--ease),
+             opacity 0.6s var(--ease); /* transform intentionally excluded: ScrollStack drives it frame-by-frame */
   opacity:0; transform:translateY(12px);
   position:relative; overflow:hidden;
   --mx:50%; --my:50%;
-  will-change:transform;
+  margin-bottom:1.4rem;
+  transform-origin:top center;
+  will-change:transform, filter;
+  backface-visibility:hidden;
 }
+.proj-item:last-child { margin-bottom:0 }
 .proj-item.vis { opacity:1; transform:none }
+@media (prefers-reduced-motion:reduce) {
+  .proj-item { transform:none !important; filter:none !important }
+}
 .proj-item::before {
   content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
   background:radial-gradient(circle at var(--mx) var(--my), rgba(168,197,190,0.13), transparent 72%);
@@ -592,22 +631,31 @@ section { padding:7rem 0; position:relative }
 ════════════════════════════════════════ */
 #news { background:var(--bg1) }
 .news-list {
-  display:flex; flex-direction:column;
-  border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  display:flex; flex-direction:column; gap:0.9rem;
 }
 .news-item {
-  background:var(--surface); border-bottom:1px solid var(--border);
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
   padding:1.5rem 2rem;
   display:grid; grid-template-columns:110px 1fr auto;
   gap:0 1.5rem; align-items:start;
-  transition:background var(--t) var(--ease);
-  opacity:0; transform:translateY(8px);
+  transition:border-color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform 0.4s var(--ease);
+  opacity:0; transform:translateY(12px);
   text-decoration:none; color:inherit;
+  position:relative; overflow:hidden;
+  --mx:50%; --my:50%;
+  will-change:transform;
 }
-.news-item:last-child { border-bottom:none }
 .news-item.vis { opacity:1; transform:none }
-.news-item:hover { background:var(--surface2) }
-.news-date { font-size:0.74rem; font-weight:700; letter-spacing:0.08em; color:var(--accent); padding-top:0.22rem }
+.news-item::before {
+  content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(circle at var(--mx) var(--my), rgba(168,197,190,0.13), transparent 72%);
+  opacity:0; transition:opacity 0.45s var(--ease);
+}
+[data-theme="light"] .news-item::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(42,122,111,0.10), transparent 72%) }
+.news-item:hover { border-color:var(--border2); box-shadow:var(--shadow) }
+.news-item:hover::before { opacity:1 }
+.news-item > * { position:relative; z-index:1 }
+.news-date { font-family:var(--mono-accent); font-size:0.74rem; font-weight:500; letter-spacing:0.02em; color:var(--accent); padding-top:0.22rem }
 .news-title { font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:0.3rem; line-height:1.45 }
 .news-body { font-size:0.97rem; color:var(--text2); line-height:1.7 }
 .news-arrow { font-size:0.9rem; color:var(--text3); padding-top:0.22rem; transition:color var(--t) var(--ease), transform var(--t) var(--ease) }
@@ -697,7 +745,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.4re
   body { font-size:16px }
   .hero-ctas { flex-direction:column }
   .btn { width:100%; justify-content:center }
-  .stats-block { grid-template-columns:1fr 1fr }
   .container { padding:0 1.2rem }
   .hero-profile-mobile .profile-img-wrap { width:130px; height:163px }
 }

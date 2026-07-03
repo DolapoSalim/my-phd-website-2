@@ -169,7 +169,10 @@ document.querySelectorAll('.fi,.tl-item,.pub,.news-item,.proj-item').forEach(el=
 ═══════════════════════════════════════════════════════ */
 function initCardTilt(scope){
   const root = scope || document;
-  const cards = root.querySelectorAll('.pub, .proj-item');
+  /* proj-item is excluded: it now uses ScrollStack's own scroll-driven
+     transform (see initScrollStack), and a competing hover-tilt would
+     fight over the same inline style.transform property. */
+  const cards = root.querySelectorAll('.pub, .news-item');
   if (!cards.length) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
@@ -517,6 +520,82 @@ initCardTilt();
 })();
 
 /* ═══════════════════════════════════════════════════════
+   FISH CURSOR
+   ───────────────────────────────────────────────────────
+   Replaces the system pointer with a small swimming fish
+   while inside #hero. Position is lerped toward the real
+   cursor each frame (so it trails slightly, like swimming
+   rather than sliding), and the sprite rotates to face its
+   direction of travel. Hovering a link/button puffs it up
+   and shifts it gold, signalling "clickable" without ever
+   reverting to the plain system arrow.
+═══════════════════════════════════════════════════════ */
+(function initFishCursor(){
+  const hero = document.getElementById('hero');
+  const fc = document.getElementById('fish-cursor');
+  if (!hero || !fc) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return; /* no persistent pointer on touch */
+
+  const pos = { x: 0, y: 0 };   /* rendered (lerped) position */
+  const target = { x: 0, y: 0 }; /* real cursor position, relative to viewport */
+  let angle = 0;
+  let active = false;
+  let rafId = null;
+
+  function onMove(e){
+    target.x = e.clientX;
+    target.y = e.clientY;
+    if (!active){
+      /* snap on first entry so it doesn't swim in from a stale 0,0 */
+      pos.x = target.x; pos.y = target.y;
+      active = true;
+      fc.classList.add('fc-active');
+    }
+  }
+
+  function onLeave(){
+    active = false;
+    fc.classList.remove('fc-active');
+  }
+
+  hero.addEventListener('mousemove', onMove);
+  hero.addEventListener('mouseleave', onLeave);
+
+  /* Hover state for clickable elements within the hero */
+  hero.querySelectorAll('a, button, .btn').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>fc.classList.add('fc-hover'));
+    el.addEventListener('mouseleave', ()=>fc.classList.remove('fc-hover'));
+  });
+
+  function tick(){
+    const dx = target.x - pos.x, dy = target.y - pos.y;
+    pos.x += dx * 0.18;
+    pos.y += dy * 0.18;
+
+    const speed = Math.hypot(dx, dy);
+    if (speed > 0.6){
+      const targetAngle = Math.atan2(dy, dx) * (180/Math.PI);
+      /* shortest-path angle lerp so it doesn't spin the long way around */
+      let diff = targetAngle - angle;
+      diff = ((diff + 180) % 360 + 360) % 360 - 180;
+      angle += diff * 0.18;
+    }
+
+    fc.style.left = pos.x + 'px';
+    fc.style.top  = pos.y + 'px';
+    if (!fc.classList.contains('fc-hover')){
+      fc.style.transform = `translate(-50%,-50%) rotate(${angle.toFixed(1)}deg)`;
+    } else {
+      fc.style.transform = `translate(-50%,-50%) rotate(${angle.toFixed(1)}deg) scale(1.35)`;
+    }
+
+    rafId = requestAnimationFrame(tick);
+  }
+  rafId = requestAnimationFrame(tick);
+})();
+
+/* ═══════════════════════════════════════════════════════
    WAVES BACKGROUND  (Canvas 2D, Perlin-noise wave-lines)
    ───────────────────────────────────────────────────────
    A field of horizontal lines perturbed by 2D Perlin noise
@@ -717,48 +796,6 @@ initCardTilt();
 })();
 
 /* ═══════════════════════════════════════════════════════
-   STAT COUNT-UP
-   Animates the numbers in the About section's stats block
-   (Publications, EU Projects, MSc Grade, Countries) from 0
-   up to their target value once scrolled into view.
-═══════════════════════════════════════════════════════ */
-(function initCountUp(){
-  const stats = document.querySelectorAll('.stat-n[data-count]');
-  if (!stats.length) return;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function animate(el){
-    const target = parseFloat(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    if (reduced || !Number.isFinite(target)){
-      el.textContent = target + suffix;
-      return;
-    }
-    const duration = 1400;
-    const start = performance.now();
-    function step(now){
-      if (typeof now !== 'number') now = performance.now(); /* defensive: some envs omit the rAF timestamp */
-      const p = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 3); /* ease-out cubic */
-      const value = Math.round(target * eased);
-      el.textContent = value + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  const statIO = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if (e.isIntersecting){
-        animate(e.target);
-        statIO.unobserve(e.target);
-      }
-    });
-  }, { threshold:0.5 });
-  stats.forEach(s=>statIO.observe(s));
-})();
-
-/* ═══════════════════════════════════════════════════════
    MAGNETIC HERO BUTTONS
    The hero CTA buttons (Publications / Download CV / Contact)
    gently pull toward the cursor when it's nearby, and ease
@@ -789,6 +826,100 @@ initCardTilt();
     });
   });
 })();
+
+/* ═══════════════════════════════════════════════════════
+   SCROLL STACK  (ported from React Bits' ScrollStack)
+   ───────────────────────────────────────────────────────
+   As the page scrolls through the Projects section, each
+   .proj-item pins in place, shrinks slightly, and the next
+   card slides over it — a deck of cards being dealt down
+   the page. Ported from the React+Lenis original to vanilla
+   JS driven by native window scroll (no smooth-scroll
+   library pulled in just for this section).
+
+   Math is carried over from the source almost line-for-line:
+   each card has a trigger window (stackPosition → scaleEnd)
+   over which it scales down, and a pin window (stackPosition
+   → just past the section end) over which it's translated to
+   stay glued under the viewport's scroll position.
+═══════════════════════════════════════════════════════ */
+function initScrollStack(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const cards = Array.from(document.querySelectorAll('#projectsList .proj-item'));
+  const endEl = document.querySelector('#projects .scroll-stack-end');
+  if (!cards.length || !endEl) return;
+
+  /* Tunable, same defaults as the React Bits component */
+  const itemStackDistance = 22;   /* px offset between stacked cards' pin points */
+  const itemScale         = 0.025; /* additional shrink per card index */
+  const baseScale         = 0.9;   /* scale of the first card at full progress */
+  const blurAmount        = 1.1;   /* px of blur per layer of depth in the stack */
+  const stackPositionRatio = 0.16; /* fraction of viewport height — where pinning begins */
+  const scaleEndRatio      = 0.06; /* fraction of viewport height — where scaling finishes */
+
+  function clampProgress(scrollTop, start, end){
+    if (scrollTop < start) return 0;
+    if (scrollTop > end) return 1;
+    return (scrollTop - start) / (end - start);
+  }
+
+  let ticking = false;
+
+  function update(){
+    const vh = window.innerHeight;
+    const stackPositionPx = vh * stackPositionRatio;
+    const scaleEndPositionPx = vh * scaleEndRatio;
+    const scrollTop = window.scrollY;
+    const endTop = endEl.getBoundingClientRect().top + window.scrollY;
+
+    /* Determine which card is currently "on top" of the stack, for blur depth */
+    let topCardIndex = 0;
+    cards.forEach((card, j)=>{
+      const jTop = card.getBoundingClientRect().top + window.scrollY;
+      const jTriggerStart = jTop - stackPositionPx - itemStackDistance * j;
+      if (scrollTop >= jTriggerStart) topCardIndex = j;
+    });
+
+    cards.forEach((card, i)=>{
+      const cardTop = card.getBoundingClientRect().top + window.scrollY;
+      const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
+      const triggerEnd   = cardTop - scaleEndPositionPx;
+      const pinStart = triggerStart;
+      const pinEnd   = endTop - vh / 2;
+
+      const scaleProgress = clampProgress(scrollTop, triggerStart, triggerEnd);
+      const targetScale = baseScale + i * itemScale;
+      const scale = 1 - scaleProgress * (1 - targetScale);
+
+      let blur = 0;
+      if (i < topCardIndex) blur = (topCardIndex - i) * blurAmount;
+
+      let translateY = 0;
+      if (scrollTop >= pinStart && scrollTop <= pinEnd){
+        translateY = scrollTop - cardTop + stackPositionPx + itemStackDistance * i;
+      } else if (scrollTop > pinEnd){
+        translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
+      }
+
+      card.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+      card.style.filter = blur > 0 ? `blur(${blur.toFixed(1)}px)` : '';
+      card.style.zIndex = String(100 + i); /* later cards stack visually above earlier ones */
+    });
+
+    ticking = false;
+  }
+
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+}
 
 /* PROJECTS LIST */
 (function initProjects(){
@@ -826,7 +957,7 @@ initCardTilt();
     io.observe(item);
   });
 
-  initCardTilt(list); /* bind spotlight + tilt to the freshly-created project cards */
+  initScrollStack(); /* set up scroll-pinning stack now that cards exist in the DOM */
 
   /* Enrich URLs from GitHub API silently */
   fetch('https://api.github.com/users/DolapoSalim/repos?per_page=100&type=public')

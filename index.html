@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Olatoye Dolapo Salim — Computer Vision for Marine Ecology</title>
 <meta name="description" content="PhD Candidate, University of Pisa. AI and Computer Vision for marine biodiversity monitoring."/>
-<!-- Academic/Archival pairing: EB Garamond (headings) + Crimson Text (reading body) —
-     Plus Jakarta Sans kept only for nav/buttons/uppercase UI labels, where a sans
-     reads more clearly at very small sizes than a serif would. -->
+<!-- Poppins throughout — display headings via heavier weights (700/800),
+     reading body at regular/medium, UI labels at semibold. JetBrains Mono
+     is the one complementary font, reserved for DOI/citation-style data
+     points only (see --mono-accent), used sparingly per design intent. -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -46,6 +47,14 @@
 <section id="hero">
   <!-- Marine boid canvas — fish flee mouse cursor -->
   <canvas id="marine-canvas"></canvas>
+  <!-- Custom fish cursor — replaces the pointer while inside the hero -->
+  <div id="fish-cursor" aria-hidden="true">
+    <svg viewBox="-16 -8 32 16" width="32" height="16">
+      <path class="fc-body" d="M9 0 C4 -7 -7 -5.5 -11 -0.5 C-7 5.5 4 7 9 0 Z"/>
+      <path class="fc-tail" d="M-11 -0.5 C-14 -3.5 -16 -3 -16 -3 C-15 -1 -15 1 -16 3 C-16 3 -14 3.5 -11 0.5 Z"/>
+      <circle class="fc-eye" cx="5.5" cy="-1.2" r="0.9"/>
+    </svg>
+  </div>
 
   <div class="container">
     <div class="hero-wrap">
@@ -53,11 +62,12 @@
       <div>
         <div class="hero-kicker"><span class="dot-live"></span>PhD Candidate &nbsp;·&nbsp; University of Pisa &nbsp;·&nbsp; Italy</div>
         <h1 class="hero-name">Olatoye<br><em>Dolapo Salim</em></h1>
-        <p class="hero-tagline"><b>Computer Vision for Marine Ecology</b></p>
+        <p class="hero-tagline"><b>Computer Vision</b> for Marine Ecology</p>
         <p class="hero-bio">
-          Leveraging AI and emerging imaging technologies to decode
+          Leveraging <strong>AI and emerging imaging technologies</strong> to decode
           biodiversity stability in complex marine environments.
-        
+          Part of the EU Horizon <strong>BioEcoOcean</strong> project,
+          funded by the University of Pisa.
         </p>
         <div class="hero-ctas">
           <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="btn btn-fill">Publications</a>
@@ -103,9 +113,9 @@
         <div class="sec-label">About</div>
         <h2 class="sec-title">Marine Biologist<br>&amp; AI Researcher</h2>
         <div class="about-text">
-          <p>I am a PhD candidate at the University of Pisa's Department of Biology, working at the intersection of marine ecology and machine intelligence. My research centres on applying <b>AI and emerging imaging technologies, </b>particularly computer vision and deep learning to evaluate biodiversity stability in complex marine environments.</p>
-          <p>My work spans the full pipeline: from collecting and annotating underwater imagery, training <strong>object detection and classification models</strong>, to integrating outputs with ecological data for biodiversity assessment. I believe scalable, automated vision systems are key to monitoring ocean health at the speed the climate crisis demands.</p>
-          <p>I hold an MSc in Coastal &amp; Marine Biology and Ecology from Università del Salento (Unisalento4Talents Scholar) and a BSc in Fisheries and Aquaculture from Federal University Oye-Ekiti, Nigeria, graduating as best student of my department. My PhD is funded by the BioEcoOcean EU Horizon project.</p>
+          <p>I am a PhD candidate at the <strong>University of Pisa's Department of Biology</strong>, working at the intersection of marine ecology and machine intelligence. My research centres on applying <b>AI and emerging imaging technologies, </b>particularly computer vision and deep learning to evaluate <strong>biodiversity stability in complex marine environments</strong>.</p>
+          <p>My work spans the full pipeline: from collecting and annotating underwater imagery, training <strong>object detection and classification models</strong>, to integrating outputs with ecological data for biodiversity assessment. I believe <strong>scalable, automated vision systems</strong> are key to monitoring ocean health at the speed the climate crisis demands.</p>
+          <p>I hold an MSc in <strong>Coastal &amp; Marine Biology and Ecology</strong> from Università del Salento (Unisalento4Talents Scholar) and a BSc in <strong>Fisheries and Aquaculture</strong> from Federal University Oye-Ekiti, Nigeria, graduating as <strong>best student of my department</strong>. My PhD is funded by the <strong>BioEcoOcean EU Horizon project</strong>.</p>
         </div>
         <div class="about-actions">
           <a href="https://bioecoocean.org/" target="_blank" class="btn btn-ghost btn-sm">BioEcoOcean ↗</a>
@@ -114,12 +124,6 @@
         </div>
       </div>
       <div class="fi" style="transition-delay:0.1s">
-        <div class="stats-block">
-          <div class="stat"><div class="stat-n" data-count="3" data-suffix="+">0</div><div class="stat-l">Publications</div></div>
-          <div class="stat"><div class="stat-n" data-count="3">0</div><div class="stat-l">EU Projects</div></div>
-          <div class="stat"><div class="stat-n" data-count="110">0</div><div class="stat-l">MSc Grade /110</div></div>
-          <div class="stat"><div class="stat-n" data-count="3">0</div><div class="stat-l">Countries</div></div>
-        </div>
         <div class="award-block">
           <div class="award-label">Academic Awards</div>
           <div class="award-item"><strong>Best Graduating Student</strong> — Dept. of Fisheries &amp; Aquaculture, Federal University Oye-Ekiti, 2019</div>
@@ -176,19 +180,19 @@
     <div class="tl" id="diveTimeline">
       <div class="tl-progress" id="diveProgress"></div>
       <div class="tl-item">
-        <div class="tl-year">2024 – Present</div>
+        <div class="tl-year">2023 – Present</div>
         <div class="tl-degree">Doctor of Philosophy in Biological Sciences</div>
         <div class="tl-inst">University of Pisa, Italy</div>
         <div class="tl-note">Understanding biodiversity stability in complex marine environments using emerging sensing technologies. <strong>Funded by BioEcoOcean (EU Horizon).</strong></div>
       </div>
       <div class="tl-item">
-        <div class="tl-year">2022 – 2024</div>
+        <div class="tl-year">2021 – 2023</div>
         <div class="tl-degree">MSc in Coastal &amp; Marine Biology and Ecology</div>
         <div class="tl-inst">Università del Salento, Italy</div>
         <div class="tl-note"><strong>Grade: 110/110</strong> · Awarded the <strong>Unisalento4Talents Scholarship.</strong></div>
       </div>
       <div class="tl-item">
-        <div class="tl-year">2013 – 2018</div>
+        <div class="tl-year">2015 – 2019</div>
         <div class="tl-degree">BSc in Fisheries and Aquaculture</div>
         <div class="tl-inst">Federal University Oye-Ekiti, Nigeria</div>
         <div class="tl-note"><strong>Best Graduating Student</strong> — Department of Fisheries and Aquaculture, 2018/2019.</div>
@@ -245,7 +249,8 @@
     <div class="sec-label">Projects</div>
     <h2 class="sec-title">Code &amp; Repositories</h2>
     <p class="sec-sub">Tools, pipelines, and experiments in computer vision and marine data science.</p>
-    <div class="proj-list" id="projectsList"></div>
+    <div class="scroll-stack-inner" id="projectsList"></div>
+    <div class="scroll-stack-end"></div>
     <div style="margin-top:2rem">
       <a href="https://github.com/DolapoSalim?tab=repositories" target="_blank" class="btn btn-ghost">View all on GitHub ↗</a>
     </div>
