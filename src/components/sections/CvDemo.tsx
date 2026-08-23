@@ -2,6 +2,7 @@ import cvDemo from '@/content/site/cv-demo.json'
 import { richText } from '@/lib/richtext'
 import { Reveal } from '@/components/effects/Reveal'
 import { WavesBackground } from '@/components/effects/WavesBackground'
+import GlareHover from '@/components/reactbits/GlareHover'
 
 export function CvDemo() {
   const [headingLine1, headingLine2] = cvDemo.heading.split('\n')
@@ -46,6 +47,19 @@ export function CvDemo() {
               <div className="demo-overlay">
                 <div className="demo-badge">{cvDemo.badge}</div>
               </div>
+              <GlareHover
+                width="100%"
+                height="100%"
+                background="transparent"
+                borderColor="transparent"
+                borderRadius="12px"
+                glareColor="#a8c5be"
+                glareOpacity={0.22}
+                glareAngle={-30}
+                glareSize={260}
+                transitionDuration={1100}
+                className="absolute inset-0 z-[3] cursor-default"
+              />
             </div>
           </Reveal>
         </div>

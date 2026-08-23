@@ -48,6 +48,20 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ReactBits StarBorder keyframes/utilities (Tailwind v4 CSS-first registration) */
+@theme {
+  --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
+  --animate-star-movement-top: star-movement-top linear infinite alternate;
+}
+@keyframes star-movement-bottom {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(-100%, 0%); opacity: 0; }
+}
+@keyframes star-movement-top {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(100%, 0%); opacity: 0; }
+}
+
 /* ════════════════════════════════════════
    DESIGN TOKENS
    Marine palette carried over from the original vanilla-CSS site.
@@ -146,6 +160,15 @@
   --shadow:   0 4px 32px rgba(0,70,60,0.12);
   --hero-img-opacity: 0.12;
 }
+
+/* Everything below is wrapped in Tailwind's own "base" cascade layer
+   (already declared, in order, by the `@import "tailwindcss"` above)
+   so that Tailwind/shadcn/ReactBits utility classes — which live in
+   the higher-priority "utilities" layer — can always override it.
+   Unlayered CSS beats layered CSS regardless of specificity, so
+   without this, plain rules like the reset below would silently win
+   over every Tailwind utility applied to the same element. */
+@layer base {
 
 /* ════════════════════════════════════════
    RESET
@@ -463,6 +486,38 @@ section { padding:7rem 0; position:relative }
   width:100%; height:100%; object-fit:cover; object-position:top center; display:block;
 }
 .hero-profile-mobile .profile-meta { margin-top:0 }
+
+/* ════════════════════════════════════════
+   STATS STRIP
+════════════════════════════════════════ */
+.stats-strip { border-bottom:1px solid var(--border); background:var(--bg1); position:relative; z-index:1 }
+.stats-row {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  padding:2.6rem 0;
+}
+.stat-item {
+  text-align:center; padding:0 1rem;
+  border-left:1px solid var(--border);
+}
+.stat-item:first-child { border-left:none }
+.stat-value {
+  font-family:var(--display); font-weight:800; letter-spacing:-0.02em;
+  font-size:clamp(1.9rem,3.4vw,2.6rem); color:var(--gold); line-height:1;
+  margin-bottom:0.5rem;
+}
+.stat-label {
+  font-family:var(--sans-ui); font-size:0.72rem; font-weight:600; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text3);
+}
+@media (max-width:768px) {
+  .stats-row { grid-template-columns:1fr 1fr; row-gap:2rem }
+  .stat-item:nth-child(3) { border-left:none }
+}
+@media (max-width:480px) {
+  .stats-row { grid-template-columns:1fr; row-gap:1.6rem }
+  .stat-item { border-left:none !important; border-top:1px solid var(--border); padding-top:1.4rem }
+  .stat-item:first-child { border-top:none; padding-top:0 }
+}
 
 /* ════════════════════════════════════════
    ABOUT
@@ -841,3 +896,5 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.4re
   .container { padding:0 1.2rem }
   .hero-profile-mobile .profile-img-wrap { width:130px; height:163px }
 }
+
+} /* end @layer base */

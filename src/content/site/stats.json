@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "value": 3, "suffix": "", "label": "Peer-Reviewed Publications" },
+    { "value": 7, "suffix": "+", "label": "Open-Source Projects" },
+    { "value": 3, "suffix": "", "label": "EU Research Collaborations" },
+    { "value": 2, "suffix": "", "label": "Countries of Study" }
+  ]
+}
