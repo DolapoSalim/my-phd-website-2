@@ -4,6 +4,9 @@ import { SectionTitle } from '@/components/effects/SectionTitle'
 import { useReveal } from '@/hooks/useReveal'
 import { useScrollStack } from '@/hooks/useScrollStack'
 import { useGithubStars } from '@/hooks/useGithubStars'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 const GITHUB_USERNAME = 'DolapoSalim'
 
@@ -13,31 +16,34 @@ function ProjItem({ entry, enrichment }: { entry: ProjectEntry; enrichment: Retu
   const url = enrichment?.url ?? entry.url
 
   return (
-    <div className="proj-item" ref={ref}>
-      <div className="proj-year">{entry.year}</div>
-      <div className="proj-body">
-        <div className="proj-title">
-          <span className="proj-icon"></span>
-          {entry.name}
-        </div>
+    <Card className="proj-item flex-row items-start gap-4 border-border/60 bg-card/90 p-5" ref={ref}>
+      <div className="proj-year shrink-0">{entry.year}</div>
+      <CardContent className="flex-1 px-0">
+        <div className="proj-title !mb-2">{entry.name}</div>
         <div className="proj-desc">{entry.desc}</div>
-        <div className="proj-tags">
+        <div className="flex flex-wrap gap-1.5">
           {entry.tags.map((t) => (
-            <span className="ptag" key={t}>
-              •{t}{' '}
-            </span>
+            <Badge key={t} variant="outline" className="h-auto rounded-full px-2.5 py-0.5 text-[0.72rem] font-normal">
+              {t}
+            </Badge>
           ))}
+          {enrichment && enrichment.stars > 0 && (
+            <Badge variant="secondary" className="h-auto rounded-full px-2.5 py-0.5 text-[0.72rem] text-[var(--gold)]">
+              ★ {enrichment.stars}
+            </Badge>
+          )}
         </div>
-        {enrichment && enrichment.stars > 0 && <span className="proj-stars">★ {enrichment.stars}</span>}
-      </div>
-      <a href={url} target="_blank" rel="noreferrer" className="proj-link" aria-label={`View ${entry.name}`}>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-          <polyline points="15 3 21 3 21 9" />
-          <line x1="10" y1="14" x2="21" y2="3" />
-        </svg>
-      </a>
-    </div>
+      </CardContent>
+      <Button asChild size="icon-sm" variant="outline" className="rounded-full shrink-0" aria-label={`View ${entry.name}`}>
+        <a href={url} target="_blank" rel="noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </a>
+      </Button>
+    </Card>
   )
 }
 
@@ -61,9 +67,11 @@ export function Projects() {
           <div className="scroll-stack-end"></div>
         </div>
         <div style={{ marginTop: '2rem' }}>
-          <a href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`} target="_blank" rel="noreferrer" className="btn btn-ghost">
-            View all on GitHub ↗
-          </a>
+          <Button asChild size="lg" variant="outline" className="rounded-full">
+            <a href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`} target="_blank" rel="noreferrer">
+              View all on GitHub ↗
+            </a>
+          </Button>
         </div>
       </div>
     </section>

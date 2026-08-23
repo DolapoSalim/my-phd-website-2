@@ -798,7 +798,7 @@ section { padding:7rem 0; position:relative }
 ════════════════════════════════════════ */
 #contact { background:var(--bg) }
 .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start }
-.c-info p { font-size:1.08rem; color:var(--text2); line-height:1.88; margin-bottom:2rem }
+.c-info p, .c-info-text { font-size:1.08rem; color:var(--text2); line-height:1.88; margin-bottom:0 }
 .socials { display:flex; flex-direction:column; gap:0.65rem }
 .soc {
   display:flex; align-items:center; gap:1rem; font-size:0.95rem; font-weight:500;

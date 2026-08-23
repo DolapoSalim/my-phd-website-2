@@ -2,6 +2,8 @@ import { useState, type FormEvent, type ReactNode } from 'react'
 import contact from '@/content/site/contact.json'
 import { SectionTitle } from '@/components/effects/SectionTitle'
 import { Reveal } from '@/components/effects/Reveal'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 const ICONS: Record<string, ReactNode> = {
   github: (
@@ -36,26 +38,30 @@ function ContactForm() {
   }
 
   return (
-    <form className="cf" onSubmit={onSubmit}>
-      <div className="fg">
-        <label htmlFor="cn">Name</label>
-        <input type="text" id="cn" name="cn" placeholder="Your name" required />
-      </div>
-      <div className="fg">
-        <label htmlFor="ce">Email</label>
-        <input type="email" id="ce" name="ce" placeholder="your@email.com" required />
-      </div>
-      <div className="fg">
-        <label htmlFor="cm">Message</label>
-        <textarea id="cm" name="cm" rows={5} placeholder="How can I help?" required></textarea>
-      </div>
-      <button type="submit" className="cf-submit">
-        Send message →
-      </button>
-      <p className="cf-msg" style={{ display: message ? 'block' : 'none' }}>
-        {message}
-      </p>
-    </form>
+    <Card className="border-border/60 bg-card/90">
+      <CardContent>
+        <form className="cf" onSubmit={onSubmit}>
+          <div className="fg">
+            <label htmlFor="cn">Name</label>
+            <input type="text" id="cn" name="cn" placeholder="Your name" required />
+          </div>
+          <div className="fg">
+            <label htmlFor="ce">Email</label>
+            <input type="email" id="ce" name="ce" placeholder="your@email.com" required />
+          </div>
+          <div className="fg">
+            <label htmlFor="cm">Message</label>
+            <textarea id="cm" name="cm" rows={5} placeholder="How can I help?" required></textarea>
+          </div>
+          <Button type="submit" size="lg" className="w-fit rounded-full px-6 h-auto py-3 text-[0.88rem] font-semibold">
+            Send message →
+          </Button>
+          <p className="cf-msg" style={{ display: message ? 'block' : 'none' }}>
+            {message}
+          </p>
+        </form>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -65,21 +71,23 @@ export function Contact() {
       <div className="container">
         <div className="sec-label">Contact</div>
         <SectionTitle>Get in Touch</SectionTitle>
-        <div className="contact-grid">
-          <Reveal>
-            <div className="c-info">
-              <p>{contact.blurb}</p>
-            </div>
-            <div className="socials">
-              {contact.socials.map((s) => (
-                <a href={s.url} target="_blank" rel="noreferrer" className="soc" key={s.network}>
-                  {ICONS[s.network]}
-                  {s.label}
-                </a>
-              ))}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Reveal as="div">
+            <div className="flex h-full flex-col gap-4">
+              <p className="c-info-text">{contact.blurb}</p>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {contact.socials.map((s) => (
+                  <Card key={s.network} className="border-border/60 bg-card/90 transition-colors hover:bg-[var(--surface2)]">
+                    <a href={s.url} target="_blank" rel="noreferrer" className="soc !border-0 !bg-transparent !rounded-none">
+                      {ICONS[s.network]}
+                      {s.label}
+                    </a>
+                  </Card>
+                ))}
+              </div>
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal as="div" delay={0.1}>
             <ContactForm />
           </Reveal>
         </div>
