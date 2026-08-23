@@ -60,7 +60,7 @@ export function MarineCanvas() {
     }
 
     function accentRGB() {
-      return document.documentElement.getAttribute('data-theme') === 'light' ? '42,122,111' : '168,197,190'
+      return document.documentElement.getAttribute('data-theme') === 'light' ? '106,92,214' : '139,124,246'
     }
 
     const mouse = { x: -9999, y: -9999, active: false }

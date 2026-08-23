@@ -108,7 +108,7 @@ export function WavesBackground() {
     const mouse = { x: -9999, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false }
 
     function lineColor() {
-      return document.documentElement.getAttribute('data-theme') === 'light' ? 'rgba(42,122,111,0.16)' : 'rgba(168,197,190,0.14)'
+      return document.documentElement.getAttribute('data-theme') === 'light' ? 'rgba(106,92,214,0.16)' : 'rgba(139,124,246,0.14)'
     }
 
     function setSize() {
