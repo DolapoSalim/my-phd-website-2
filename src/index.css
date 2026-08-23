@@ -64,29 +64,32 @@
 
 /* ════════════════════════════════════════
    DESIGN TOKENS
-   Marine palette carried over from the original vanilla-CSS site.
-   Dark is the default (unmarked :root); [data-theme="light"] overrides.
+   "Deep-space lab" indigo/violet + amber palette. Dark is the default
+   (unmarked :root); [data-theme="light"] overrides.
    shadcn/ReactBits tokens below are aliases onto this same palette so
-   installed components inherit the site's teal/gold theme instead of
+   installed components inherit the site's brand colors instead of
    shadcn's generic defaults, and update live with the theme toggle.
 ════════════════════════════════════════ */
 :root {
   --ease:   cubic-bezier(0.4,0,0.2,1);
   --t:      0.3s;
-  --bg:       #06090d;
-  --bg1:      #080d14;
-  --surface:  #0e1620;
-  --surface2: #121e2a;
-  --border:   rgba(168,197,190,0.09);
-  --border2:  rgba(168,197,190,0.2);
-  --text:     #e2ece9;
-  --text2:    #7a9e97;
-  --text3:    #658f87;
-  --accent:   #a8c5be;
-  --accent-d: #6fa09a;
-  --gold:     #c9aa6e;
-  --nav-bg:   rgba(6,9,13,0.88);
-  --shadow:   0 8px 56px rgba(0,0,0,0.7);
+  /* "Deep-space lab" palette — deliberately fresh, not the old marine
+     teal/gold. Indigo/violet as the primary brand hue, warm amber as
+     the secondary accent (stats, awards, badges). */
+  --bg:       #0a0a12;
+  --bg1:      #0d0d18;
+  --surface:  #14141f;
+  --surface2: #1b1b29;
+  --border:   rgba(139,124,246,0.10);
+  --border2:  rgba(139,124,246,0.24);
+  --text:     #f1f0f7;
+  --text2:    #a9a6c4;
+  --text3:    #75718f;
+  --accent:   #8b7cf6;
+  --accent-d: #6a5cd6;
+  --gold:     #f0a955;
+  --nav-bg:   rgba(10,10,18,0.88);
+  --shadow:   0 8px 56px rgba(0,0,0,0.75);
   --hero-img-opacity: 0.18;
 
   /* Type system: Poppins throughout, doing the job a serif/sans pairing
@@ -121,7 +124,7 @@
   --muted: var(--surface2);
   --muted-foreground: var(--text2);
   /* shadcn's own "accent" token is a different concept (subtle hover
-     surface) than this site's --accent (brand teal) — kept separate
+     surface) than this site's --accent (brand violet) — kept separate
      under --ui-accent* to avoid colliding with the existing var. */
   --ui-accent: var(--surface2);
   --ui-accent-foreground: var(--text);
@@ -144,20 +147,20 @@
   --sidebar-ring: var(--accent);
 }
 [data-theme="light"] {
-  --bg:       #f2f6f5;
-  --bg1:      #e9f0ed;
+  --bg:       #f7f6fb;
+  --bg1:      #efedf8;
   --surface:  #ffffff;
-  --surface2: #f4faf8;
-  --border:   rgba(0,90,75,0.1);
-  --border2:  rgba(0,90,75,0.22);
-  --text:     #0b1c18;
-  --text2:    #346059;
-  --text3:    #4a746c;
-  --accent:   #2a7a6f;
-  --accent-d: #1a5e54;
-  --gold:     #8a6a1e;
-  --nav-bg:   rgba(242,246,245,0.92);
-  --shadow:   0 4px 32px rgba(0,70,60,0.12);
+  --surface2: #f5f3fc;
+  --border:   rgba(107,92,214,0.12);
+  --border2:  rgba(107,92,214,0.26);
+  --text:     #17152a;
+  --text2:    #4a4570;
+  --text3:    #6a6590;
+  --accent:   #6a5cd6;
+  --accent-d: #55499f;
+  --gold:     #b9700f;
+  --nav-bg:   rgba(247,246,251,0.92);
+  --shadow:   0 4px 32px rgba(60,40,120,0.12);
   --hero-img-opacity: 0.12;
 }
 
@@ -194,13 +197,13 @@ body::before {
   content:'';
   position:fixed; inset:0; z-index:0; pointer-events:none;
   background:radial-gradient(ellipse at 50% 0%,
-    rgba(42,122,111, calc(var(--depth, 0) * 0.10)) 0%,
+    rgba(106,92,214, calc(var(--depth, 0) * 0.10)) 0%,
     rgba(6,9,13,     calc(var(--depth, 0) * 0.55)) 100%);
   transition:background 0.05s linear;
 }
 [data-theme="light"] body::before {
   background:radial-gradient(ellipse at 50% 0%,
-    rgba(42,122,111, calc(var(--depth, 0) * 0.07)) 0%,
+    rgba(106,92,214, calc(var(--depth, 0) * 0.07)) 0%,
     rgba(180,210,205, calc(var(--depth, 0) * 0.35)) 100%);
 }
 @media (prefers-reduced-motion:reduce) { body::before { display:none } }
@@ -310,7 +313,7 @@ section { padding:7rem 0; position:relative }
 .btn-fill { background:var(--accent); color:var(--bg); border:1.5px solid var(--accent) }
 .btn-fill:hover {
   background:var(--accent-d); border-color:var(--accent-d); color:var(--bg);
-  transform:translateY(-2px); box-shadow:0 6px 24px rgba(168,197,190,0.25);
+  transform:translateY(-2px); box-shadow:0 6px 24px rgba(139,124,246,0.25);
 }
 .btn-ghost { background:transparent; color:var(--text2); border:1.5px solid var(--border2) }
 .btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px) }
@@ -341,10 +344,10 @@ section { padding:7rem 0; position:relative }
 #fish-cursor.fc-active { opacity:1 }
 #fish-cursor svg { display:block; overflow:visible }
 .fc-body, .fc-tail {
-  fill:rgb(168,197,190);
+  fill:rgb(139,124,246);
   transition:fill 0.25s var(--ease);
 }
-[data-theme="light"] .fc-body, [data-theme="light"] .fc-tail { fill:rgb(42,122,111) }
+[data-theme="light"] .fc-body, [data-theme="light"] .fc-tail { fill:rgb(106,92,214) }
 .fc-eye { fill:var(--bg) }
 #fish-cursor.fc-hover .fc-body,
 #fish-cursor.fc-hover .fc-tail { fill:var(--gold) }
@@ -399,8 +402,8 @@ section { padding:7rem 0; position:relative }
   animation:livepulse 2.4s ease-in-out infinite;
 }
 @keyframes livepulse {
-  0%,100% { box-shadow:0 0 0 0 rgba(168,197,190,0.5) }
-  50%      { box-shadow:0 0 0 8px rgba(168,197,190,0) }
+  0%,100% { box-shadow:0 0 0 0 rgba(139,124,246,0.5) }
+  50%      { box-shadow:0 0 0 8px rgba(139,124,246,0) }
 }
 .hero-name {
   font-family:var(--display);
@@ -490,33 +493,14 @@ section { padding:7rem 0; position:relative }
 /* ════════════════════════════════════════
    STATS STRIP
 ════════════════════════════════════════ */
-.stats-strip { border-bottom:1px solid var(--border); background:var(--bg1); position:relative; z-index:1 }
-.stats-row {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  padding:2.6rem 0;
-}
-.stat-item {
-  text-align:center; padding:0 1rem;
-  border-left:1px solid var(--border);
-}
-.stat-item:first-child { border-left:none }
+.stats-strip { position:relative; z-index:1; padding:1.5rem 0 3.5rem }
 .stat-value {
   font-family:var(--display); font-weight:800; letter-spacing:-0.02em;
   font-size:clamp(1.9rem,3.4vw,2.6rem); color:var(--gold); line-height:1;
-  margin-bottom:0.5rem;
 }
 .stat-label {
   font-family:var(--sans-ui); font-size:0.72rem; font-weight:600; letter-spacing:0.1em;
   text-transform:uppercase; color:var(--text3);
-}
-@media (max-width:768px) {
-  .stats-row { grid-template-columns:1fr 1fr; row-gap:2rem }
-  .stat-item:nth-child(3) { border-left:none }
-}
-@media (max-width:480px) {
-  .stats-row { grid-template-columns:1fr; row-gap:1.6rem }
-  .stat-item { border-left:none !important; border-top:1px solid var(--border); padding-top:1.4rem }
-  .stat-item:first-child { border-top:none; padding-top:0 }
 }
 
 /* ════════════════════════════════════════
@@ -625,14 +609,14 @@ section { padding:7rem 0; position:relative }
   position:absolute; left:0; top:0.5rem; width:1.5px;
   height:calc(var(--dive-progress, 0) * 100%);
   background:var(--gold);
-  box-shadow:0 0 8px 1px rgba(201,170,110,0.55);
+  box-shadow:0 0 8px 1px rgba(240,169,85,0.55);
   transition:height 0.05s linear;
   pointer-events:none;
 }
 .tl-progress::after {
   content:''; position:absolute; left:50%; bottom:0; transform:translate(-50%,50%);
   width:7px; height:7px; border-radius:50%;
-  background:var(--gold); box-shadow:0 0 10px 2px rgba(201,170,110,0.6);
+  background:var(--gold); box-shadow:0 0 10px 2px rgba(240,169,85,0.6);
   opacity:var(--dive-progress, 0);
 }
 @media (prefers-reduced-motion:reduce) { .tl-progress { display:none } }
@@ -696,10 +680,10 @@ section { padding:7rem 0; position:relative }
 .pub.vis { opacity:1; transform:none }
 .pub::before {
   content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(circle at var(--mx) var(--my), rgba(168,197,190,0.13), transparent 72%);
+  background:radial-gradient(circle at var(--mx) var(--my), rgba(139,124,246,0.13), transparent 72%);
   opacity:0; transition:opacity 0.45s var(--ease);
 }
-[data-theme="light"] .pub::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(42,122,111,0.10), transparent 72%) }
+[data-theme="light"] .pub::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(106,92,214,0.10), transparent 72%) }
 .pub:hover { border-color:var(--border2); box-shadow:var(--shadow) }
 .pub:hover::before { opacity:1 }
 .pub > * { position:relative; z-index:1 }
@@ -750,10 +734,10 @@ section { padding:7rem 0; position:relative }
 }
 .proj-item::before {
   content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(circle at var(--mx) var(--my), rgba(168,197,190,0.13), transparent 72%);
+  background:radial-gradient(circle at var(--mx) var(--my), rgba(139,124,246,0.13), transparent 72%);
   opacity:0; transition:opacity 0.45s var(--ease);
 }
-[data-theme="light"] .proj-item::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(42,122,111,0.10), transparent 72%) }
+[data-theme="light"] .proj-item::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(106,92,214,0.10), transparent 72%) }
 .proj-item:hover { border-color:var(--border2); box-shadow:var(--shadow) }
 .proj-item:hover::before { opacity:1 }
 .proj-item > * { position:relative; z-index:1 }
@@ -796,10 +780,10 @@ section { padding:7rem 0; position:relative }
 .news-item.vis { opacity:1; transform:none }
 .news-item::before {
   content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(circle at var(--mx) var(--my), rgba(168,197,190,0.13), transparent 72%);
+  background:radial-gradient(circle at var(--mx) var(--my), rgba(139,124,246,0.13), transparent 72%);
   opacity:0; transition:opacity 0.45s var(--ease);
 }
-[data-theme="light"] .news-item::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(42,122,111,0.10), transparent 72%) }
+[data-theme="light"] .news-item::before { background:radial-gradient(circle at var(--mx) var(--my), rgba(106,92,214,0.10), transparent 72%) }
 .news-item:hover { border-color:var(--border2); box-shadow:var(--shadow) }
 .news-item:hover::before { opacity:1 }
 .news-item > * { position:relative; z-index:1 }
