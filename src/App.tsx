@@ -2,6 +2,7 @@ import hero from '@/content/site/hero.json'
 import { Nav } from '@/components/layout/Nav'
 import { Footer } from '@/components/layout/Footer'
 import { Hero } from '@/components/sections/Hero'
+import { StatsStrip } from '@/components/sections/StatsStrip'
 import { About } from '@/components/sections/About'
 import { CvDemo } from '@/components/sections/CvDemo'
 import { Education } from '@/components/sections/Education'
@@ -19,6 +20,7 @@ function App() {
     <>
       <Nav logo={hero.profileName} />
       <Hero />
+      <StatsStrip />
       <About />
       <CvDemo />
       <Education />

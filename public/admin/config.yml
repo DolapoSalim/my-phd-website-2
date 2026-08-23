@@ -99,6 +99,18 @@ collections:
           - { name: "logo", label: "Footer logo text", widget: "string" }
           - { name: "copy", label: "Copyright line", widget: "string" }
 
+      - name: "stats"
+        label: "Stats Strip"
+        file: "src/content/site/stats.json"
+        fields:
+          - name: "items"
+            label: "Stat items (shown between Hero and About)"
+            widget: "list"
+            fields:
+              - { name: "value", label: "Number to count up to", widget: "number" }
+              - { name: "suffix", label: "Suffix (e.g. +)", widget: "string", required: false }
+              - { name: "label", widget: "string" }
+
   - name: "education"
     label: "Education"
     folder: "src/content/education"
