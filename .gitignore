@@ -1,2 +1,13 @@
 .DS_Store
 .vscode
+
+# Node / Vite
+node_modules
+dist
+dist-ssr
+*.local
+.vite
+
+# env
+.env
+.env.local

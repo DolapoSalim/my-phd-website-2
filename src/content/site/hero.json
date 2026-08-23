@@ -1,0 +1,19 @@
+{
+  "kicker": "PhD Candidate · University of Pisa · Italy",
+  "nameLine1": "Olatoye",
+  "nameLine2": "Dolapo Salim",
+  "tagline": "**Computer Vision** for Marine Ecology",
+  "bio": "Leveraging **AI and emerging imaging technologies** to decode biodiversity stability in complex marine environments. Part of the EU Horizon **BioEcoOcean** project, funded by the University of Pisa.",
+  "ctas": [
+    { "label": "Publications", "url": "https://www.researchgate.net/profile/Dolapo-Olatoye/research", "style": "fill" },
+    { "label": "Download CV", "url": "https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true", "style": "ghost" },
+    { "label": "Contact", "url": "#contact", "style": "ghost" }
+  ],
+  "profileImage": "/assets/images/profile picture.png",
+  "profileName": "Olatoye Dolapo Salim",
+  "meta": [
+    { "label": "loc", "value": "Pisa, Tuscany, Italy" },
+    { "label": "inst", "value": "Dipartimento di Biologia, UniPi" },
+    { "label": "field", "value": "Computer Vision · Marine Ecology" }
+  ]
+}

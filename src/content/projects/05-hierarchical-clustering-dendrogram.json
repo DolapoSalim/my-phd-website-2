@@ -1,0 +1,8 @@
+{
+  "order": 5,
+  "name": "Hierarchical-Clustering-Dendrogram",
+  "year": "2024",
+  "desc": "R-based hierarchical clustering and dendrogram visualisation for ecological community analysis, biodiversity grouping, and habitat similarity studies.",
+  "tags": ["R", "Statistics", "Ecology"],
+  "url": "https://github.com/DolapoSalim"
+}

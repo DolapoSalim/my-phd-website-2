@@ -1,0 +1,177 @@
+backend:
+  name: git-gateway
+  branch: adjusted
+
+# Enables `npx decap-server` for local testing before Netlify Identity
+# is wired up — see the "local_backend" flag docs. Harmless once deployed.
+local_backend: true
+
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
+
+# Once the Netlify site exists, set site_url/display_url here to its
+# https://<name>.netlify.app (or custom domain) to enable CMS previews.
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - name: "hero"
+        label: "Hero"
+        file: "src/content/site/hero.json"
+        fields:
+          - { name: "kicker", label: "Kicker line", widget: "string" }
+          - { name: "nameLine1", label: "Name — line 1", widget: "string" }
+          - { name: "nameLine2", label: "Name — line 2 (accent colour)", widget: "string" }
+          - { name: "tagline", label: "Tagline", widget: "string", hint: "Use **text** for bold emphasis." }
+          - { name: "bio", label: "Bio", widget: "text", hint: "Use **text** for bold emphasis." }
+          - name: "ctas"
+            label: "Call-to-action buttons"
+            widget: "list"
+            fields:
+              - { name: "label", widget: "string" }
+              - { name: "url", widget: "string" }
+              - { name: "style", widget: "select", options: ["fill", "ghost"] }
+          - { name: "profileImage", label: "Profile photo", widget: "image" }
+          - { name: "profileName", label: "Profile photo alt text / nav logo", widget: "string" }
+          - name: "meta"
+            label: "Profile meta rows"
+            widget: "list"
+            fields:
+              - { name: "label", widget: "string" }
+              - { name: "value", widget: "string" }
+
+      - name: "about"
+        label: "About"
+        file: "src/content/site/about.json"
+        fields:
+          - { name: "heading", label: "Heading (line break = new line)", widget: "text" }
+          - name: "paragraphs"
+            label: "Paragraphs"
+            widget: "list"
+            field: { name: "paragraph", widget: "text", hint: "Use **text** for bold, __text__ for accent bold." }
+          - name: "links"
+            label: "Links"
+            widget: "list"
+            fields:
+              - { name: "label", widget: "string" }
+              - { name: "url", widget: "string" }
+          - name: "awards"
+            label: "Academic awards"
+            widget: "list"
+            field: { name: "award", widget: "string", hint: "Use **text** for bold." }
+          - name: "affiliations"
+            label: "Affiliations"
+            widget: "list"
+            field: { name: "affiliation", widget: "string" }
+
+      - name: "cv-demo"
+        label: "CV Demo"
+        file: "src/content/site/cv-demo.json"
+        fields:
+          - { name: "heading", label: "Heading (line break = new line)", widget: "text" }
+          - name: "paragraphs"
+            label: "Paragraphs"
+            widget: "list"
+            field: { name: "paragraph", widget: "text", hint: "Use **text** for bold." }
+          - { name: "tags", label: "Tags", widget: "list" }
+          - { name: "video", label: "Demo video", widget: "file", media_folder: "public/assets/video", public_folder: "/assets/video" }
+          - { name: "badge", label: "Overlay badge text", widget: "string" }
+
+      - name: "contact"
+        label: "Contact"
+        file: "src/content/site/contact.json"
+        fields:
+          - { name: "blurb", label: "Intro blurb", widget: "text" }
+          - { name: "mailto", label: "Contact email", widget: "string" }
+          - name: "socials"
+            label: "Social links"
+            widget: "list"
+            fields:
+              - { name: "network", widget: "select", options: ["github", "linkedin", "x", "researchgate"] }
+              - { name: "label", widget: "string" }
+              - { name: "url", widget: "string" }
+
+      - name: "footer"
+        label: "Footer"
+        file: "src/content/site/footer.json"
+        fields:
+          - { name: "logo", label: "Footer logo text", widget: "string" }
+          - { name: "copy", label: "Copyright line", widget: "string" }
+
+  - name: "education"
+    label: "Education"
+    folder: "src/content/education"
+    extension: "json"
+    format: "json"
+    identifier_field: "degree"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{degree}}"
+    fields:
+      - { name: "order", label: "Order (lowest = most recent, shown first)", widget: "number" }
+      - { name: "years", label: "Years", widget: "string" }
+      - { name: "degree", widget: "string" }
+      - { name: "institution", widget: "string" }
+      - { name: "note", widget: "text", hint: "Use **text** for bold (renders gold in this section)." }
+
+  - name: "publications"
+    label: "Publications"
+    folder: "src/content/publications"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order (lowest = newest, shown first)", widget: "number" }
+      - { name: "year", widget: "string" }
+      - { name: "type", label: "Type / venue", widget: "string" }
+      - { name: "title", widget: "string" }
+      - { name: "authors", widget: "text", hint: "Wrap your own name in _underscores_ to italicise it, as in the original." }
+      - { name: "journal", widget: "string" }
+      - { name: "doi", label: "DOI (optional)", widget: "string", required: false }
+      - { name: "doiUrl", label: "DOI URL (optional)", widget: "string", required: false }
+
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    extension: "json"
+    format: "json"
+    identifier_field: "name"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{name}}"
+    fields:
+      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
+      - { name: "name", label: "Project name (must match the GitHub repo name to auto-link stars)", widget: "string" }
+      - { name: "year", widget: "string" }
+      - { name: "desc", label: "Description", widget: "text" }
+      - { name: "tags", widget: "list" }
+      - { name: "url", label: "Fallback URL (used until a matching GitHub repo is found)", widget: "string" }
+
+  - name: "skills"
+    label: "Skills"
+    folder: "src/content/skills"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order", widget: "number" }
+      - { name: "title", label: "Group title", widget: "string" }
+      - { name: "tags", widget: "list" }
+
+  - name: "news"
+    label: "News"
+    folder: "src/content/news"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
+      - { name: "date", widget: "string" }
+      - { name: "title", widget: "string" }
+      - { name: "body", widget: "text" }
+      - { name: "url", label: "Link URL", widget: "string" }

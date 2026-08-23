@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Olatoye Dolapo Salim — Computer Vision for Marine Ecology</title>
+<meta name="description" content="PhD Candidate, University of Pisa. AI and Computer Vision for marine biodiversity monitoring."/>
+<!-- Poppins throughout — display headings via heavier weights (700/800),
+     reading body at regular/medium, UI labels at semibold. JetBrains Mono
+     is the one complementary font, reserved for DOI/citation-style data
+     points only (see --mono-accent), used sparingly per design intent. -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><b>Olatoye Dolapo Salim</b></div>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#cv-demo">research</a></li>
+      <li><a href="#education">education</a></li>
+      <li><a href="#publications">publications</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#news">news</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn">☀ Light</button>
+      <button class="hbg" id="hbg" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="#about">about</a><a href="#cv-demo">research</a>
+  <a href="#education">education</a><a href="#publications">publications</a>
+  <a href="#projects">projects</a><a href="#skills">skills</a>
+  <a href="#news">news</a><a href="#contact">contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- Marine boid canvas — fish flee mouse cursor -->
+  <canvas id="marine-canvas"></canvas>
+  <!-- Custom fish cursor — replaces the pointer while inside the hero -->
+  <div id="fish-cursor" aria-hidden="true">
+    <svg viewBox="-16 -8 32 16" width="32" height="16">
+      <path class="fc-body" d="M9 0 C4 -7 -7 -5.5 -11 -0.5 C-7 5.5 4 7 9 0 Z"/>
+      <path class="fc-tail" d="M-11 -0.5 C-14 -3.5 -16 -3 -16 -3 C-15 -1 -15 1 -16 3 C-16 3 -14 3.5 -11 0.5 Z"/>
+      <circle class="fc-eye" cx="5.5" cy="-1.2" r="0.9"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-wrap">
+      <!-- Text content -->
+      <div>
+        <div class="hero-kicker"><span class="dot-live"></span>PhD Candidate &nbsp;·&nbsp; University of Pisa &nbsp;·&nbsp; Italy</div>
+        <h1 class="hero-name">Olatoye<br><em>Dolapo Salim</em></h1>
+        <p class="hero-tagline"><b>Computer Vision</b> for Marine Ecology</p>
+        <p class="hero-bio">
+          Leveraging <strong>AI and emerging imaging technologies</strong> to decode
+          biodiversity stability in complex marine environments.
+          Part of the EU Horizon <strong>BioEcoOcean</strong> project,
+          funded by the University of Pisa.
+        </p>
+        <div class="hero-ctas">
+          <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="btn btn-fill">Publications</a>
+          <a href="https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true" target="_blank" class="btn btn-ghost">Download CV</a>
+          <a href="#contact" class="btn btn-ghost">Contact</a>
+        </div>
+
+        <!-- Mobile: profile shown below CTA buttons -->
+        <div class="hero-profile-mobile">
+          <div class="profile-img-wrap">
+            <img src="assets/images/profile picture.png" alt="Olatoye Dolapo Salim"
+                 onerror="this.parentElement.style.background='var(--surface2)';this.style.display='none'"/>
+          </div>
+          <div class="profile-meta">
+            <div class="meta-row">loc <span>Pisa, Tuscany, Italy</span></div>
+            <div class="meta-row">inst <span>Dept. of Biology, UniPi</span></div>
+            <div class="meta-row">field <span>CV · Marine Ecology</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop: profile panel right column -->
+      <div class="hero-panel">
+        <div class="profile-img-wrap">
+          <img src="assets/images/profile picture.png" alt="Olatoye Dolapo Salim"
+               onerror="this.parentElement.style.background='var(--surface2)';this.style.display='none'"/>
+        </div>
+        <div class="profile-meta">
+          <div class="meta-row">loc <span>Pisa, Tuscany, Italy</span></div>
+          <div class="meta-row">inst <span>Dipartimento di Biologia, UniPi</span></div>
+          <div class="meta-row">field <span>Computer Vision · Marine Ecology</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fi">
+        <div class="sec-label">About</div>
+        <h2 class="sec-title">Marine Biologist<br>&amp; AI Researcher</h2>
+        <div class="about-text">
+          <p>I am a PhD candidate at the <strong>University of Pisa's Department of Biology</strong>, working at the intersection of marine ecology and machine intelligence. My research centres on applying <b>AI and emerging imaging technologies, </b>particularly computer vision and deep learning to evaluate <strong>biodiversity stability in complex marine environments</strong>.</p>
+          <p>My work spans the full pipeline: from collecting and annotating underwater imagery, training <strong>object detection and classification models</strong>, to integrating outputs with ecological data for biodiversity assessment. I believe <strong>scalable, automated vision systems</strong> are key to monitoring ocean health at the speed the climate crisis demands.</p>
+          <p>I hold an MSc in <strong>Coastal &amp; Marine Biology and Ecology</strong> from Università del Salento (Unisalento4Talents Scholar) and a BSc in <strong>Fisheries and Aquaculture</strong> from Federal University Oye-Ekiti, Nigeria, graduating as <strong>best student of my department</strong>. My PhD is funded by the <strong>BioEcoOcean EU Horizon project</strong>.</p>
+        </div>
+        <div class="about-actions">
+          <a href="https://bioecoocean.org/" target="_blank" class="btn btn-ghost btn-sm">BioEcoOcean ↗</a>
+          <a href="https://bioboostplus.eu/scientific/20" target="_blank" class="btn btn-ghost btn-sm">BioBoost+ ↗</a>
+          <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" target="_blank" class="btn btn-ghost btn-sm">Research Notes ↗</a>
+        </div>
+      </div>
+      <div class="fi" style="transition-delay:0.1s">
+        <div class="award-block">
+          <div class="award-label">Academic Awards</div>
+          <div class="award-item"><strong>Best Graduating Student</strong> — Dept. of Fisheries &amp; Aquaculture, Federal University Oye-Ekiti, 2019</div>
+          <div class="award-item"><strong>Unisalento4Talents Scholarship</strong> — Università del Salento, MSc 2021–2023</div>
+        </div>
+        <div class="affils">
+          <div class="sec-label" style="margin-bottom:0.7rem">Affiliations</div>
+          <div class="affil-row">
+            <div class="affil">University of Pisa</div>
+            <div class="affil">BioEcoOcean · EU Horizon</div>
+            <div class="affil">BioBoost+</div>
+            <div class="affil">AMBULANT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV DEMO -->
+<section id="cv-demo">
+  <div id="waves-bg"></div>
+  <div class="container">
+    <div class="sec-label">Computer Vision in Action</div>
+    <div class="demo-grid">
+      <div class="demo-text fi">
+        <h3>Automated Species<br>Detection &amp; Tracking</h3>
+        <p>This demo shows a real-time <strong>YOLO-based object detection and tracking</strong> pipeline applied to underwater video footage. Each species is automatically identified, labelled, and assigned a persistent tracking ID across frames.</p>
+        <p>Part of ongoing work under <strong>BioBoost+ EU project</strong> contributing to scalable, AI-driven biodiversity monitoring by eliminating the need for manual video annotation.</p>
+        <div class="demo-tags">
+          <span class="demo-tag">YOLOv8</span><span class="demo-tag">Object Tracking</span>
+          <span class="demo-tag">Species Detection</span><span class="demo-tag">Python</span>
+          <span class="demo-tag">OpenCV</span><span class="demo-tag">BioBoost+</span>
+        </div>
+      </div>
+      <div class="fi" style="transition-delay:0.12s">
+        <div class="demo-video-wrap">
+          <video autoplay muted loop playsinline preload="metadata" src="assets/video/demo.mp4"
+            onerror="this.parentElement.innerHTML='<div style=padding:3rem;text-align:center;color:var(--text3);font-size:0.85rem>Place demo.mp4 in assets/video/</div>'">
+          </video>
+          <div class="demo-overlay"><div class="demo-badge">Live Demo — Species Detection</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="sec-label">Education</div>
+    <h2 class="sec-title">Academic Journey</h2>
+    <p class="sec-sub">From Nigeria to Italy — building the interdisciplinary foundation for AI-driven marine science.</p>
+    <div class="tl" id="diveTimeline">
+      <div class="tl-progress" id="diveProgress"></div>
+      <div class="tl-item">
+        <div class="tl-year">2023 – Present</div>
+        <div class="tl-degree">Doctor of Philosophy in Biological Sciences</div>
+        <div class="tl-inst">University of Pisa, Italy</div>
+        <div class="tl-note">Understanding biodiversity stability in complex marine environments using emerging sensing technologies. <strong>Funded by BioEcoOcean (EU Horizon).</strong></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2021 – 2023</div>
+        <div class="tl-degree">MSc in Coastal &amp; Marine Biology and Ecology</div>
+        <div class="tl-inst">Università del Salento, Italy</div>
+        <div class="tl-note"><strong>Grade: 110/110</strong> · Awarded the <strong>Unisalento4Talents Scholarship.</strong></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2015 – 2019</div>
+        <div class="tl-degree">BSc in Fisheries and Aquaculture</div>
+        <div class="tl-inst">Federal University Oye-Ekiti, Nigeria</div>
+        <div class="tl-note"><strong>Best Graduating Student</strong> — Department of Fisheries and Aquaculture, 2018/2019.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <div class="sec-label">Publications</div>
+    <h2 class="sec-title">Research Output</h2>
+    <p class="sec-sub">Peer-reviewed articles and conference contributions, newest first.</p>
+    <div class="pub-list">
+      <div class="pub fi">
+        <div class="pub-year">2026</div>
+        <div>
+          <div class="pub-type">Research Article · Ecological Indicators</div>
+          <div class="pub-title">Invertebrates' Metabolic Responses to Climate Warming Scenarios in the Adriatic Sea</div>
+          <div class="pub-authors">Shokri M., Lezzi L., Ciotti M., Vignes F., Taban P., Marrocco V., Alabi V., <em>Olatoye D.</em>, Muresan A.N., Forni P., Semeraro T., Fano E.A., &amp; Basset A.</div>
+          <div class="pub-journal">Ecological Indicators, 183, 114622</div>
+          <a href="https://doi.org/10.1016/j.ecolind.2026.114622" target="_blank" class="pub-doi">DOI 10.1016/j.ecolind.2026.114622 ↗</a>
+        </div>
+      </div>
+      <div class="pub fi" style="transition-delay:0.08s">
+        <div class="pub-year">2024</div>
+        <div>
+          <div class="pub-type">Poster · BEING SEA-EU / AMBULANT</div>
+          <div class="pub-title">Automated Benthic Detection and Identification System of Key Marine Features through Machine Learning, Machine Vision Prototypes and Artificial Neural Networks</div>
+          <div class="pub-authors">Boujmil I., Karovic S., Zama F., <em>Olatoye D.S.</em>, Klenczner T.A., Siciliano A., Dimech S., Sitilo N., Sacco O., Pierucci M., Deguara D., Scerri D., Theuma L., Paolacci S.</div>
+          <div class="pub-journal">AquaBioTech Group &amp; Malta College of Arts, Science and Technology</div>
+        </div>
+      </div>
+      <div class="pub fi" style="transition-delay:0.16s">
+        <div class="pub-year">2020</div>
+        <div>
+          <div class="pub-type">Research Article · Applied Tropical Agriculture</div>
+          <div class="pub-title">Studies on Lateralization and Aggression in Nile Tilapia (Oreochromis niloticus) Using the Mirror, Dyadic and Predator Inspection Tests</div>
+          <div class="pub-authors">Ariyomo T.O., <em>Olatoye D.S.</em> &amp; Jegede T.</div>
+          <div class="pub-journal">Applied Tropical Agriculture, 25(2), pp. 68–74</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2rem">
+      <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="btn btn-ghost">Full list on ResearchGate ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS — list format, after publications -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-label">Projects</div>
+    <h2 class="sec-title">Code &amp; Repositories</h2>
+    <p class="sec-sub">Tools, pipelines, and experiments in computer vision and marine data science.</p>
+    <div class="scroll-stack-inner" id="projectsList"></div>
+    <div class="scroll-stack-end"></div>
+    <div style="margin-top:2rem">
+      <a href="https://github.com/DolapoSalim?tab=repositories" target="_blank" class="btn btn-ghost">View all on GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-label">Skills</div>
+    <h2 class="sec-title">Technical Expertise</h2>
+    <p class="sec-sub">A cross-disciplinary stack spanning AI engineering and field marine science.</p>
+    <div class="skills-layout">
+      <div class="sg fi"><div class="sg-title">Programming &amp; Data</div><div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">JavaScript</span><span class="tag">Bash</span></div></div>
+      <div class="sg fi" style="transition-delay:.05s"><div class="sg-title">Computer Vision &amp; AI</div><div class="tags"><span class="tag">YOLO</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">CNNs</span><span class="tag">ViT</span><span class="tag">Object Detection</span><span class="tag">Segmentation</span><span class="tag">Claude AI</span></div></div>
+      <div class="sg fi" style="transition-delay:.1s"><div class="sg-title">Tools &amp; Platforms</div><div class="tags"><span class="tag">Roboflow</span><span class="tag">Streamlit</span><span class="tag">Git / GitHub</span><span class="tag">Docker</span><span class="tag">HPC / Cluster</span><span class="tag">CVAT</span><span class="tag">Label Studio</span></div></div>
+      <div class="sg fi" style="transition-delay:.15s"><div class="sg-title">Remote Sensing &amp; GIS</div><div class="tags"><span class="tag">Satellite Imagery</span><span class="tag">QGIS</span><span class="tag">Google Earth Engine</span><span class="tag">Hyperspectral</span><span class="tag">Coastal Monitoring</span></div></div>
+      <div class="sg fi" style="transition-delay:.2s"><div class="sg-title">Marine Science</div><div class="tags"><span class="tag">Marine Ecology</span><span class="tag">Biodiversity Assessment</span><span class="tag">Benthic Ecology</span><span class="tag">Fisheries</span><span class="tag">Ecosystem Modelling</span><span class="tag">Climate Impact</span></div></div>
+      <div class="sg fi" style="transition-delay:.25s"><div class="sg-title">Data Science</div><div class="tags"><span class="tag">Statistical Analysis</span><span class="tag">Data Visualisation</span><span class="tag">Multivariate Analysis</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="container">
+    <div class="sec-label">News &amp; Updates</div>
+    <h2 class="sec-title">Latest</h2>
+    <p class="sec-sub">Research milestones, project updates, and field dispatches.</p>
+    <div class="news-list">
+      <a href="https://bioboostplus.eu/scientific/20" target="_blank" class="news-item fi">
+        <div class="news-date">2024</div>
+        <div><div class="news-title">Featured on BioBoost+</div><div class="news-body">My contribution to the EU BioBoost+ project — automated species image recognition — was featured on the project's official website.</div></div>
+        <div class="news-arrow">↗</div>
+      </a>
+      <a href="https://bioecoocean.org/news/the-bioecoocean-consortium-biannual-meeting-held-in-november-2024/" target="_blank" class="news-item fi" style="transition-delay:0.07s">
+        <div class="news-date">Nov 2024</div>
+        <div><div class="news-title">BioEcoOcean Consortium Biannual Meeting</div><div class="news-body">Participated in the BioEcoOcean EU Horizon consortium's biannual meeting held online on November 18–19, 2024.</div></div>
+        <div class="news-arrow">↗</div>
+      </a>
+      <a href="https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" target="_blank" class="news-item fi" style="transition-delay:0.14s">
+        <div class="news-date">Ongoing</div>
+        <div><div class="news-title">PhD Research: AI for Marine Biodiversity</div><div class="news-body">Developing AI imaging pipelines and sensor fusion methods to assess ecosystem stability in the Mediterranean and beyond.</div></div>
+        <div class="news-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-label">Contact</div>
+    <h2 class="sec-title">Get in Touch</h2>
+    <div class="contact-grid">
+      <div class="fi">
+        <div class="c-info"><p>Available for academic collaborations, consulting, speaking, and research inquiries, especially at the intersection of computer vision, marine science, and biodiversity monitoring.</p></div>
+        <div class="socials">
+          <a href="https://github.com/DolapoSalim" target="_blank" class="soc">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            github.com/DolapoSalim
+          </a>
+          <a href="https://www.linkedin.com/in/dolapoolatoye/" target="_blank" class="soc">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            linkedin.com/in/dolapoolatoye
+          </a>
+          <a href="https://x.com/dolapo_salim" target="_blank" class="soc">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            @dolapo_salim
+          </a>
+          <a href="https://www.researchgate.net/profile/Dolapo-Olatoye/research" target="_blank" class="soc">
+            <span class="soc-rg">RG</span>ResearchGate Profile
+          </a>
+        </div>
+      </div>
+      <div class="fi" style="transition-delay:0.1s">
+        <form class="cf" id="cf">
+          <div class="fg"><label for="cn">Name</label><input type="text" id="cn" placeholder="Your name" required/></div>
+          <div class="fg"><label for="ce">Email</label><input type="email" id="ce" placeholder="your@email.com" required/></div>
+          <div class="fg"><label for="cm">Message</label><textarea id="cm" rows="5" placeholder="How can I help?" required></textarea></div>
+          <button type="submit" class="cf-submit">Send message →</button>
+          <p class="cf-msg" id="cfMsg"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div class="f-logo"><b>Olatoye Dolapo Salim</b> · research</div>
+      <div class="f-copy">© 2025</div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
