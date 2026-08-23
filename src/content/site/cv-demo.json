@@ -1,0 +1,10 @@
+{
+  "heading": "Automated Species\nDetection & Tracking",
+  "paragraphs": [
+    "This demo shows a real-time **YOLO-based object detection and tracking** pipeline applied to underwater video footage. Each species is automatically identified, labelled, and assigned a persistent tracking ID across frames.",
+    "Part of ongoing work under **BioBoost+ EU project** contributing to scalable, AI-driven biodiversity monitoring by eliminating the need for manual video annotation."
+  ],
+  "tags": ["YOLOv8", "Object Tracking", "Species Detection", "Python", "OpenCV", "BioBoost+"],
+  "video": "/assets/video/demo.mp4",
+  "badge": "Live Demo — Species Detection"
+}

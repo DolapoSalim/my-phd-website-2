@@ -1,0 +1,8 @@
+{
+  "order": 7,
+  "name": "OCR-Analysis-of-ChatGPT-Chat",
+  "year": "2024",
+  "desc": "OCR pipeline extracting and analysing text from exported ChatGPT conversation screenshots, enabling topic mining, keyword frequency analysis, and AI usage pattern exploration.",
+  "tags": ["Python", "OCR", "NLP"],
+  "url": "https://github.com/DolapoSalim"
+}

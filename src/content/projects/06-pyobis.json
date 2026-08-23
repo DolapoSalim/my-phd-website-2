@@ -1,0 +1,8 @@
+{
+  "order": 6,
+  "name": "PyObis",
+  "year": "2025",
+  "desc": "Python wrapper for the OBIS (Ocean Biodiversity Information System) API. Fetch, filter, and analyse global marine species occurrence data programmatically.",
+  "tags": ["Python", "API", "Biodiversity"],
+  "url": "https://github.com/DolapoSalim"
+}
