@@ -1,14 +1,15 @@
-import { useRef } from 'react'
-import { publicationEntries, type PublicationEntry } from '@/lib/content'
+import { publicationEntries } from '@/lib/content'
 import { richText } from '@/lib/richtext'
 import { SectionHeader } from '@/components/effects/SectionHeader'
-import { useReveal } from '@/hooks/useReveal'
+import { AccordionGallery, type AccordionGalleryItem } from '@/components/effects/AccordionGallery'
 
-function PubCard({ entry }: { entry: PublicationEntry }) {
-  const ref = useRef<HTMLElement | null>(null)
-  useReveal(ref)
-  return (
-    <article className="pub" ref={ref}>
+const items: AccordionGalleryItem[] = publicationEntries.map((entry, i) => ({
+  key: entry.title,
+  index: String(i + 1).padStart(2, '0'),
+  title: entry.title,
+  meta: entry.year,
+  content: (
+    <>
       <div className="pub-top">
         <span className="pub-year">{entry.year}</span>
         <span className="pub-type">{entry.type}</span>
@@ -27,9 +28,9 @@ function PubCard({ entry }: { entry: PublicationEntry }) {
           </a>
         )}
       </div>
-    </article>
-  )
-}
+    </>
+  ),
+}))
 
 export function Publications() {
   return (
@@ -44,11 +45,7 @@ export function Publications() {
           </a>
         }
       />
-      <div className="pub-grid">
-        {publicationEntries.map((entry) => (
-          <PubCard entry={entry} key={entry.title} />
-        ))}
-      </div>
+      <AccordionGallery items={items} defaultIndex={0} trigger="click" />
     </section>
   )
 }

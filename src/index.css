@@ -436,33 +436,75 @@ section.sect:first-of-type { border-top:none }
 .article-foot:hover { color:var(--accent) }
 
 /* ════════════════════════════════════════
-   PUBLICATIONS
+   PUBLICATIONS — content reused inside .ag-panel__content
 ════════════════════════════════════════ */
-.pub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(430px,1fr)); gap:22px; align-items:stretch }
-.pub {
-  border:1px solid var(--border2); border-radius:4px; padding:34px 32px;
-  display:flex; flex-direction:column;
-  transition:border-color var(--t) var(--ease), background var(--t) var(--ease);
-  opacity:0; transform:translateY(22px);
-}
-.pub.vis { opacity:1; transform:none }
-.pub:hover { border-color:rgba(225,173,102,0.55); background:rgba(225,173,102,0.03) }
 .pub-top { display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding-bottom:20px }
 .pub-year { font-family:var(--display); font-weight:600; font-size:46px; line-height:0.9; letter-spacing:-0.04em; color:var(--accent); font-feature-settings:'tnum' }
 .pub-type { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text2) }
-.pub-title { margin:0; font-family:var(--display); font-weight:500; font-size:clamp(21px,1.9vw,28px); line-height:1.2; letter-spacing:-0.02em; color:var(--text) }
-.pub-desc { margin:16px 0 0 0; font-size:16px; line-height:1.68; color:var(--text2) }
-.pub-authors { font-size:14.5px; line-height:1.6; color:var(--text2); padding-top:16px }
-.pub-authors .me { color:var(--text) }
-.pub-bottom { margin-top:auto; padding-top:24px; display:flex; align-items:baseline; justify-content:space-between; gap:20px; flex-wrap:wrap }
+.pub-title { margin:0; font-family:var(--display); font-weight:500; font-size:clamp(20px,1.7vw,26px); line-height:1.22; letter-spacing:-0.02em; color:var(--text) }
+.pub-desc { margin:16px 0 0 0; font-size:15.5px; line-height:1.66; color:var(--text2) }
+.pub-authors { font-size:14px; line-height:1.6; color:var(--text2); padding-top:16px }
+.pub-authors b, .pub-authors strong { color:var(--text); font-weight:600 }
+.pub-authors em { color:var(--accent); font-style:normal }
+.pub-bottom { margin-top:auto; padding-top:22px; display:flex; align-items:baseline; justify-content:space-between; gap:20px; flex-wrap:wrap }
 .pub-journal-block { border-top:1px solid var(--border3); padding-top:16px; flex:1 }
 .pub-journal { font-family:var(--body); font-style:italic; font-size:17px; color:var(--text) }
 .pub-journal-meta { font-family:var(--sans-ui); font-size:12px; letter-spacing:0.06em; color:var(--text2); padding-top:6px; font-feature-settings:'tnum' }
 .pub-doi {
   font-family:var(--sans-ui); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);
   border:1px solid rgba(225,173,102,0.5); border-radius:4px; padding:10px 16px; transition:background var(--t) var(--ease);
+  flex-shrink:0;
 }
 .pub-doi:hover { background:rgba(225,173,102,0.12) }
+
+/* ════════════════════════════════════════
+   ACCORDION GALLERY — text-panel adaptation of ReactBits'
+   AccordionGallery for the Selected Publications section
+════════════════════════════════════════ */
+.ag-root {
+  display:flex; align-items:stretch; gap:var(--ag-gap); width:100%; max-width:100%;
+  height:var(--ag-height);
+}
+.ag-panel {
+  position:relative; flex:1 1 0; min-width:0; overflow:hidden;
+  border:1px solid var(--border2); border-radius:4px; background:var(--surface);
+  cursor:pointer; transition:border-color var(--t) var(--ease), background var(--t) var(--ease);
+}
+.ag-panel:hover, .ag-panel:focus-visible { border-color:rgba(225,173,102,0.55); background:rgba(225,173,102,0.03) }
+.ag-panel:focus-visible { outline:none; box-shadow:0 0 0 2px var(--accent) }
+.ag-panel--active { cursor:default }
+
+.ag-panel__spine {
+  position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
+  justify-content:space-between; padding:26px 0 22px 0;
+  opacity:1; transition:opacity 0.3s var(--ease);
+}
+.ag-panel--active .ag-panel__spine { opacity:0; pointer-events:none }
+.ag-panel__spine-index { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.14em; color:var(--accent) }
+.ag-panel__spine-title {
+  writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
+  font-family:var(--display); font-weight:500; font-size:15px; letter-spacing:-0.01em; color:var(--text2);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-height:100%;
+}
+.ag-panel__spine-meta { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.1em; color:var(--text3); font-feature-settings:'tnum' }
+
+.ag-panel__content {
+  position:absolute; inset:0; padding:32px 30px; display:flex; flex-direction:column;
+  opacity:0; transform:translateX(14px); pointer-events:none; overflow-y:auto;
+  transition:opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.ag-panel--active .ag-panel__content { opacity:1; transform:none; pointer-events:auto; transition-delay:0.1s }
+
+@media (max-width:720px) {
+  .ag-root { flex-direction:column; height:auto }
+  .ag-panel { flex:0 0 auto; min-height:64px }
+  .ag-panel__spine { flex-direction:row; padding:0 20px; justify-content:flex-start; gap:14px }
+  .ag-panel__spine-title {
+    writing-mode:horizontal-tb; transform:none; flex:1;
+  }
+  .ag-panel__content { position:relative; inset:auto; min-height:340px }
+  .ag-panel:not(.ag-panel--active) .ag-panel__content { display:none }
+}
 
 /* ════════════════════════════════════════
    CV — Education + Appointments
