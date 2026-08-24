@@ -1,7 +1,9 @@
+import { useRef } from 'react'
 import { publicationEntries } from '@/lib/content'
 import { richText } from '@/lib/richtext'
 import { SectionHeader } from '@/components/effects/SectionHeader'
 import { AccordionGallery, type AccordionGalleryItem } from '@/components/effects/AccordionGallery'
+import { useReveal } from '@/hooks/useReveal'
 
 const items: AccordionGalleryItem[] = publicationEntries.map((entry, i) => ({
   key: entry.title,
@@ -33,6 +35,9 @@ const items: AccordionGalleryItem[] = publicationEntries.map((entry, i) => ({
 }))
 
 export function Publications() {
+  const ref = useRef<HTMLDivElement | null>(null)
+  useReveal(ref)
+
   return (
     <section className="sect" id="publications">
       <SectionHeader
@@ -45,7 +50,9 @@ export function Publications() {
           </a>
         }
       />
-      <AccordionGallery items={items} defaultIndex={0} trigger="hover" />
+      <div className="fi" ref={ref}>
+        <AccordionGallery items={items} defaultIndex={0} trigger="hover" />
+      </div>
     </section>
   )
 }
