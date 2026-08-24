@@ -332,10 +332,11 @@ section.sect:first-of-type { border-top:none }
 .hero-name {
   position:relative; margin:0; will-change:transform;
   font-family:var(--display); font-weight:600;
-  font-size:clamp(56px,12.6vw,208px); line-height:0.86; letter-spacing:-0.045em;
+  letter-spacing:-0.045em;
   color:var(--text);
 }
-.hero-name span { display:block }
+.hero-name-line { position:relative; width:100%; height:clamp(70px,14.5vw,230px) }
+.hero-name-line + .hero-name-line { margin-top:-0.06em }
 .hero-facts {
   display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:56px; align-items:center;
   border-top:1px solid var(--border3); margin-top:44px; padding:32px 0 36px 0;
@@ -565,7 +566,7 @@ section.sect:first-of-type { border-top:none }
 .built-card h3 { margin:0; font-family:var(--display); font-weight:600; font-size:28px; letter-spacing:-0.03em; color:var(--text) }
 .built-card p { margin:0; font-size:15.5px; line-height:1.62; color:var(--text2) }
 .built-card-cta { margin-top:auto; padding-top:14px; font-family:var(--sans-ui); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text) }
-.stack-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:44px 40px; align-items:stretch; margin-top:64px }
+.stack-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:44px 40px; align-items:stretch; margin-top:64px }
 .stack-group { display:flex; flex-direction:column; opacity:0; transform:translateY(22px) }
 .stack-group.vis { opacity:1; transform:none }
 .stack-group-head { display:flex; align-items:baseline; gap:12px; padding-bottom:18px }
@@ -620,6 +621,7 @@ section.sect:first-of-type { border-top:none }
 @media (max-width:900px) {
   .hero-facts { grid-template-columns:1fr }
   .contact-grid { grid-template-columns:1fr 1fr }
+  .stack-grid { grid-template-columns:repeat(2,1fr) }
 }
 @media (max-width:768px) {
   body { font-size:16px }
@@ -628,7 +630,7 @@ section.sect:first-of-type { border-top:none }
   section.sect { padding:64px 24px 72px 24px }
   #hero { padding:112px 24px 0 24px }
   .wrap { padding-left:24px; padding-right:24px }
-  .pub-grid, .card-grid { grid-template-columns:1fr }
+  .pub-grid, .card-grid, .stack-grid { grid-template-columns:1fr }
   .article-card.featured { grid-template-columns:1fr }
   .cv-grid { grid-template-columns:1fr; gap:48px }
   .contact-grid { grid-template-columns:1fr 1fr; gap:24px }
