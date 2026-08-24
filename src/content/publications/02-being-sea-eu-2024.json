@@ -1,10 +1,12 @@
 {
   "order": 2,
   "year": "2024",
-  "type": "Poster · BEING SEA-EU / AMBULANT",
-  "title": "Automated Benthic Detection and Identification System of Key Marine Features through Machine Learning, Machine Vision Prototypes and Artificial Neural Networks",
-  "authors": "Boujmil I., Karovic S., Zama F., _Olatoye D.S._, Klenczner T.A., Siciliano A., Dimech S., Sitilo N., Sacco O., Pierucci M., Deguara D., Scerri D., Theuma L., Paolacci S.",
-  "journal": "AquaBioTech Group & Malta College of Arts, Science and Technology",
+  "type": "Poster publication",
+  "title": "Automated benthic detection and identification of key marine features through machine learning and machine vision prototypes",
+  "desc": "The AMBULANT prototype: neural-network pipelines trained on annotated ROV stills to recognise benthic features, presented as a route to routine, non-expert habitat monitoring.",
+  "authors": "Boujmil, I., Karovic, S., Zama, F., __Olatoye, D. S.__, Klenczner, T. A., Siciliano, A., Dimech, S., Sitilo, N., Sacco, O., Pierucci, M., Deguara, D., Scerri, D., Theuma, L. & Paolacci, S.",
+  "journal": "BEING SEA-EU",
+  "journalMeta": "AquaBioTech Group & MCAST, Malta",
   "doi": "",
   "doiUrl": ""
 }

@@ -1,35 +1,30 @@
-import hero from '@/content/site/hero.json'
+import marquee from '@/content/site/marquee.json'
 import { Nav } from '@/components/layout/Nav'
-import { Footer } from '@/components/layout/Footer'
+import { CustomCursor } from '@/components/effects/CustomCursor'
+import { Marquee } from '@/components/effects/Marquee'
 import { Hero } from '@/components/sections/Hero'
-import { StatsStrip } from '@/components/sections/StatsStrip'
 import { About } from '@/components/sections/About'
-import { CvDemo } from '@/components/sections/CvDemo'
-import { Education } from '@/components/sections/Education'
+import { Research } from '@/components/sections/Research'
 import { Publications } from '@/components/sections/Publications'
-import { Projects } from '@/components/sections/Projects'
-import { Skills } from '@/components/sections/Skills'
-import { News } from '@/components/sections/News'
+import { Cv } from '@/components/sections/Cv'
+import { Awards } from '@/components/sections/Awards'
+import { Expertise } from '@/components/sections/Expertise'
 import { Contact } from '@/components/sections/Contact'
-import { useScrollDepthEffects } from '@/hooks/useScrollDepthEffects'
 
 function App() {
-  useScrollDepthEffects()
-
   return (
     <>
-      <Nav logo={hero.profileName} />
+      <CustomCursor />
+      <Nav />
       <Hero />
-      <StatsStrip />
       <About />
-      <CvDemo />
-      <Education />
+      <Marquee items={marquee.items} />
+      <Research />
       <Publications />
-      <Projects />
-      <Skills />
-      <News />
+      <Cv />
+      <Awards />
+      <Expertise />
       <Contact />
-      <Footer />
     </>
   )
 }

@@ -1,10 +1,14 @@
 {
-  "blurb": "Available for academic collaborations, consulting, speaking, and research inquiries, especially at the intersection of computer vision, marine science, and biodiversity monitoring.",
-  "mailto": "dolapo.olatoye@phd.unipi.it",
-  "socials": [
-    { "network": "github", "label": "github.com/DolapoSalim", "url": "https://github.com/DolapoSalim" },
-    { "network": "linkedin", "label": "linkedin.com/in/dolapoolatoye", "url": "https://www.linkedin.com/in/dolapoolatoye/" },
-    { "network": "x", "label": "@dolapo_salim", "url": "https://x.com/dolapo_salim" },
-    { "network": "researchgate", "label": "ResearchGate Profile", "url": "https://www.researchgate.net/profile/Dolapo-Olatoye/research" }
-  ]
+  "email": "dolaposalim.olatoye@phd.unipi.it",
+  "officeHours": "Tuesdays & Thursdays, 14:00–16:00 CET",
+  "officeLocation": "Ecology Unit, Dept. of Biology, Via Derna 1, Pisa",
+  "elsewhere": [
+    { "label": "LinkedIn ↗", "url": "https://www.linkedin.com/in/dolapoolatoye/" },
+    { "label": "ORCID ↗", "url": "https://orcid.org/0009-0005-6193-336X" },
+    { "label": "GitHub ↗", "url": "https://github.com/DolapoSalim" }
+  ],
+  "affiliations": "FISON · American Fisheries Society · ECOPs Italy",
+  "openTo": "Collaboration on marine imaging datasets, co-supervision of student projects, review and speaking.",
+  "footerLocation": "Olatoye Dolapo Salim — Pisa, Italy",
+  "footerUpdated": "Last updated August 2026"
 }

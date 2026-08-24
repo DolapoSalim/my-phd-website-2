@@ -1,0 +1,13 @@
+{
+  "order": 1,
+  "featured": true,
+  "kind": "Open tool",
+  "yearRange": "2025 — present",
+  "title": "EcoQuad",
+  "subtitle": "Deep-learning quadrat cover estimation",
+  "desc": "A YOLO-based tool that quantifies macroalgal and sessile invertebrate coverage from quadrat photographs. It detects the quadrat frame automatically, lays a grid over the sampled area and returns per-cell percentage cover, so species presence and spatial metrics come out of the image without manual point counting. Built in the Ecology Unit at Pisa and deployed as an interactive web application for classroom and lab use.",
+  "tags": ["YOLO", "Object detection", "Streamlit", "Teaching"],
+  "ctaLabel": "Open the app ↗",
+  "ctaUrl": "https://ecoquad-ai.streamlit.app/",
+  "foot": ""
+}

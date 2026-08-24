@@ -1,45 +1,47 @@
 import { useState } from 'react'
+import hero from '@/content/site/hero.json'
 import { useTheme } from '@/hooks/useTheme'
 
 const NAV_LINKS = [
-  { href: '#about', label: 'about' },
-  { href: '#cv-demo', label: 'research' },
-  { href: '#education', label: 'education' },
-  { href: '#publications', label: 'publications' },
-  { href: '#projects', label: 'projects' },
-  { href: '#skills', label: 'skills' },
-  { href: '#news', label: 'news' },
-  { href: '#contact', label: 'contact' },
+  { href: '#research', label: 'Research' },
+  { href: '#publications', label: 'Publications' },
+  { href: '#cv', label: 'CV' },
+  { href: '#awards', label: 'Awards' },
+  { href: '#software', label: 'Expertise' },
 ]
 
-export function Nav({ logo }: { logo: string }) {
+export function Nav() {
   const { theme, toggle } = useTheme()
   const [open, setOpen] = useState(false)
 
   return (
     <>
       <nav>
-        <div className="nav-inner">
-          <div className="nav-logo">
-            <b>{logo}</b>
-          </div>
+        <a href="#top" data-magnetic="1" className="nav-logo">
+          <b>{hero.navShortName}</b>
+          <span className="nav-logo-tagline">{hero.navTagline}</span>
+        </a>
+        <div className="nav-right">
           <ul className="nav-links">
             {NAV_LINKS.map((l) => (
               <li key={l.href}>
-                <a href={l.href}>{l.label}</a>
+                <a href={l.href} data-magnetic="1">
+                  {l.label}
+                </a>
               </li>
             ))}
           </ul>
-          <div className="nav-right">
-            <button className="theme-btn" onClick={toggle}>
-              {theme === 'dark' ? '☀ Light' : '☾ Dark'}
-            </button>
-            <button className={`hbg ${open ? 'open' : ''}`} aria-label="menu" onClick={() => setOpen((o) => !o)}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
-          </div>
+          <a href={`mailto:${hero.email}`} data-magnetic="1" className="nav-cta">
+            Get in touch
+          </a>
+          <button className="theme-btn" onClick={toggle}>
+            {theme === 'dark' ? '☀ Light' : '☾ Dark'}
+          </button>
+          <button className={`hbg ${open ? 'open' : ''}`} aria-label="menu" onClick={() => setOpen((o) => !o)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </nav>
       <div className={`mob-nav ${open ? 'open' : ''}`}>
@@ -48,6 +50,9 @@ export function Nav({ logo }: { logo: string }) {
             {l.label}
           </a>
         ))}
+        <a href={`mailto:${hero.email}`} onClick={() => setOpen(false)}>
+          Get in touch
+        </a>
       </div>
     </>
   )

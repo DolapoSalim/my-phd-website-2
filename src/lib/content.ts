@@ -7,52 +7,61 @@ function loadCollection<T extends { order: number }>(modules: Record<string, unk
     .sort((a, b) => a.order - b.order)
 }
 
-const educationModules = import.meta.glob('../content/education/*.json', { eager: true })
+const cvEducationModules = import.meta.glob('../content/cv-education/*.json', { eager: true })
+const cvAppointmentModules = import.meta.glob('../content/cv-appointments/*.json', { eager: true })
 const publicationModules = import.meta.glob('../content/publications/*.json', { eager: true })
-const projectModules = import.meta.glob('../content/projects/*.json', { eager: true })
+const researchModules = import.meta.glob('../content/research/*.json', { eager: true })
 const skillModules = import.meta.glob('../content/skills/*.json', { eager: true })
-const newsModules = import.meta.glob('../content/news/*.json', { eager: true })
+const awardModules = import.meta.glob('../content/awards/*.json', { eager: true })
 
-export interface EducationEntry {
+export interface CvEntry {
   order: number
-  years: string
-  degree: string
-  institution: string
-  note: string
+  dateStart: string
+  dateEnd: string
+  title: string
+  org: string
+  desc: string
 }
 export interface PublicationEntry {
   order: number
   year: string
   type: string
   title: string
+  desc: string
   authors: string
   journal: string
+  journalMeta: string
   doi: string
   doiUrl: string
 }
-export interface ProjectEntry {
+export interface ResearchEntry {
   order: number
-  name: string
-  year: string
+  featured: boolean
+  kind: string
+  yearRange: string
+  title: string
+  subtitle: string
   desc: string
   tags: string[]
-  url: string
+  ctaLabel: string
+  ctaUrl: string
+  foot: string
 }
 export interface SkillGroupEntry {
   order: number
   title: string
   tags: string[]
 }
-export interface NewsEntry {
+export interface AwardEntry {
   order: number
-  date: string
   title: string
-  body: string
-  url: string
+  desc: string
+  year: string
 }
 
-export const educationEntries = loadCollection<EducationEntry>(educationModules)
+export const cvEducationEntries = loadCollection<CvEntry>(cvEducationModules)
+export const cvAppointmentEntries = loadCollection<CvEntry>(cvAppointmentModules)
 export const publicationEntries = loadCollection<PublicationEntry>(publicationModules)
-export const projectEntries = loadCollection<ProjectEntry>(projectModules)
+export const researchEntries = loadCollection<ResearchEntry>(researchModules)
 export const skillGroupEntries = loadCollection<SkillGroupEntry>(skillModules)
-export const newsEntries = loadCollection<NewsEntry>(newsModules)
+export const awardEntries = loadCollection<AwardEntry>(awardModules)

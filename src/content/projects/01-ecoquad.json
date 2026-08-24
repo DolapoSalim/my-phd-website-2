@@ -1,8 +1,0 @@
-{
-  "order": 1,
-  "name": "EcoQuad",
-  "year": "2026",
-  "desc": "Quadrat-based ecological survey tool with automated species counting via computer vision. Designed for benthic monitoring and streamlining field data collection.",
-  "tags": ["Python", "OpenCV", "Ecology"],
-  "url": "https://github.com/DolapoSalim"
-}

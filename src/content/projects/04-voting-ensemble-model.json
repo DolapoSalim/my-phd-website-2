@@ -1,8 +1,0 @@
-{
-  "order": 4,
-  "name": "Voting-Ensemble-Model",
-  "year": "2025",
-  "desc": "Hard and soft voting ensemble framework combining multiple classifiers. Improves species prediction accuracy and robustness on imbalanced marine biodiversity datasets.",
-  "tags": ["Python", "Machine Learning", "Ensemble"],
-  "url": "https://github.com/DolapoSalim"
-}
