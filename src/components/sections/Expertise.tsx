@@ -2,7 +2,6 @@ import { useRef, type RefObject } from 'react'
 import expertise from '@/content/site/expertise.json'
 import { skillGroupEntries } from '@/lib/content'
 import { SectionHeader } from '@/components/effects/SectionHeader'
-import { CurvedLoop } from '@/components/effects/CurvedLoop'
 import { useReveal } from '@/hooks/useReveal'
 
 function BuiltCard({ item }: { item: (typeof expertise.built)[number] }) {
@@ -42,8 +41,12 @@ function StackGroup({ index, group }: { index: number; group: (typeof skillGroup
         <span className="n">{String(index + 1).padStart(2, '0')}</span>
         <span className="label">{group.title}</span>
       </div>
-      <div className="stack-loop">
-        <CurvedLoop marqueeText={group.tags.join(' ✦ ')} className="stack-loop-text" speed={0.6} curveAmount={16} direction={index % 2 === 0 ? 'left' : 'right'} />
+      <div className="stack-tags">
+        {group.tags.map((t) => (
+          <span className="stack-tag" key={t}>
+            {t}
+          </span>
+        ))}
       </div>
     </div>
   )

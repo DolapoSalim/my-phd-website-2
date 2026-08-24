@@ -48,7 +48,6 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@keyframes dc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes dc-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
 
 /* ════════════════════════════════════════
@@ -388,17 +387,13 @@ section.sect:first-of-type { border-top:none }
 .about-stat-desc { font-size:15.5px; line-height:1.62; color:var(--text2) }
 
 /* ════════════════════════════════════════
-   MARQUEE
+   MARQUEE — CurvedLoop banner between About and Research
 ════════════════════════════════════════ */
-.marquee-band { border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); overflow:hidden; padding:18px 0 }
-.marquee-track {
-  display:flex; width:max-content; gap:40px;
-  font-family:var(--sans-ui); font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text2);
-  white-space:nowrap; animation:dc-marquee 34s linear infinite;
-}
-.marquee-track .seg { display:flex; gap:40px }
-.marquee-track .dot { color:var(--accent) }
-@media (prefers-reduced-motion:reduce) { .marquee-track { animation:none; flex-wrap:wrap; white-space:normal; width:100% } .marquee-track .seg:nth-child(2) { display:none } }
+.marquee-band { border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); overflow:hidden; padding:14px 0 }
+.curved-loop-jacket { width:100%; display:flex; align-items:center; touch-action:pan-y }
+.curved-loop-svg { width:100%; aspect-ratio:100/12; overflow:visible; display:block; -webkit-user-select:none; user-select:none }
+.marquee-loop-text { fill:var(--text2); font-family:var(--display); font-weight:600; letter-spacing:-0.01em; font-size:5.4rem }
+@media (prefers-reduced-motion:reduce) { .marquee-band .curved-loop-jacket { cursor:auto } }
 
 /* ════════════════════════════════════════
    NUMBERED ARTICLE CARDS (research / expertise "built" row)
@@ -474,12 +469,16 @@ section.sect:first-of-type { border-top:none }
 .ag-panel:focus-visible { outline:none; box-shadow:0 0 0 2px var(--accent) }
 .ag-panel--active { cursor:default }
 
+/* Opacity/transform on the spine and content are driven directly by the
+   GSAP timeline in AccordionGallery.tsx (not a CSS transition) - a CSS
+   transition on the same properties would re-ease every inline write
+   GSAP makes each frame, compounding into a laggy double-animation. */
 .ag-panel__spine {
   position:absolute; inset:0; display:flex; flex-direction:column;
   justify-content:space-between; padding:26px 22px;
-  opacity:1; transition:opacity 0.4s ease-out;
+  opacity:1;
 }
-.ag-panel--active .ag-panel__spine { opacity:0; pointer-events:none }
+.ag-panel--active .ag-panel__spine { pointer-events:none }
 .ag-panel__spine-index { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.14em; color:var(--accent) }
 .ag-panel__spine-title {
   font-family:var(--display); font-weight:500; font-size:15.5px; line-height:1.4; letter-spacing:-0.01em; color:var(--text2);
@@ -490,9 +489,8 @@ section.sect:first-of-type { border-top:none }
 .ag-panel__content {
   position:absolute; inset:0; padding:32px 30px; display:flex; flex-direction:column;
   opacity:0; transform:translateX(10px); pointer-events:none; overflow-y:auto;
-  transition:opacity 0.45s ease-out, transform 0.45s ease-out;
 }
-.ag-panel--active .ag-panel__content { opacity:1; transform:none; pointer-events:auto; transition-delay:0.08s }
+.ag-panel--active .ag-panel__content { pointer-events:auto }
 
 @media (max-width:720px) {
   .ag-root { flex-direction:column; height:auto }
@@ -573,14 +571,13 @@ section.sect:first-of-type { border-top:none }
 .stack-group-head { display:flex; align-items:baseline; gap:12px; padding-bottom:18px }
 .stack-group-head .n { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.08em; color:var(--accent); font-feature-settings:'tnum' }
 .stack-group-head .label { font-family:var(--sans-ui); font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text) }
-.stack-loop { padding-top:20px; border-top:1px solid var(--border2); flex:1; display:flex; align-items:center; overflow:hidden }
-.curved-loop-jacket { width:100%; display:flex; align-items:center; touch-action:pan-y }
-.curved-loop-svg { width:100%; aspect-ratio:100/12; overflow:visible; display:block; -webkit-user-select:none; user-select:none }
-.stack-loop-text {
-  fill:var(--text2); font-family:var(--sans-ui); font-weight:500; text-transform:uppercase; letter-spacing:0.01em; font-size:5.2rem;
-  transition:fill var(--t) var(--ease);
+.stack-tags { display:flex; flex-wrap:wrap; align-content:flex-start; gap:8px; padding-top:18px; border-top:1px solid var(--border2); flex:1 }
+.stack-tag {
+  font-family:var(--sans-ui); font-size:12px; letter-spacing:0.05em;
+  border:1px solid var(--border3); border-radius:4px; padding:8px 15px; color:var(--text2);
+  transition:all var(--t) var(--ease);
 }
-.stack-loop:hover .stack-loop-text { fill:var(--accent) }
+.stack-tag:hover { border-color:var(--accent); color:var(--accent) }
 
 /* ════════════════════════════════════════
    CONTACT

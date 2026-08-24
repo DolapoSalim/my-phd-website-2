@@ -1,7 +1,7 @@
 import marquee from '@/content/site/marquee.json'
 import { Nav } from '@/components/layout/Nav'
 import { CustomCursor } from '@/components/effects/CustomCursor'
-import { Marquee } from '@/components/effects/Marquee'
+import { MarqueeBand } from '@/components/effects/MarqueeBand'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Research } from '@/components/sections/Research'
@@ -18,7 +18,7 @@ function App() {
       <Nav />
       <Hero />
       <About />
-      <Marquee items={marquee.items} />
+      <MarqueeBand items={marquee.items} />
       <Research />
       <Publications />
       <Cv />
