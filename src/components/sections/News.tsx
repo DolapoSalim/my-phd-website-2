@@ -1,14 +1,17 @@
 import { useRef } from 'react'
-import { newsEntries, type NewsEntry } from '@/lib/content'
+import { newsEntries } from '@/lib/content'
 import { richText } from '@/lib/richtext'
 import { SectionHeader } from '@/components/effects/SectionHeader'
+import { AccordionGallery, type AccordionGalleryItem } from '@/components/effects/AccordionGallery'
 import { useReveal } from '@/hooks/useReveal'
 
-function NewsCard({ entry }: { entry: NewsEntry }) {
-  const ref = useRef<HTMLElement | null>(null)
-  useReveal(ref)
-  return (
-    <article className="article-card" ref={ref}>
+const items: AccordionGalleryItem[] = newsEntries.map((entry, i) => ({
+  key: entry.title,
+  index: String(i + 1).padStart(2, '0'),
+  title: entry.title,
+  meta: entry.date,
+  content: (
+    <>
       <div className="article-idx">
         <span>{entry.tag || 'Update'}</span>
         <span className="yr">{entry.date}</span>
@@ -20,11 +23,14 @@ function NewsCard({ entry }: { entry: NewsEntry }) {
           {entry.urlLabel || 'Read more ↗'}
         </a>
       )}
-    </article>
-  )
-}
+    </>
+  ),
+}))
 
 export function News() {
+  const ref = useRef<HTMLDivElement | null>(null)
+  useReveal(ref)
+
   return (
     <section className="sect" id="news">
       <SectionHeader
@@ -33,10 +39,8 @@ export function News() {
         heading="News"
         aside={<p style={{ maxWidth: '40ch' }}>Short updates on new tools, papers and conferences — posted as they happen.</p>}
       />
-      <div className="card-grid">
-        {newsEntries.map((entry) => (
-          <NewsCard entry={entry} key={entry.title} />
-        ))}
+      <div className="fi" ref={ref}>
+        <AccordionGallery items={items} defaultIndex={0} trigger="hover" />
       </div>
     </section>
   )

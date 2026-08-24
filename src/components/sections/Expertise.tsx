@@ -2,6 +2,7 @@ import { useRef, type RefObject } from 'react'
 import expertise from '@/content/site/expertise.json'
 import { skillGroupEntries } from '@/lib/content'
 import { SectionHeader } from '@/components/effects/SectionHeader'
+import { StackCursorZone } from '@/components/effects/StackCursorZone'
 import { useReveal } from '@/hooks/useReveal'
 
 function BuiltCard({ item }: { item: (typeof expertise.built)[number] }) {
@@ -83,11 +84,13 @@ export function Expertise() {
         <span>The stack</span>
         <span className="rule" />
       </div>
-      <div className="stack-grid">
-        {skillGroupEntries.map((group, i) => (
-          <StackGroup index={i} group={group} key={group.title} />
-        ))}
-      </div>
+      <StackCursorZone>
+        <div className="stack-grid">
+          {skillGroupEntries.map((group, i) => (
+            <StackGroup index={i} group={group} key={group.title} />
+          ))}
+        </div>
+      </StackCursorZone>
     </section>
   )
 }
