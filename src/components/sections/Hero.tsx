@@ -26,7 +26,15 @@ export function Hero() {
 
   return (
     <section id="top">
-      <div id="hero-bg" ref={bgRef} />
+      <div id="hero-bg" ref={bgRef}>
+        {!reduced && (
+          <video className="hero-bg-video" autoPlay muted loop playsInline preload="metadata">
+            <source src="/assets/video/demo.mp4" type="video/mp4" />
+          </video>
+        )}
+        <div className="hero-bg-tint" />
+        <div className="hero-bg-glow" />
+      </div>
 
       <div className="hero-kicker-row">
         <span className="idx">01</span>
