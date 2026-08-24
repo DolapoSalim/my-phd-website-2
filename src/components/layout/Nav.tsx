@@ -3,7 +3,7 @@ import hero from '@/content/site/hero.json'
 import { useTheme } from '@/hooks/useTheme'
 
 const NAV_LINKS = [
-  { href: '#research', label: 'Research' },
+  { href: '#news', label: 'News' },
   { href: '#publications', label: 'Publications' },
   { href: '#cv', label: 'CV' },
   { href: '#awards', label: 'Awards' },

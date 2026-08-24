@@ -4,7 +4,7 @@ import { CustomCursor } from '@/components/effects/CustomCursor'
 import { MarqueeBand } from '@/components/effects/MarqueeBand'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
-import { Research } from '@/components/sections/Research'
+import { News } from '@/components/sections/News'
 import { Publications } from '@/components/sections/Publications'
 import { Cv } from '@/components/sections/Cv'
 import { Awards } from '@/components/sections/Awards'
@@ -19,7 +19,7 @@ function App() {
       <Hero />
       <About />
       <MarqueeBand items={marquee.items} />
-      <Research />
+      <News />
       <Publications />
       <Cv />
       <Awards />

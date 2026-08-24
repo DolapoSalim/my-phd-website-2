@@ -10,7 +10,7 @@ function loadCollection<T extends { order: number }>(modules: Record<string, unk
 const cvEducationModules = import.meta.glob('../content/cv-education/*.json', { eager: true })
 const cvAppointmentModules = import.meta.glob('../content/cv-appointments/*.json', { eager: true })
 const publicationModules = import.meta.glob('../content/publications/*.json', { eager: true })
-const researchModules = import.meta.glob('../content/research/*.json', { eager: true })
+const newsModules = import.meta.glob('../content/news/*.json', { eager: true })
 const skillModules = import.meta.glob('../content/skills/*.json', { eager: true })
 const awardModules = import.meta.glob('../content/awards/*.json', { eager: true })
 
@@ -34,18 +34,14 @@ export interface PublicationEntry {
   doi: string
   doiUrl: string
 }
-export interface ResearchEntry {
+export interface NewsEntry {
   order: number
-  featured: boolean
-  kind: string
-  yearRange: string
+  date: string
   title: string
-  subtitle: string
-  desc: string
-  tags: string[]
-  ctaLabel: string
-  ctaUrl: string
-  foot: string
+  body: string
+  tag: string
+  url: string
+  urlLabel: string
 }
 export interface SkillGroupEntry {
   order: number
@@ -62,6 +58,6 @@ export interface AwardEntry {
 export const cvEducationEntries = loadCollection<CvEntry>(cvEducationModules)
 export const cvAppointmentEntries = loadCollection<CvEntry>(cvAppointmentModules)
 export const publicationEntries = loadCollection<PublicationEntry>(publicationModules)
-export const researchEntries = loadCollection<ResearchEntry>(researchModules)
+export const newsEntries = loadCollection<NewsEntry>(newsModules)
 export const skillGroupEntries = loadCollection<SkillGroupEntry>(skillModules)
 export const awardEntries = loadCollection<AwardEntry>(awardModules)
