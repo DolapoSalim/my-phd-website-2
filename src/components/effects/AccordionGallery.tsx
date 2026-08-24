@@ -32,8 +32,8 @@ export function AccordionGallery({
   expandRatio = 0.52,
   gap = 14,
   height = 460,
-  duration = 0.6,
-  ease = 'power3.out',
+  duration = 0.5,
+  ease = 'power2.out',
   trigger = 'click',
 }: AccordionGalleryProps) {
   const panelRefs = useRef<(HTMLDivElement | null)[]>([])

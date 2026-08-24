@@ -1,17 +1,25 @@
-import { useRef } from 'react'
 import about from '@/content/site/about.json'
 import { richText } from '@/lib/richtext'
-import { useReveal } from '@/hooks/useReveal'
+import { SplitText } from '@/components/effects/SplitText'
 
 export function About() {
-  const ref = useRef<HTMLParagraphElement | null>(null)
-  useReveal(ref)
-
   return (
     <section className="sect" id="about">
-      <p className="about-copy fi" ref={ref}>
+      <SplitText
+        tag="p"
+        className="about-copy"
+        splitType="words"
+        from={{ opacity: 0, y: 14 }}
+        to={{ opacity: 1, y: 0 }}
+        duration={0.6}
+        delay={14}
+        ease="power3.out"
+        threshold={0.2}
+        rootMargin="-80px"
+        textAlign="justify"
+      >
         {richText(about.copy)}
-      </p>
+      </SplitText>
       <div className="about-stats">
         {about.stats.map((s) => (
           <div className="about-stat" key={s.label}>
