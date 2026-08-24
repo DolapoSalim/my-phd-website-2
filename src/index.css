@@ -92,16 +92,14 @@
   --shadow:   0 8px 56px rgba(0,0,0,0.75);
   --hero-img-opacity: 0.18;
 
-  /* Type system: Poppins throughout, doing the job a serif/sans pairing
-     used to do via weight contrast instead of a second typeface —
-     ExtraBold/Bold for display headings, Regular/Medium for reading
-     body, SemiBold for compact UI labels. A single complementary
-     font (--mono-accent) is reserved for citation-style data points
-     (DOI / publication years) only, where a monospaced look reads
-     more "archival record" than Poppins would — used sparingly. */
-  --display: 'Poppins', sans-serif;
-  --body:    'Poppins', sans-serif;
-  --sans-ui: 'Poppins', sans-serif;
+  /* Type system: Clash Display for headings (bold, geometric, confident),
+     Satoshi for reading body and UI labels — the same pairing used by
+     https://devrajchatribin.com/, both free via Fontshare. A single
+     complementary font (--mono-accent) is reserved for citation-style
+     data points (DOI / publication years) only — used sparingly. */
+  --display: 'Clash Display', sans-serif;
+  --body:    'Satoshi', sans-serif;
+  --sans-ui: 'Satoshi', sans-serif;
   --mono-accent: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Back-compat aliases so existing selectors keep working unchanged */
