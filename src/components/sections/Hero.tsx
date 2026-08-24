@@ -2,12 +2,16 @@ import { useEffect, useRef } from 'react'
 import hero from '@/content/site/hero.json'
 import { richText } from '@/lib/richtext'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { TextPressure } from '@/components/effects/TextPressure'
+import { useTheme } from '@/hooks/useTheme'
+import { WarpText } from '@/components/effects/WarpText'
+
+const NAME_COLOR = { dark: '#f3f2f2', light: '#17140f' } as const
 
 export function Hero() {
   const bgRef = useRef<HTMLDivElement | null>(null)
   const nameRef = useRef<HTMLHeadingElement | null>(null)
   const reduced = useReducedMotion()
+  const { theme } = useTheme()
 
   useEffect(() => {
     if (reduced) return
@@ -46,12 +50,23 @@ export function Hero() {
       </div>
 
       <h1 className="hero-name" ref={nameRef}>
-        <div className="hero-name-line">
-          <TextPressure text={hero.nameLine1} tag="span" textColor="var(--text)" minFontSize={56} maxFontSize={208} />
-        </div>
-        <div className="hero-name-line">
-          <TextPressure text={hero.nameLine2} tag="span" textColor="var(--text)" minFontSize={56} maxFontSize={208} />
-        </div>
+        <WarpText
+          text={`${hero.nameLine1}\n${hero.nameLine2}`}
+          color={NAME_COLOR[theme]}
+          fontFamily="Archivo, Helvetica, sans-serif"
+          fontWeight={600}
+          fontSize="clamp(4rem, 14vw, 15rem)"
+          letterSpacing="-0.045em"
+          lineHeight={0.86}
+          textAlign="left"
+          warpStrength={0.06}
+          warpScale={1.4}
+          speed={0.4}
+          pointerInfluence={0.36}
+          pointerStrength={0.3}
+          refraction={0.014}
+          style={{ height: 'clamp(170px, 27vw, 430px)' }}
+        />
       </h1>
 
       <div className="hero-facts">
