@@ -45,7 +45,7 @@ export function Publications() {
           </a>
         }
       />
-      <AccordionGallery items={items} defaultIndex={0} trigger="click" />
+      <AccordionGallery items={items} defaultIndex={0} trigger="hover" />
     </section>
   )
 }
