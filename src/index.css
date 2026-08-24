@@ -477,7 +477,7 @@ section.sect:first-of-type { border-top:none }
 .ag-panel__spine {
   position:absolute; inset:0; display:flex; flex-direction:column;
   justify-content:space-between; padding:26px 22px;
-  opacity:1; transition:opacity 0.3s var(--ease);
+  opacity:1; transition:opacity 0.4s ease-out;
 }
 .ag-panel--active .ag-panel__spine { opacity:0; pointer-events:none }
 .ag-panel__spine-index { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.14em; color:var(--accent) }
@@ -489,10 +489,10 @@ section.sect:first-of-type { border-top:none }
 
 .ag-panel__content {
   position:absolute; inset:0; padding:32px 30px; display:flex; flex-direction:column;
-  opacity:0; transform:translateX(14px); pointer-events:none; overflow-y:auto;
-  transition:opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  opacity:0; transform:translateX(10px); pointer-events:none; overflow-y:auto;
+  transition:opacity 0.45s ease-out, transform 0.45s ease-out;
 }
-.ag-panel--active .ag-panel__content { opacity:1; transform:none; pointer-events:auto; transition-delay:0.1s }
+.ag-panel--active .ag-panel__content { opacity:1; transform:none; pointer-events:auto; transition-delay:0.08s }
 
 @media (max-width:720px) {
   .ag-root { flex-direction:column; height:auto }
@@ -573,13 +573,14 @@ section.sect:first-of-type { border-top:none }
 .stack-group-head { display:flex; align-items:baseline; gap:12px; padding-bottom:18px }
 .stack-group-head .n { font-family:var(--sans-ui); font-size:11px; letter-spacing:0.08em; color:var(--accent); font-feature-settings:'tnum' }
 .stack-group-head .label { font-family:var(--sans-ui); font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text) }
-.stack-tags { display:flex; flex-wrap:wrap; align-content:flex-start; gap:8px; padding-top:18px; border-top:1px solid var(--border2); flex:1 }
-.stack-tag {
-  font-family:var(--sans-ui); font-size:12px; letter-spacing:0.05em;
-  border:1px solid var(--border3); border-radius:4px; padding:8px 15px; color:var(--text2);
-  transition:all var(--t) var(--ease);
+.stack-loop { padding-top:20px; border-top:1px solid var(--border2); flex:1; display:flex; align-items:center; overflow:hidden }
+.curved-loop-jacket { width:100%; display:flex; align-items:center; touch-action:pan-y }
+.curved-loop-svg { width:100%; aspect-ratio:100/12; overflow:visible; display:block; -webkit-user-select:none; user-select:none }
+.stack-loop-text {
+  fill:var(--text2); font-family:var(--sans-ui); font-weight:500; text-transform:uppercase; letter-spacing:0.01em; font-size:5.2rem;
+  transition:fill var(--t) var(--ease);
 }
-.stack-tag:hover { border-color:var(--accent); color:var(--accent) }
+.stack-loop:hover .stack-loop-text { fill:var(--accent) }
 
 /* ════════════════════════════════════════
    CONTACT
