@@ -329,14 +329,9 @@ section.sect:first-of-type { border-top:none }
   width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0;
   animation:dc-blink 2.6s ease-in-out infinite;
 }
-.hero-name {
-  position:relative; margin:0; will-change:transform;
-  font-family:var(--display); font-weight:600;
-  letter-spacing:-0.045em;
-  color:var(--text);
-}
-.hero-name-line { position:relative; width:100%; height:clamp(70px,14.5vw,230px) }
-.hero-name-line + .hero-name-line { margin-top:-0.06em }
+.hero-name { position:relative; margin:0; width:100%; will-change:transform }
+.warp-text { position:relative; display:block; width:100%; min-height:170px; overflow:hidden; isolation:isolate }
+.warp-text canvas { position:absolute; inset:0; width:100%; height:100%; display:block }
 .hero-facts {
   display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:56px; align-items:center;
   border-top:1px solid var(--border3); margin-top:44px; padding:32px 0 36px 0;
