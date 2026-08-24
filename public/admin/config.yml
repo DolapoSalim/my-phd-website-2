@@ -159,26 +159,22 @@ collections:
       - { name: "doi", label: "DOI button label (e.g. \"DOI ↗\")", widget: "string", required: false }
       - { name: "doiUrl", label: "DOI URL", widget: "string", required: false }
 
-  - name: "research"
-    label: "Research & Projects"
-    folder: "src/content/research"
+  - name: "news"
+    label: "News"
+    folder: "src/content/news"
     extension: "json"
     format: "json"
     identifier_field: "title"
     slug: "{{order}}-{{slug}}"
     summary: "{{order}} — {{title}}"
     fields:
-      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
-      - { name: "featured", label: "Featured (spans two columns, larger type)", widget: "boolean", default: false }
-      - { name: "kind", label: "Kind (e.g. \"Open tool\", \"EU Horizon\", \"Research\")", widget: "string" }
-      - { name: "yearRange", widget: "string" }
+      - { name: "order", label: "Order (lowest = newest, shown first)", widget: "number" }
+      - { name: "date", label: "Date (e.g. \"August 2026\")", widget: "string" }
       - { name: "title", widget: "string" }
-      - { name: "subtitle", widget: "string" }
-      - { name: "desc", widget: "text" }
-      - { name: "tags", widget: "list", required: false }
-      - { name: "ctaLabel", label: "CTA label (leave blank for none)", widget: "string", required: false }
-      - { name: "ctaUrl", label: "CTA URL", widget: "string", required: false }
-      - { name: "foot", label: "Footer line (e.g. \"University of Pisa · WSense\")", widget: "string", required: false }
+      - { name: "body", label: "Post text", widget: "text", hint: "Use **text** for bold, _text_ for accent italic." }
+      - { name: "tag", label: "Tag (e.g. \"Update\", \"Conference\", \"Release\")", widget: "string", required: false }
+      - { name: "url", label: "Link URL (leave blank if not linked)", widget: "string", required: false }
+      - { name: "urlLabel", label: "Link label (e.g. \"Read more ↗\")", widget: "string", required: false }
 
   - name: "awards"
     label: "Awards & Grants"
