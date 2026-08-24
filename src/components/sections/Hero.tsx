@@ -29,7 +29,7 @@ export function Hero() {
       <div id="hero-bg" ref={bgRef}>
         {!reduced && (
           <video className="hero-bg-video" autoPlay muted loop playsInline preload="metadata">
-            <source src="/assets/video/demo.mp4" type="video/mp4" />
+            <source src="/assets/video/hero-bg.mp4" type="video/mp4" />
           </video>
         )}
         <div className="hero-bg-tint" />
