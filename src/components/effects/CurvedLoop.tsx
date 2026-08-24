@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState, useMemo, useId, type PointerEvent as ReactPointerEvent } from 'react'
 
 /** Port of React Bits' CurvedLoop: an SVG text-on-path marquee, dragged
- *  and released to continue coasting in that direction. Sized down here
- *  (via CSS) from the original full-viewport demo to a single compact
- *  line per skills group. */
+ *  and released to continue coasting in that direction. `viewBoxHeight`
+ *  lets callers shrink it from the original's near-full-viewport banner
+ *  down to a compact single-line ticker. */
 interface CurvedLoopProps {
   marqueeText: string
   speed?: number
@@ -11,9 +11,14 @@ interface CurvedLoopProps {
   curveAmount?: number
   direction?: 'left' | 'right'
   interactive?: boolean
+  /** Height of the SVG viewBox (width is fixed at 1440), i.e. how tall a
+   *  line the curve renders as. Lower this for a compact ticker instead
+   *  of the original's near-full-viewport banner - keeps glyphs from
+   *  distorting the way stretching the box with CSS alone would. */
+  viewBoxHeight?: number
 }
 
-export function CurvedLoop({ marqueeText, speed = 1, className, curveAmount = 24, direction = 'left', interactive = true }: CurvedLoopProps) {
+export function CurvedLoop({ marqueeText, speed = 1, className, curveAmount = 24, direction = 'left', interactive = true, viewBoxHeight = 120 }: CurvedLoopProps) {
   const text = useMemo(() => {
     const hasTrailing = /\s| $/.test(marqueeText)
     return (hasTrailing ? marqueeText.replace(/\s+$/, '') : marqueeText) + ' '
@@ -25,7 +30,8 @@ export function CurvedLoop({ marqueeText, speed = 1, className, curveAmount = 24
   const [offset, setOffset] = useState(0)
   const uid = useId()
   const pathId = `curve-${uid}`
-  const pathD = `M-100,40 Q500,${40 + curveAmount} 1540,40`
+  const baseline = viewBoxHeight / 3
+  const pathD = `M-100,${baseline} Q500,${baseline + curveAmount} 1540,${baseline}`
 
   const dragRef = useRef(false)
   const lastXRef = useRef(0)
@@ -106,7 +112,7 @@ export function CurvedLoop({ marqueeText, speed = 1, className, curveAmount = 24
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
     >
-      <svg className="curved-loop-svg" viewBox="0 0 1440 120">
+      <svg className="curved-loop-svg" viewBox={`0 0 1440 ${viewBoxHeight}`}>
         <text ref={measureRef} xmlSpace="preserve" style={{ visibility: 'hidden', opacity: 0, pointerEvents: 'none' }}>
           {text}
         </text>

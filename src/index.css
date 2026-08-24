@@ -389,10 +389,10 @@ section.sect:first-of-type { border-top:none }
 /* ════════════════════════════════════════
    MARQUEE — CurvedLoop banner between About and Research
 ════════════════════════════════════════ */
-.marquee-band { border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); overflow:hidden; padding:14px 0 }
+.marquee-band { border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); overflow:hidden; padding:16px 0 }
 .curved-loop-jacket { width:100%; display:flex; align-items:center; touch-action:pan-y }
-.curved-loop-svg { width:100%; aspect-ratio:100/12; overflow:visible; display:block; -webkit-user-select:none; user-select:none }
-.marquee-loop-text { fill:var(--text2); font-family:var(--display); font-weight:600; letter-spacing:-0.01em; font-size:5.4rem }
+.curved-loop-svg { width:100%; aspect-ratio:1440/64; overflow:visible; display:block; -webkit-user-select:none; user-select:none }
+.marquee-loop-text { fill:var(--text2); font-family:var(--sans-ui); font-weight:500; letter-spacing:0.04em; text-transform:uppercase; font-size:1.6rem }
 @media (prefers-reduced-motion:reduce) { .marquee-band .curved-loop-jacket { cursor:auto } }
 
 /* ════════════════════════════════════════
