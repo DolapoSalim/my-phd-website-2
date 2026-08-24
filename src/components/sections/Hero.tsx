@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import hero from '@/content/site/hero.json'
 import { richText } from '@/lib/richtext'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { TextPressure } from '@/components/effects/TextPressure'
 
 export function Hero() {
   const bgRef = useRef<HTMLDivElement | null>(null)
@@ -45,8 +46,12 @@ export function Hero() {
       </div>
 
       <h1 className="hero-name" ref={nameRef}>
-        <span>{hero.nameLine1}</span>
-        <span>{hero.nameLine2}</span>
+        <div className="hero-name-line">
+          <TextPressure text={hero.nameLine1} tag="span" textColor="var(--text)" minFontSize={56} maxFontSize={208} />
+        </div>
+        <div className="hero-name-line">
+          <TextPressure text={hero.nameLine2} tag="span" textColor="var(--text)" minFontSize={56} maxFontSize={208} />
+        </div>
       </h1>
 
       <div className="hero-facts">
