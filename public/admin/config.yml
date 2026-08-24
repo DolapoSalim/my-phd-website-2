@@ -20,11 +20,20 @@ collections:
         label: "Hero"
         file: "src/content/site/hero.json"
         fields:
-          - { name: "kicker", label: "Kicker line", widget: "string" }
+          - { name: "navShortName", label: "Nav logo (short name)", widget: "string" }
+          - { name: "navTagline", label: "Nav tagline (italic, next to logo)", widget: "string" }
+          - { name: "email", label: "Contact email (mailto: nav button + contact section)", widget: "string" }
+          - { name: "kicker", label: "Kicker line (next to the 01 index)", widget: "string" }
+          - { name: "status", label: "Status line (e.g. \"Open to collaboration — 2026\")", widget: "string" }
           - { name: "nameLine1", label: "Name — line 1", widget: "string" }
-          - { name: "nameLine2", label: "Name — line 2 (accent colour)", widget: "string" }
-          - { name: "tagline", label: "Tagline", widget: "string", hint: "Use **text** for bold emphasis." }
-          - { name: "bio", label: "Bio", widget: "text", hint: "Use **text** for bold emphasis." }
+          - { name: "nameLine2", label: "Name — line 2", widget: "string" }
+          - { name: "tagline", label: "Tagline paragraph", widget: "text", hint: "Use **text** for bold, _text_ for accent italic." }
+          - name: "facts"
+            label: "Fact table (Thesis / Supervisors / Funded by, etc.)"
+            widget: "list"
+            fields:
+              - { name: "label", widget: "string" }
+              - { name: "value", widget: "string" }
           - name: "ctas"
             label: "Call-to-action buttons"
             widget: "list"
@@ -32,99 +41,103 @@ collections:
               - { name: "label", widget: "string" }
               - { name: "url", widget: "string" }
               - { name: "style", widget: "select", options: ["fill", "ghost"] }
-          - { name: "profileImage", label: "Profile photo", widget: "image" }
-          - { name: "profileName", label: "Profile photo alt text / nav logo", widget: "string" }
-          - name: "meta"
-            label: "Profile meta rows"
-            widget: "list"
-            fields:
-              - { name: "label", widget: "string" }
-              - { name: "value", widget: "string" }
 
       - name: "about"
         label: "About"
         file: "src/content/site/about.json"
         fields:
-          - { name: "heading", label: "Heading (line break = new line)", widget: "text" }
-          - name: "paragraphs"
-            label: "Paragraphs"
+          - { name: "copy", label: "Intro paragraph", widget: "text", hint: "Use **text** to highlight in full brightness against the dimmed base text." }
+          - name: "stats"
+            label: "Stat callouts"
             widget: "list"
-            field: { name: "paragraph", widget: "text", hint: "Use **text** for bold, __text__ for accent bold." }
-          - name: "links"
-            label: "Links"
+            fields:
+              - { name: "value", label: "Big number (e.g. \"06\")", widget: "string" }
+              - { name: "label", widget: "string" }
+              - { name: "desc", widget: "string" }
+
+      - name: "marquee"
+        label: "Marquee ticker"
+        file: "src/content/site/marquee.json"
+        fields:
+          - { name: "items", label: "Keywords (scrolling ticker band)", widget: "list" }
+
+      - name: "expertise"
+        label: "Technical Expertise"
+        file: "src/content/site/expertise.json"
+        fields:
+          - { name: "heading", widget: "string" }
+          - { name: "sub", widget: "string" }
+          - { name: "githubUrl", widget: "string" }
+          - name: "built"
+            label: "Built & deployed"
+            widget: "list"
+            fields:
+              - { name: "kind", label: "Kind (e.g. \"Web app\", \"Open source\", \"Models\")", widget: "string" }
+              - { name: "meta", label: "Right-aligned meta (e.g. \"Streamlit\", \"GitHub\")", widget: "string" }
+              - { name: "title", widget: "string" }
+              - { name: "desc", widget: "text" }
+              - { name: "cta", label: "CTA label (e.g. \"Launch ↗\", \"In progress\")", widget: "string" }
+              - { name: "url", label: "URL (leave blank if not linked)", widget: "string", required: false }
+
+      - name: "cv-schools"
+        label: "CV — Schools & training"
+        file: "src/content/site/cv-schools.json"
+        fields:
+          - name: "items"
             widget: "list"
             fields:
               - { name: "label", widget: "string" }
-              - { name: "url", widget: "string" }
-          - name: "awards"
-            label: "Academic awards"
-            widget: "list"
-            field: { name: "award", widget: "string", hint: "Use **text** for bold." }
-          - name: "affiliations"
-            label: "Affiliations"
-            widget: "list"
-            field: { name: "affiliation", widget: "string" }
-
-      - name: "cv-demo"
-        label: "CV Demo"
-        file: "src/content/site/cv-demo.json"
-        fields:
-          - { name: "heading", label: "Heading (line break = new line)", widget: "text" }
-          - name: "paragraphs"
-            label: "Paragraphs"
-            widget: "list"
-            field: { name: "paragraph", widget: "text", hint: "Use **text** for bold." }
-          - { name: "tags", label: "Tags", widget: "list" }
-          - { name: "video", label: "Demo video", widget: "file", media_folder: "public/assets/video", public_folder: "/assets/video" }
-          - { name: "badge", label: "Overlay badge text", widget: "string" }
+              - { name: "year", widget: "string" }
 
       - name: "contact"
         label: "Contact"
         file: "src/content/site/contact.json"
         fields:
-          - { name: "blurb", label: "Intro blurb", widget: "text" }
-          - { name: "mailto", label: "Contact email", widget: "string" }
-          - name: "socials"
-            label: "Social links"
+          - { name: "email", widget: "string" }
+          - { name: "officeHours", label: "Office hours", widget: "string" }
+          - { name: "officeLocation", label: "Office location", widget: "string" }
+          - name: "elsewhere"
+            label: "Elsewhere (social/profile links)"
             widget: "list"
             fields:
-              - { name: "network", widget: "select", options: ["github", "linkedin", "x", "researchgate"] }
               - { name: "label", widget: "string" }
               - { name: "url", widget: "string" }
+          - { name: "affiliations", widget: "string" }
+          - { name: "openTo", label: "Open to", widget: "text" }
+          - { name: "footerLocation", label: "Footer — name & location", widget: "string" }
+          - { name: "footerUpdated", label: "Footer — last updated line", widget: "string" }
 
-      - name: "footer"
-        label: "Footer"
-        file: "src/content/site/footer.json"
-        fields:
-          - { name: "logo", label: "Footer logo text", widget: "string" }
-          - { name: "copy", label: "Copyright line", widget: "string" }
-
-      - name: "stats"
-        label: "Stats Strip"
-        file: "src/content/site/stats.json"
-        fields:
-          - name: "items"
-            label: "Stat items (shown between Hero and About)"
-            widget: "list"
-            fields:
-              - { name: "value", label: "Number to count up to", widget: "number" }
-              - { name: "suffix", label: "Suffix (e.g. +)", widget: "string", required: false }
-              - { name: "label", widget: "string" }
-
-  - name: "education"
-    label: "Education"
-    folder: "src/content/education"
+  - name: "cv-education"
+    label: "CV — Education"
+    folder: "src/content/cv-education"
     extension: "json"
     format: "json"
-    identifier_field: "degree"
+    identifier_field: "title"
     slug: "{{order}}-{{slug}}"
-    summary: "{{order}} — {{degree}}"
+    summary: "{{order}} — {{title}}"
     fields:
       - { name: "order", label: "Order (lowest = most recent, shown first)", widget: "number" }
-      - { name: "years", label: "Years", widget: "string" }
-      - { name: "degree", widget: "string" }
-      - { name: "institution", widget: "string" }
-      - { name: "note", widget: "text", hint: "Use **text** for bold (renders gold in this section)." }
+      - { name: "dateStart", label: "Start year", widget: "string" }
+      - { name: "dateEnd", label: "End year (blank = ongoing, shows as an em dash)", widget: "string", required: false }
+      - { name: "title", widget: "string" }
+      - { name: "org", label: "Institution", widget: "string" }
+      - { name: "desc", widget: "text" }
+
+  - name: "cv-appointments"
+    label: "CV — Appointments"
+    folder: "src/content/cv-appointments"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order (lowest = most recent, shown first)", widget: "number" }
+      - { name: "dateStart", label: "Start year", widget: "string" }
+      - { name: "dateEnd", label: "End year (blank = ongoing, shows as an em dash)", widget: "string", required: false }
+      - { name: "title", widget: "string" }
+      - { name: "org", label: "Organisation", widget: "string" }
+      - { name: "desc", widget: "text" }
 
   - name: "publications"
     label: "Publications"
@@ -137,31 +150,52 @@ collections:
     fields:
       - { name: "order", label: "Order (lowest = newest, shown first)", widget: "number" }
       - { name: "year", widget: "string" }
-      - { name: "type", label: "Type / venue", widget: "string" }
+      - { name: "type", label: "Type (e.g. \"Research article\", \"Poster publication\")", widget: "string" }
       - { name: "title", widget: "string" }
-      - { name: "authors", widget: "text", hint: "Wrap your own name in _underscores_ to italicise it, as in the original." }
+      - { name: "desc", label: "Summary paragraph", widget: "text", required: false }
+      - { name: "authors", widget: "text", hint: "Wrap your own name in __double underscores__ to highlight it." }
       - { name: "journal", widget: "string" }
-      - { name: "doi", label: "DOI (optional)", widget: "string", required: false }
-      - { name: "doiUrl", label: "DOI URL (optional)", widget: "string", required: false }
+      - { name: "journalMeta", label: "Journal meta (volume/pages, or host organisation)", widget: "string", required: false }
+      - { name: "doi", label: "DOI button label (e.g. \"DOI ↗\")", widget: "string", required: false }
+      - { name: "doiUrl", label: "DOI URL", widget: "string", required: false }
 
-  - name: "projects"
-    label: "Projects"
-    folder: "src/content/projects"
+  - name: "research"
+    label: "Research & Projects"
+    folder: "src/content/research"
     extension: "json"
     format: "json"
-    identifier_field: "name"
+    identifier_field: "title"
     slug: "{{order}}-{{slug}}"
-    summary: "{{order}} — {{name}}"
+    summary: "{{order}} — {{title}}"
     fields:
       - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
-      - { name: "name", label: "Project name (must match the GitHub repo name to auto-link stars)", widget: "string" }
+      - { name: "featured", label: "Featured (spans two columns, larger type)", widget: "boolean", default: false }
+      - { name: "kind", label: "Kind (e.g. \"Open tool\", \"EU Horizon\", \"Research\")", widget: "string" }
+      - { name: "yearRange", widget: "string" }
+      - { name: "title", widget: "string" }
+      - { name: "subtitle", widget: "string" }
+      - { name: "desc", widget: "text" }
+      - { name: "tags", widget: "list", required: false }
+      - { name: "ctaLabel", label: "CTA label (leave blank for none)", widget: "string", required: false }
+      - { name: "ctaUrl", label: "CTA URL", widget: "string", required: false }
+      - { name: "foot", label: "Footer line (e.g. \"University of Pisa · WSense\")", widget: "string", required: false }
+
+  - name: "awards"
+    label: "Awards & Grants"
+    folder: "src/content/awards"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
+      - { name: "title", widget: "string" }
+      - { name: "desc", widget: "text" }
       - { name: "year", widget: "string" }
-      - { name: "desc", label: "Description", widget: "text" }
-      - { name: "tags", widget: "list" }
-      - { name: "url", label: "Fallback URL (used until a matching GitHub repo is found)", widget: "string" }
 
   - name: "skills"
-    label: "Skills"
+    label: "Expertise Stack"
     folder: "src/content/skills"
     extension: "json"
     format: "json"
@@ -172,18 +206,3 @@ collections:
       - { name: "order", label: "Order", widget: "number" }
       - { name: "title", label: "Group title", widget: "string" }
       - { name: "tags", widget: "list" }
-
-  - name: "news"
-    label: "News"
-    folder: "src/content/news"
-    extension: "json"
-    format: "json"
-    identifier_field: "title"
-    slug: "{{order}}-{{slug}}"
-    summary: "{{order}} — {{title}}"
-    fields:
-      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
-      - { name: "date", widget: "string" }
-      - { name: "title", widget: "string" }
-      - { name: "body", widget: "text" }
-      - { name: "url", label: "Link URL", widget: "string" }

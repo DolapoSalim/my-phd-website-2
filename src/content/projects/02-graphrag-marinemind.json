@@ -1,8 +1,0 @@
-{
-  "order": 2,
-  "name": "GraphRAG-MarineMind",
-  "year": "2026",
-  "desc": "A deterministic Graph-RAG system for interpreting imaging-based ecological variables and environmental monitoring data",
-  "tags": ["GraphRAG", "Python", "Machine Learning"],
-  "url": "https://github.com/DolapoSalim"
-}

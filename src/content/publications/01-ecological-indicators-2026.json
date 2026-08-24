@@ -1,10 +1,12 @@
 {
   "order": 1,
   "year": "2026",
-  "type": "Research Article · Ecological Indicators",
-  "title": "Invertebrates' Metabolic Responses to Climate Warming Scenarios in the Adriatic Sea",
-  "authors": "Shokri M., Lezzi L., Ciotti M., Vignes F., Taban P., Marrocco V., Alabi V., _Olatoye D._, Muresan A.N., Forni P., Semeraro T., Fano E.A., & Basset A.",
-  "journal": "Ecological Indicators, 183, 114622",
-  "doi": "10.1016/j.ecolind.2026.114622",
+  "type": "Research article",
+  "title": "Invertebrates' metabolic responses to climate warming scenarios in the Adriatic Sea",
+  "desc": "Species-level respirometry across Adriatic invertebrates, projected onto warming scenarios to estimate how community energy demand shifts with temperature. Contributes an indicator-scale reading of thermal sensitivity for transitional-water fauna.",
+  "authors": "Shokri, M., Lezzi, L., Ciotti, M., Vignes, F., Taban, P., Marrocco, V., Alabi, V., __Olatoye, D.__, Muresan, A. N., Forni, P., Semeraro, T., Fano, E. A. & Basset, A.",
+  "journal": "Ecological Indicators",
+  "journalMeta": "Vol. 183 · 114622",
+  "doi": "DOI ↗",
   "doiUrl": "https://doi.org/10.1016/j.ecolind.2026.114622"
 }

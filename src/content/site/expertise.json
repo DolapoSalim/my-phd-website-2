@@ -1,0 +1,31 @@
+{
+  "heading": "Technical expertise",
+  "sub": "A cross-disciplinary stack spanning AI engineering and field marine science.",
+  "githubUrl": "https://github.com/DolapoSalim",
+  "built": [
+    {
+      "kind": "Web app",
+      "meta": "Streamlit",
+      "title": "EcoQuad",
+      "desc": "Upload a quadrat photograph, get grid-based percentage cover for macroalgae and sessile invertebrates.",
+      "cta": "Launch ↗",
+      "url": "https://ecoquad-ai.streamlit.app/"
+    },
+    {
+      "kind": "Open source",
+      "meta": "GitHub",
+      "title": "marineAnnotate",
+      "desc": "Annotation for marine biologists that keeps the imagery local — label detections and habitat classes without sending sensitive survey data anywhere.",
+      "cta": "View repository ↗",
+      "url": "https://github.com/DolapoSalim/marineAnnotate"
+    },
+    {
+      "kind": "Models",
+      "meta": "Benchmarking",
+      "title": "Species detectors",
+      "desc": "YOLO-based detectors for macroalgae, fish and seagrass, plus ensemble pipelines under evaluation for BioBoost+ WP1.",
+      "cta": "In progress",
+      "url": null
+    }
+  ]
+}

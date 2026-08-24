@@ -1,93 +1,78 @@
+import { useEffect, useRef } from 'react'
 import hero from '@/content/site/hero.json'
 import { richText } from '@/lib/richtext'
-import { MarineCanvas } from '@/components/effects/MarineCanvas'
-import { FishCursor } from '@/components/effects/FishCursor'
-import { HeroNameReveal } from '@/components/effects/HeroNameReveal'
-import StarBorder from '@/components/reactbits/StarBorder'
-import DecryptedText from '@/components/reactbits/DecryptedText'
-import GlareHover from '@/components/reactbits/GlareHover'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 export function Hero() {
+  const bgRef = useRef<HTMLDivElement | null>(null)
+  const nameRef = useRef<HTMLHeadingElement | null>(null)
+  const reduced = useReducedMotion()
+
+  useEffect(() => {
+    if (reduced) return
+    let raf = 0
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const y = window.scrollY || 0
+        if (nameRef.current) nameRef.current.style.transform = `translate3d(0,${(y * -0.13).toFixed(2)}px,0)`
+        if (bgRef.current) bgRef.current.style.transform = `translate3d(0,${(y * 0.24).toFixed(2)}px,0)`
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [reduced])
+
   return (
-    <section id="hero">
-      <MarineCanvas />
-      <FishCursor />
+    <section id="top">
+      <div id="hero-bg" ref={bgRef} />
 
-      <div className="container relative z-[3]">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
-          {/* Identity tile */}
-          <Card className="md:col-span-8 border-border/60 bg-card/90 backdrop-blur-sm p-2 md:p-4">
-            <CardHeader>
-              <div className="hero-kicker !mb-0">
-                <span className="dot-live"></span>
-                <DecryptedText
-                  text={hero.kicker}
-                  animateOn="view"
-                  sequential
-                  revealDirection="center"
-                  speed={28}
-                  encryptedClassName="text-[var(--text3)] opacity-70"
-                />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <HeroNameReveal>
-                {hero.nameLine1}
-                <br />
-                <em>{hero.nameLine2}</em>
-              </HeroNameReveal>
-              <p className="hero-tagline">{richText(hero.tagline)}</p>
-              <p className="hero-bio">{richText(hero.bio)}</p>
-            </CardContent>
-            <CardFooter className="flex flex-wrap gap-3 border-t-0 bg-transparent pt-0">
-              {hero.ctas.map((cta) =>
-                cta.style === 'star' ? (
-                  <StarBorder key={cta.label} as="a" href={cta.url} target={cta.url.startsWith('#') ? undefined : '_blank'} color="#f0a955" speed="4s" thickness={2}>
-                    {cta.label}
-                  </StarBorder>
-                ) : (
-                  <Button key={cta.label} asChild size="lg" variant={cta.style === 'fill' ? 'default' : 'outline'} className="rounded-full px-6 h-auto py-3 text-[0.88rem] font-semibold">
-                    <a href={cta.url} target={cta.url.startsWith('#') ? undefined : '_blank'} rel="noreferrer">
-                      {cta.label}
-                    </a>
-                  </Button>
-                ),
-              )}
-            </CardFooter>
-          </Card>
+      <div className="hero-kicker-row">
+        <span className="idx">01</span>
+        <span className="rule" />
+        <span>{hero.kicker}</span>
+        <span className="status">
+          <span className="dot-live" />
+          {hero.status}
+        </span>
+      </div>
 
-          {/* Profile tile */}
-          <Card className="md:col-span-4 border-border/60 bg-card/90 backdrop-blur-sm items-center justify-center text-center relative overflow-hidden">
-            <GlareHover
-              width="100%"
-              height="100%"
-              background="transparent"
-              borderColor="transparent"
-              borderRadius="0px"
-              glareColor="#f0a955"
-              glareOpacity={0.3}
-              glareAngle={-30}
-              glareSize={220}
-              transitionDuration={900}
-              className="absolute inset-0 z-[3] cursor-default"
-            />
-            <CardContent className="flex flex-col items-center gap-4">
-              <Avatar className="size-28 md:size-32 ring-2 ring-border">
-                <AvatarImage src={hero.profileImage} alt={hero.profileName} />
-                <AvatarFallback>{hero.profileName.split(' ').map((w) => w[0]).slice(0, 2).join('')}</AvatarFallback>
-              </Avatar>
-              <div className="profile-meta items-center">
-                {hero.meta.map((m) => (
-                  <div className="meta-row justify-center" key={m.label}>
-                    {m.label} <span>{m.value}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+      <h1 className="hero-name" ref={nameRef}>
+        <span>{hero.nameLine1}</span>
+        <span>{hero.nameLine2}</span>
+      </h1>
+
+      <div className="hero-facts">
+        <p className="hero-tagline">{richText(hero.tagline)}</p>
+        <div className="hero-table">
+          {hero.facts.map((f) => (
+            <div className="hero-table-row" key={f.label}>
+              <span className="k">{f.label}</span>
+              <span className="v">{f.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="hero-cta-row">
+        <div className="hero-ctas">
+          {hero.ctas.map((cta) => (
+            <a
+              key={cta.label}
+              href={cta.url}
+              target={cta.url.startsWith('#') ? undefined : '_blank'}
+              rel={cta.url.startsWith('#') ? undefined : 'noreferrer'}
+              data-magnetic="1"
+              className={`btn ${cta.style === 'fill' ? 'btn-fill' : 'btn-ghost'}`}
+            >
+              {cta.label}
+            </a>
+          ))}
+        </div>
+        <div className="hero-scroll">
+          Scroll
+          <span className="line" />
         </div>
       </div>
     </section>

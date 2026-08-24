@@ -1,0 +1,13 @@
+{
+  "order": 4,
+  "featured": false,
+  "kind": "Open tool",
+  "yearRange": "2025 — present",
+  "title": "marineAnnotate",
+  "subtitle": "Private, local image annotation",
+  "desc": "An annotation tool for marine biologists that keeps imagery on the researcher's own machine — label detections and habitat classes without pushing sensitive survey data to a third-party service. Built out of the AMBULANT annotation work, where 10,000+ ROV stills were labelled by hand.",
+  "tags": [],
+  "ctaLabel": "github.com/DolapoSalim/marineAnnotate ↗",
+  "ctaUrl": "https://github.com/DolapoSalim/marineAnnotate",
+  "foot": ""
+}

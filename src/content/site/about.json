@@ -1,23 +1,7 @@
 {
-  "heading": "Marine Biologist\n& AI Researcher",
-  "paragraphs": [
-    "I am a PhD candidate at the **University of Pisa's Department of Biology**, working at the intersection of marine ecology and machine intelligence. My research centres on applying __AI and emerging imaging technologies, __particularly computer vision and deep learning to evaluate **biodiversity stability in complex marine environments**.",
-    "My work spans the full pipeline: from collecting and annotating underwater imagery, training **object detection and classification models**, to integrating outputs with ecological data for biodiversity assessment. I believe **scalable, automated vision systems** are key to monitoring ocean health at the speed the climate crisis demands.",
-    "I hold an MSc in **Coastal & Marine Biology and Ecology** from Università del Salento (Unisalento4Talents Scholar) and a BSc in **Fisheries and Aquaculture** from Federal University Oye-Ekiti, Nigeria, graduating as **best student of my department**. My PhD is funded by the **BioEcoOcean EU Horizon project**."
-  ],
-  "links": [
-    { "label": "BioEcoOcean ↗", "url": "https://bioecoocean.org/" },
-    { "label": "BioBoost+ ↗", "url": "https://bioboostplus.eu/scientific/20" },
-    { "label": "Research Notes ↗", "url": "https://great-dinner-c99.notion.site/DOLAPO-S-RESEARCH-1b3089435345805cb5d8f41a4d46105a" }
-  ],
-  "awards": [
-    "**Best Graduating Student** — Dept. of Fisheries & Aquaculture, Federal University Oye-Ekiti, 2019",
-    "**Unisalento4Talents Scholarship** — Università del Salento, MSc 2021–2023"
-  ],
-  "affiliations": [
-    "University of Pisa",
-    "BioEcoOcean · EU Horizon",
-    "BioBoost+",
-    "AMBULANT"
+  "copy": "**I work at the intersection of marine ecology and machine intelligence**, applying AI and emerging imaging technologies — computer vision and deep learning — to evaluate **biodiversity stability in complex marine environments.** My work runs the whole pipeline: collecting and annotating underwater imagery, training detection and classification models, then folding their output back into ecological assessment. **Automated vision is how ocean monitoring keeps pace with the climate crisis.**",
+  "stats": [
+    { "value": "06", "label": "Honors & awards", "desc": "Pisa, Salento, Erasmus and FUOYE — 2017 to 2024." },
+    { "value": "04", "label": "Countries trained in", "desc": "Nigeria, Italy, Malta and Spain — field to model." }
   ]
 }

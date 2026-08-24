@@ -1,8 +1,0 @@
-{
-  "order": 3,
-  "name": "YOLO-label-Converter",
-  "year": "2025",
-  "desc": "Converts annotation formats (COCO, Pascal VOC, CSV) to YOLO-compatible labels. Supports batch processing and custom class remapping for detection training pipelines.",
-  "tags": ["Python", "Annotation", "YOLO"],
-  "url": "https://github.com/DolapoSalim"
-}
