@@ -45,8 +45,8 @@ export function Publications() {
         label="Research output"
         heading="Selected publications"
         aside={
-          <a href="https://orcid.org/0009-0005-6193-336X" target="_blank" rel="noreferrer" data-magnetic="1" className="btn-accent" style={{ borderBottom: '1px solid var(--accent)', color: 'var(--accent)', paddingBottom: '5px', fontFamily: 'var(--sans-ui)', fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Full record on ORCID ↗
+          <a href="https://orcid.org/0009-0005-6193-336X" target="_blank" rel="noreferrer" data-magnetic="1" className="link-underline">
+            Full record on ORCID
           </a>
         }
       />

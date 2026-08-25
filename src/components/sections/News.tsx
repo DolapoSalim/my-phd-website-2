@@ -12,6 +12,7 @@ const items: AccordionGalleryItem[] = newsEntries.map((entry, i) => ({
   meta: entry.date,
   content: (
     <>
+      {entry.image && <img src={entry.image} alt={entry.imageAlt || entry.title} className="news-thumb" />}
       <div className="article-idx">
         <span>{entry.tag || 'Update'}</span>
         <span className="yr">{entry.date}</span>
@@ -20,7 +21,7 @@ const items: AccordionGalleryItem[] = newsEntries.map((entry, i) => ({
       <p className="article-body">{richText(entry.body)}</p>
       {entry.url && (
         <a href={entry.url} target="_blank" rel="noreferrer" data-magnetic="1" className="article-foot">
-          {entry.urlLabel || 'Read more ↗'}
+          {entry.urlLabel || 'Read more'}
         </a>
       )}
     </>

@@ -63,8 +63,8 @@ export function Expertise() {
         aside={
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '18px', maxWidth: '34ch' }}>
             <p style={{ textAlign: 'right' }}>{expertise.sub}</p>
-            <a href={expertise.githubUrl} target="_blank" rel="noreferrer" data-magnetic="1" style={{ borderBottom: '1px solid var(--accent)', color: 'var(--accent)', paddingBottom: '5px', fontFamily: 'var(--sans-ui)', fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              github.com/DolapoSalim ↗
+            <a href={expertise.githubUrl} target="_blank" rel="noreferrer" data-magnetic="1" className="link-underline">
+              github.com/DolapoSalim
             </a>
           </div>
         }

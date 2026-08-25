@@ -173,8 +173,10 @@ collections:
       - { name: "title", widget: "string" }
       - { name: "body", label: "Post text", widget: "text", hint: "Use **text** for bold, _text_ for accent italic." }
       - { name: "tag", label: "Tag (e.g. \"Update\", \"Conference\", \"Release\")", widget: "string", required: false }
+      - { name: "image", label: "Image (optional)", widget: "image", required: false }
+      - { name: "imageAlt", label: "Image alt text (for screen readers)", widget: "string", required: false }
       - { name: "url", label: "Link URL (leave blank if not linked)", widget: "string", required: false }
-      - { name: "urlLabel", label: "Link label (e.g. \"Read more ↗\")", widget: "string", required: false }
+      - { name: "urlLabel", label: "Link label (e.g. \"Read more\")", widget: "string", required: false }
 
   - name: "awards"
     label: "Awards & Grants"

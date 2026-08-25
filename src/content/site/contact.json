@@ -3,9 +3,9 @@
   "officeHours": "Tuesdays & Thursdays, 14:00–16:00 CET",
   "officeLocation": "Ecology Unit, Dept. of Biology, Via Derna 1, Pisa",
   "elsewhere": [
-    { "label": "LinkedIn ↗", "url": "https://www.linkedin.com/in/dolapoolatoye/" },
-    { "label": "ORCID ↗", "url": "https://orcid.org/0009-0005-6193-336X" },
-    { "label": "GitHub ↗", "url": "https://github.com/DolapoSalim" }
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/dolapoolatoye/" },
+    { "label": "ORCID", "url": "https://orcid.org/0009-0005-6193-336X" },
+    { "label": "GitHub", "url": "https://github.com/DolapoSalim" }
   ],
   "affiliations": "FISON · American Fisheries Society · ECOPs Italy",
   "openTo": "Collaboration on marine imaging datasets, co-supervision of student projects, review and speaking.",

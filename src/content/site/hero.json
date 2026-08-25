@@ -14,6 +14,6 @@
   ],
   "ctas": [
     { "label": "View research", "url": "#research", "style": "fill" },
-    { "label": "Download CV ↗", "url": "https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true", "style": "ghost" }
+    { "label": "Download CV", "url": "https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true", "style": "ghost" }
   ]
 }

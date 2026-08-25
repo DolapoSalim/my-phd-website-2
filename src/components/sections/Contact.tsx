@@ -52,8 +52,8 @@ export function Contact() {
       <div className="footer-bar">
         <span>{contact.footerLocation}</span>
         <span>{contact.footerUpdated}</span>
-        <a href="#top" data-magnetic="1">
-          Back to top ↑
+        <a href="#top" data-magnetic="1" className="back-to-top">
+          Back to top
         </a>
       </div>
     </section>

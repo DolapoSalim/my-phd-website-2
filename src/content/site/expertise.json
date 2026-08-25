@@ -8,7 +8,7 @@
       "meta": "Streamlit",
       "title": "EcoQuad",
       "desc": "Upload a quadrat photograph, get grid-based percentage cover for macroalgae and sessile invertebrates.",
-      "cta": "Launch ↗",
+      "cta": "Launch",
       "url": "https://ecoquad-ai.streamlit.app/"
     },
     {
@@ -16,7 +16,7 @@
       "meta": "GitHub",
       "title": "marineAnnotate",
       "desc": "Annotation for marine biologists that keeps the imagery local — label detections and habitat classes without sending sensitive survey data anywhere.",
-      "cta": "View repository ↗",
+      "cta": "View repository",
       "url": "https://github.com/DolapoSalim/marineAnnotate"
     },
     {
