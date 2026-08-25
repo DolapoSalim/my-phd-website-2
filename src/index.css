@@ -172,34 +172,30 @@ a:hover { color:var(--accent) }
 ::-webkit-scrollbar-track { background:var(--bg) }
 ::-webkit-scrollbar-thumb { background:var(--text3); border-radius:2px }
 
-/* ── Custom ring + dot cursor — fine pointer only, magnetic hover on
-     [data-magnetic]. Mirrors the reference's componentDidMount logic. ── */
+/* ── Fish cursor — fine pointer only, magnetic hover on
+     [data-magnetic]. Ported from the legacy site's #hero-only fish
+     cursor, now running sitewide. ── */
 body.dc-nocursor, body.dc-nocursor * { cursor:none !important }
 @media (max-width:900px), (pointer:coarse) {
   body.dc-nocursor, body.dc-nocursor * { cursor:auto !important }
 }
-#cursor-ring {
-  position:fixed; top:0; left:0; width:34px; height:34px;
-  border:1px solid var(--accent); border-radius:50%;
-  pointer-events:none; z-index:95; opacity:0;
-  transform:translate(-50%,-50%);
-  transition:width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s var(--ease);
+#fish-cursor {
+  position:fixed; top:0; left:0; pointer-events:none; z-index:95;
+  opacity:0; transition:opacity 0.25s var(--ease);
+  will-change:transform;
 }
-#cursor-ring.active { opacity:1 }
-#cursor-ring.hover { width:62px; height:62px; background:rgba(225,173,102,0.12) }
-#cursor-dot {
-  position:fixed; top:0; left:0; width:4px; height:4px; border-radius:50%;
-  background:var(--text); pointer-events:none; z-index:96; opacity:0;
-  transform:translate(-50%,-50%);
-}
-#cursor-dot.active { opacity:1 }
+#fish-cursor.active { opacity:1 }
+#fish-cursor svg { display:block; overflow:visible }
+.fc-body, .fc-tail { fill:var(--text2); transition:fill 0.25s var(--ease) }
+.fc-eye { fill:var(--bg) }
+#fish-cursor.hover .fc-body, #fish-cursor.hover .fc-tail { fill:var(--accent) }
 @media (max-width:900px), (pointer:coarse) {
-  #cursor-ring, #cursor-dot { display:none }
+  #fish-cursor { display:none }
 }
 
 /* ── TargetCursor — scoped to The Stack via StackCursorZone, hides the
-     ambient ring/dot above while active so the two don't overlap ── */
-body.stack-cursor-active #cursor-ring, body.stack-cursor-active #cursor-dot { opacity:0 !important }
+     ambient fish cursor above while active so the two don't overlap ── */
+body.stack-cursor-active #fish-cursor { opacity:0 !important }
 .target-cursor-wrapper {
   position:fixed; top:0; left:0; width:0; height:0;
   pointer-events:none; z-index:9999; mix-blend-mode:difference;
@@ -252,9 +248,10 @@ nav {
 }
 .nav-cta:hover { background:rgba(225,173,102,0.12); color:var(--accent) }
 .theme-btn {
+  display:flex; align-items:center; justify-content:center;
+  width:34px; height:34px; flex-shrink:0;
   background:none; border:1px solid var(--border3); border-radius:4px;
-  padding:0.32rem 0.9rem; cursor:pointer;
-  font-family:var(--sans-ui); font-size:11px; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2);
+  cursor:pointer; color:var(--text2);
   transition:all var(--t) var(--ease);
 }
 .theme-btn:hover { border-color:var(--accent); color:var(--accent) }
@@ -322,8 +319,8 @@ section.sect:first-of-type { border-top:none }
 ════════════════════════════════════════ */
 #top {
   position:relative; min-height:100vh;
-  display:flex; flex-direction:column; justify-content:flex-end;
-  padding:132px 40px 0 40px; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:132px 40px 64px 40px; overflow:hidden;
 }
 #hero-bg {
   position:absolute; inset:-10% -10% 0 -10%; pointer-events:none; overflow:hidden;
@@ -641,10 +638,14 @@ section.sect:first-of-type { border-top:none }
 }
 @media (max-width:768px) {
   body { font-size:16px }
+  nav { padding:14px 20px; gap:12px }
+  .nav-logo-tagline, .nav-cta { display:none }
+  .nav-right { gap:10px }
   .nav-links { display:none }
   .hbg { display:flex }
+  .mob-nav { top:59px; padding:1.5rem 1.5rem }
   section.sect { padding:64px 24px 72px 24px }
-  #hero { padding:112px 24px 0 24px }
+  #top { padding:96px 20px 48px 20px }
   .wrap { padding-left:24px; padding-right:24px }
   .pub-grid, .card-grid, .stack-grid { grid-template-columns:1fr }
   .article-card.featured { grid-template-columns:1fr }

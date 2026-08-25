@@ -11,7 +11,7 @@ interface MarqueeBandProps {
 export function MarqueeBand({ items }: MarqueeBandProps) {
   return (
     <div className="marquee-band">
-      <CurvedLoop marqueeText={items.join(' ✦ ')} className="marquee-loop-text" speed={1} curveAmount={12} viewBoxHeight={64} />
+      <CurvedLoop marqueeText={items.join(' · ')} className="marquee-loop-text" speed={1} curveAmount={12} viewBoxHeight={64} />
     </div>
   )
 }

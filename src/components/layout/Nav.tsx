@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Sun, Moon } from 'lucide-react'
 import hero from '@/content/site/hero.json'
 import { useTheme } from '@/hooks/useTheme'
 
@@ -34,8 +35,8 @@ export function Nav() {
           <a href={`mailto:${hero.email}`} data-magnetic="1" className="nav-cta">
             Get in touch
           </a>
-          <button className="theme-btn" onClick={toggle}>
-            {theme === 'dark' ? '☀ Light' : '☾ Dark'}
+          <button className="theme-btn" onClick={toggle} aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
+            {theme === 'dark' ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
           </button>
           <button className={`hbg ${open ? 'open' : ''}`} aria-label="menu" onClick={() => setOpen((o) => !o)}>
             <span></span>
