@@ -17,10 +17,16 @@ interface Bubble {
  *  puffing up gold over any element carrying data-magnetic (which also
  *  gets the physical magnetic pull toward the cursor).
  *
- *  Uses (any-pointer: fine) rather than (pointer: fine) - hybrid touch
- *  + mouse laptops often report a coarse *primary* pointer even while
- *  a mouse is actively in use, which silently disabled this (and
- *  TargetCursor) even on hardware with a perfectly good mouse.
+ *  Doesn't gate on matchMedia('(any-pointer: fine)') at all - on some
+ *  real-world setups that query itself has been observed reporting
+ *  false on a normal desktop with a working mouse (privacy/security
+ *  software can spoof it to reduce fingerprinting entropy, and it isn't
+ *  something a page can tell apart from a genuinely coarse-only
+ *  device). Instead this waits for an actual mousemove event before
+ *  activating - real mouse movement can't be faked without breaking
+ *  ordinary mouse use, so it's a more reliable signal than the
+ *  declarative media query, and it still naturally stays off on
+ *  touch-only devices since those don't fire mousemove on tap.
  *
  *  Not gated behind prefers-reduced-motion - it's a pointer replacement,
  *  not an ambient loop (see the reduced-motion-preference-always-animate
@@ -31,9 +37,6 @@ export function CustomCursor() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    const fine = window.matchMedia('(any-pointer: fine)').matches
-    if (!fine) return
-
     const fish = fishRef.current
     const canvas = canvasRef.current
     if (!fish || !canvas) return

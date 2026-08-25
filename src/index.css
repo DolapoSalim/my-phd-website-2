@@ -173,11 +173,15 @@ a:hover { color:var(--accent) }
 ::-webkit-scrollbar-track { background:var(--bg) }
 ::-webkit-scrollbar-thumb { background:var(--text3); border-radius:2px }
 
-/* ── Fish cursor — fine pointer only, magnetic hover on
-     [data-magnetic]. Ported from the legacy site's #hero-only fish
-     cursor, now running sitewide. ── */
+/* ── Fish cursor — activates on real mouse movement (see
+     CustomCursor.tsx), falls back to the native cursor under 900px
+     since narrow viewports are the reliable signal here (any-pointer:
+     fine has been observed lying on some real desktops, so it's no
+     longer used as a gate). Magnetic hover on [data-magnetic]. Ported
+     from the legacy site's #hero-only fish cursor, now running
+     sitewide. ── */
 body.dc-nocursor, body.dc-nocursor * { cursor:none !important }
-@media (max-width:900px), not (any-pointer:fine) {
+@media (max-width:900px) {
   body.dc-nocursor, body.dc-nocursor * { cursor:auto !important }
 }
 #fish-bubbles {
@@ -194,7 +198,7 @@ body.dc-nocursor, body.dc-nocursor * { cursor:none !important }
 .fc-body, .fc-tail { fill:var(--text); transition:fill 0.25s var(--ease) }
 .fc-eye { fill:var(--bg) }
 #fish-cursor.hover .fc-body, #fish-cursor.hover .fc-tail { fill:var(--accent) }
-@media (max-width:900px), not (any-pointer:fine) {
+@media (max-width:900px) {
   #fish-cursor, #fish-bubbles { display:none }
 }
 
