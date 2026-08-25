@@ -40,6 +40,8 @@ export interface NewsEntry {
   title: string
   body: string
   tag: string
+  image: string
+  imageAlt: string
   url: string
   urlLabel: string
 }

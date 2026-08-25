@@ -51,7 +51,7 @@ export function Cv() {
             data-magnetic="1"
             className="btn btn-ghost"
           >
-            Download full CV ↗
+            Download full CV
           </a>
         }
       />

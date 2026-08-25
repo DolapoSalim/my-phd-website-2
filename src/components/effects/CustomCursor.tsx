@@ -5,16 +5,18 @@ import { useEffect, useRef } from 'react'
  *  here it runs sitewide) that lags toward the real cursor and rotates
  *  to face its direction of travel, puffing up gold over any element
  *  carrying data-magnetic (which also gets the physical magnetic pull
- *  toward the cursor). Fine-pointer only; respects prefers-reduced-
- *  motion. Hidden over The Stack, which has its own TargetCursor
- *  (see StackCursorZone) via the body.stack-cursor-active class. */
+ *  toward the cursor). Fine-pointer only - it's a pointer replacement,
+ *  not an ambient loop, so it isn't gated behind prefers-reduced-motion
+ *  (see the reduced-motion-preference-always-animate memory: this site
+ *  keeps interactive/decorative motion on regardless of that setting).
+ *  Hidden over The Stack, which has its own TargetCursor (see
+ *  StackCursorZone) via the body.stack-cursor-active class. */
 export function CustomCursor() {
   const fishRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const fine = window.matchMedia('(pointer: fine)').matches
-    if (reduced || !fine) return
+    if (!fine) return
 
     const fish = fishRef.current
     if (!fish) return
