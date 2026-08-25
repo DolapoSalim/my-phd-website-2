@@ -151,7 +151,8 @@
    RESET
 ════════════════════════════════════════ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
-html { scroll-behavior:smooth }
+/* Smooth scrolling is handled by Lenis (SmoothScroll.tsx) now, not the
+   browser's native scroll-behavior, so the two don't fight each other. */
 body {
   font-family:var(--body);
   font-size:17px;
@@ -176,21 +177,25 @@ a:hover { color:var(--accent) }
      [data-magnetic]. Ported from the legacy site's #hero-only fish
      cursor, now running sitewide. ── */
 body.dc-nocursor, body.dc-nocursor * { cursor:none !important }
-@media (max-width:900px), (pointer:coarse) {
+@media (max-width:900px), not (any-pointer:fine) {
   body.dc-nocursor, body.dc-nocursor * { cursor:auto !important }
+}
+#fish-bubbles {
+  position:fixed; inset:0; pointer-events:none; z-index:94;
 }
 #fish-cursor {
   position:fixed; top:0; left:0; pointer-events:none; z-index:95;
   opacity:0; transition:opacity 0.25s var(--ease);
   will-change:transform;
+  filter:drop-shadow(0 1px 4px rgba(0,0,0,0.45));
 }
 #fish-cursor.active { opacity:1 }
 #fish-cursor svg { display:block; overflow:visible }
-.fc-body, .fc-tail { fill:var(--text2); transition:fill 0.25s var(--ease) }
+.fc-body, .fc-tail { fill:var(--text); transition:fill 0.25s var(--ease) }
 .fc-eye { fill:var(--bg) }
 #fish-cursor.hover .fc-body, #fish-cursor.hover .fc-tail { fill:var(--accent) }
-@media (max-width:900px), (pointer:coarse) {
-  #fish-cursor { display:none }
+@media (max-width:900px), not (any-pointer:fine) {
+  #fish-cursor, #fish-bubbles { display:none }
 }
 
 /* ── TargetCursor — scoped to The Stack via StackCursorZone, hides the
