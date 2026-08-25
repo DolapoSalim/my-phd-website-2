@@ -1,6 +1,7 @@
 import marquee from '@/content/site/marquee.json'
 import { Nav } from '@/components/layout/Nav'
 import { CustomCursor } from '@/components/effects/CustomCursor'
+import { SmoothScroll } from '@/components/effects/SmoothScroll'
 import { MarqueeBand } from '@/components/effects/MarqueeBand'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
@@ -14,6 +15,7 @@ import { Contact } from '@/components/sections/Contact'
 function App() {
   return (
     <>
+      <SmoothScroll />
       <CustomCursor />
       <Nav />
       <Hero />

@@ -14,7 +14,7 @@ export function StackCursorZone({ children }: { children: ReactNode }) {
   const fineRef = useRef<boolean | null>(null)
 
   const isFinePointer = () => {
-    if (fineRef.current === null) fineRef.current = window.matchMedia('(pointer: fine)').matches
+    if (fineRef.current === null) fineRef.current = window.matchMedia('(any-pointer: fine)').matches
     return fineRef.current
   }
 
