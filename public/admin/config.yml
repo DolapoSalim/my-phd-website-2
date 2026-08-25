@@ -110,6 +110,7 @@ collections:
   - name: "cv-education"
     label: "CV — Education"
     folder: "src/content/cv-education"
+    create: true
     extension: "json"
     format: "json"
     identifier_field: "title"
@@ -126,6 +127,7 @@ collections:
   - name: "cv-appointments"
     label: "CV — Appointments"
     folder: "src/content/cv-appointments"
+    create: true
     extension: "json"
     format: "json"
     identifier_field: "title"
@@ -142,6 +144,7 @@ collections:
   - name: "publications"
     label: "Publications"
     folder: "src/content/publications"
+    create: true
     extension: "json"
     format: "json"
     identifier_field: "title"
@@ -162,6 +165,7 @@ collections:
   - name: "news"
     label: "News"
     folder: "src/content/news"
+    create: true
     extension: "json"
     format: "json"
     identifier_field: "title"
@@ -181,6 +185,7 @@ collections:
   - name: "awards"
     label: "Awards & Grants"
     folder: "src/content/awards"
+    create: true
     extension: "json"
     format: "json"
     identifier_field: "title"
@@ -195,6 +200,7 @@ collections:
   - name: "skills"
     label: "Expertise Stack"
     folder: "src/content/skills"
+    create: true
     extension: "json"
     format: "json"
     identifier_field: "title"
