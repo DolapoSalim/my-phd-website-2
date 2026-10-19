@@ -444,7 +444,8 @@ a.built-card .built-card-cta::after,
 /* ════════════════════════════════════════
    NUMBERED ARTICLE CARDS (news / expertise "built" row)
 ════════════════════════════════════════ */
-.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:22px }
+.card-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px }
+@media (max-width:768px) { .card-grid { grid-template-columns:1fr } }
 .article-card {
   border:1px solid var(--border2); border-radius:4px; padding:34px 30px;
   display:flex; flex-direction:column; gap:18px;
@@ -455,7 +456,7 @@ a.built-card .built-card-cta::after,
 .article-card:hover { border-color:rgba(225,173,102,0.55); background:rgba(225,173,102,0.03) }
 .article-card.featured { grid-column:span 2; padding:38px 34px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:44px; align-items:start }
 @media (max-width:900px) { .article-card.featured { grid-column:span 1 } }
-.news-thumb { width:100%; max-height:220px; object-fit:cover; border-radius:4px; margin-bottom:4px }
+.news-thumb { width:auto; max-width:100%; max-height:220px; object-fit:contain; align-self:flex-start; border-radius:4px; margin-bottom:4px }
 .article-idx {
   display:flex; align-items:baseline; justify-content:space-between; gap:16px;
   font-family:var(--sans-ui); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); font-feature-settings:'tnum';
