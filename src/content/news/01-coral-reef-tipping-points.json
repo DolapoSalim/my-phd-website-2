@@ -1,0 +1,11 @@
+{
+  "order": 1,
+  "date": "October 2026",
+  "title": "Released: Coral reef tipping points",
+  "body": "I've released **Coral reef tipping points**, a coral–seaweed–herbivore model built on synthetic data to test how reef resilience is studied: tipping points, recovery zones, early-warning signals, parameter fitting and management scenarios. Because the data are made up, the right answers are known, so every method can be checked. You can run the model in your browser on the interactive website, and it is archived on Zenodo (DOI 10.5281/zenodo.23471354).",
+  "tag": "Release",
+  "image": "/assets/images/coral-reef-basins-3d.png",
+  "imageAlt": "3D surface plot of the \"tolerance wall\" at grazing 0.19: the maximum seaweed cover a reef can carry and still recover, across coral cover and herbivore levels. It is highest with many herbivores and little coral, and falls towards zero as coral cover rises and herbivores decline.",
+  "url": "https://github.com/DolapoSalim/macroalgae_analysis_advance",
+  "urlLabel": "View on GitHub"
+}

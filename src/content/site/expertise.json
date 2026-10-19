@@ -4,6 +4,14 @@
   "githubUrl": "https://github.com/DolapoSalim",
   "built": [
     {
+      "kind": "Model + website",
+      "meta": "Python · Zenodo",
+      "title": "Coral reef tipping points",
+      "desc": "A coral–seaweed–herbivore model built on synthetic data to test reef-resilience methods — tipping points, recovery zones, early-warning signals and management scenarios. Run it in your browser.",
+      "cta": "Explore the model",
+      "url": "https://dolaposalim.github.io/macroalgae_analysis_advance/"
+    },
+    {
       "kind": "Web app",
       "meta": "Streamlit",
       "title": "EcoQuad",
