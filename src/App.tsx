@@ -7,6 +7,8 @@ import { Research } from '@/pages/Research'
 import { Publications } from '@/pages/Publications'
 import { Cv } from '@/pages/Cv'
 import { News } from '@/pages/News'
+import { About } from '@/pages/About'
+import { FishCursor } from '@/components/site/FishCursor'
 
 redirectLegacyHash()
 
@@ -16,6 +18,7 @@ const PAGES: Record<Route, { title: string; render: () => React.ReactNode }> = {
   '/publications': { title: 'Publications — Olatoye Dolapo Salim', render: () => <Publications /> },
   '/cv': { title: 'CV — Olatoye Dolapo Salim', render: () => <Cv /> },
   '/news': { title: 'News — Olatoye Dolapo Salim', render: () => <News /> },
+  '/about': { title: 'About me — Olatoye Dolapo Salim', render: () => <About /> },
 }
 
 function App() {
@@ -37,17 +40,21 @@ function App() {
   }, [path])
 
   return (
-    <div className="site">
-      <a className="skip-link" href="#content">
-        Skip to content
-      </a>
-      <Header path={path} />
-      {/* keyed so each page replays its entrance */}
-      <div className="view" key={path}>
-        {page.render()}
+    <>
+      {/* outside .site, so the large-screen zoom on .site doesn't offset it */}
+      <FishCursor />
+      <div className="site">
+        <a className="skip-link" href="#content">
+          Skip to content
+        </a>
+        <Header path={path} />
+        {/* keyed so each page replays its entrance */}
+        <div className="view" key={path}>
+          {page.render()}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   )
 }
 

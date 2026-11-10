@@ -80,6 +80,13 @@ collections:
               - { name: "url", label: "URL (leave blank if not linked)", widget: "string", required: false }
               - { name: "image", label: "Image (optional — a figure or screenshot; without one the card gets a drawn placeholder)", widget: "image", required: false }
 
+      - name: "about-me"
+        label: "About me (intro)"
+        file: "src/content/site/about-me.json"
+        fields:
+          - { name: "heading", widget: "string" }
+          - { name: "copy", label: "Intro paragraph", widget: "text", hint: "Use **text** for bold." }
+
       - name: "cv-schools"
         label: "CV — Schools & training"
         file: "src/content/site/cv-schools.json"
@@ -211,3 +218,28 @@ collections:
       - { name: "order", label: "Order", widget: "number" }
       - { name: "title", label: "Group title", widget: "string" }
       - { name: "tags", widget: "list" }
+
+  - name: "interests"
+    label: "About me — Interests"
+    folder: "src/content/interests"
+    create: true
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
+      - { name: "title", widget: "string" }
+      - { name: "tagline", label: "Tagline (one line under the title)", widget: "string" }
+      - { name: "desc", label: "Longer description (optional)", widget: "text", required: false }
+      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design"] }
+      - name: "images"
+        label: "Photos (optional, up to 3 — e.g. book covers, gym, piano). Replace the drawn artwork."
+        widget: "list"
+        required: false
+        max: 3
+        fields:
+          - { name: "image", widget: "image" }
+      - { name: "url", label: "Link URL (optional, e.g. your content channel)", widget: "string", required: false }
+      - { name: "urlLabel", label: "Link label (e.g. \"Watch on YouTube\")", widget: "string", required: false }

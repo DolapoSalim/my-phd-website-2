@@ -3,7 +3,7 @@ import { useSyncExternalStore, type AnchorHTMLAttributes, type MouseEvent } from
 /** A deliberately tiny pushState router: the site only has a handful of
  *  fixed pages, so a routing library would be more code than the routes.
  *  Netlify's `/* -> /index.html` rewrite (netlify.toml) serves every path. */
-export const ROUTES = ['/', '/research', '/publications', '/cv', '/news'] as const
+export const ROUTES = ['/', '/research', '/publications', '/cv', '/news', '/about'] as const
 export type Route = (typeof ROUTES)[number]
 
 const listeners = new Set<() => void>()
@@ -41,6 +41,7 @@ const LEGACY_HASHES: Record<string, Route> = {
   '#cv': '/cv',
   '#awards': '/cv',
   '#news': '/news',
+  '#about': '/about',
 }
 export function redirectLegacyHash() {
   const to = LEGACY_HASHES[window.location.hash]

@@ -1,11 +1,14 @@
+import type { ReactNode } from 'react'
 import { Link, type Route } from '@/lib/router'
 
 export type Sheet =
   | { kind: 'image'; src: string }
   | { kind: 'logo'; src: string }
   | { kind: 'paper'; title: string; meta: string }
+  | { kind: 'custom'; node: ReactNode }
 
 function SheetFace({ sheet }: { sheet: Sheet }) {
+  if (sheet.kind === 'custom') return <span className="sheet sheet-custom">{sheet.node}</span>
   if (sheet.kind === 'paper') {
     return (
       <span className="sheet sheet-paper">
@@ -24,18 +27,16 @@ function SheetFace({ sheet }: { sheet: Sheet }) {
 
 /** A manila field-records folder: up to three sheets peek out of it, and
  *  fan out when the folder is hovered or focused. The front flap carries
- *  a specimen-style label (catalogue number + item count). */
+ *  a specimen-style catalogue-number label. */
 export function FieldFolder({
   to,
   no,
   label,
-  count,
   sheets,
 }: {
   to: Route
   no: string
   label: string
-  count: string
   sheets: Sheet[]
 }) {
   return (
@@ -48,10 +49,7 @@ export function FieldFolder({
           ))}
         </span>
         <span className="folder-front">
-          <span className="folder-label">
-            <span>Nº {no}</span>
-            <span>{count}</span>
-          </span>
+          <span className="folder-label">Nº {no}</span>
         </span>
       </span>
       <span className="folder-caption">{label}</span>

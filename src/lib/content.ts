@@ -15,6 +15,7 @@ const publicationModules = import.meta.glob('../content/publications/*.json', { 
 const newsModules = import.meta.glob('../content/news/*.json', { eager: true })
 const skillModules = import.meta.glob('../content/skills/*.json', { eager: true })
 const awardModules = import.meta.glob('../content/awards/*.json', { eager: true })
+const interestModules = import.meta.glob('../content/interests/*.json', { eager: true })
 
 export interface CvEntry {
   order: number
@@ -65,6 +66,19 @@ export const publicationEntries = loadCollection<PublicationEntry>(publicationMo
 export const newsEntries = loadCollection<NewsEntry>(newsModules)
 export const skillGroupEntries = loadCollection<SkillGroupEntry>(skillModules)
 export const awardEntries = loadCollection<AwardEntry>(awardModules)
+
+export type InterestArtwork = 'reading' | 'fitness' | 'content' | 'piano' | 'growth' | 'design'
+export interface InterestEntry {
+  order: number
+  title: string
+  tagline: string
+  desc: string
+  artwork: InterestArtwork
+  images: { image: string }[]
+  url: string
+  urlLabel: string
+}
+export const interestEntries = loadCollection<InterestEntry>(interestModules)
 
 /** "Built & deployed" cards (site/expertise.json). `image` is optional, so
  *  JSON inference can't type it — declare the shape once here. */
