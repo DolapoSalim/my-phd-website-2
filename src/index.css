@@ -96,7 +96,6 @@ a { color: inherit; text-decoration: none }
 .avatar { flex: none; width: 38px; height: 38px; border-radius: 50%; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s var(--ease) }
 .avatar:hover { transform: scale(1.06) }
 .avatar img { width: 100%; height: 100%; object-fit: cover }
-.crumb-divider { color: var(--border); font-size: 20px; font-weight: 300 }
 .station { margin: 0; display: flex; gap: 10px; font-size: 13px; color: var(--muted); white-space: nowrap }
 .station time { color: var(--text) }
 .back-link { font-size: 14px; color: var(--text-2); padding: 7px 14px; border-radius: 999px; background: var(--surface); box-shadow: var(--shadow); transition: color 0.2s, box-shadow 0.2s }
@@ -217,7 +216,8 @@ a { color: inherit; text-decoration: none }
 .lead strong { color: var(--text); font-weight: 600 }
 .lead .pill-link { margin-top: 22px }
 
-.section-label { display: flex; align-items: center; gap: 14px; margin: 72px 0 24px; font-size: 12px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted) }
+.section-label { display: flex; align-items: center; gap: 16px; margin: 76px 0 26px; font-size: 17px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text) }
+.section-label .rule { background: var(--border) }
 .section-label .rule { flex: 1; height: 1px; background: var(--border) }
 
 .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow) }
@@ -384,17 +384,20 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 
 /* ── full-size photo / video viewer (MediaViewer.tsx) ── */
 .viewer {
-  position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 24px;
-  background: rgba(6, 12, 20, 0.86); backdrop-filter: blur(6px); animation: fade 0.25s var(--ease) both;
+  position: fixed; inset: 0; z-index: 80; height: 100vh; height: 100dvh;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  background: rgba(6, 12, 20, 0.88); backdrop-filter: blur(6px); animation: fade 0.25s var(--ease) both;
 }
 @keyframes fade { from { opacity: 0 } }
-.viewer-inner { position: relative; display: flex; flex-direction: column; gap: 12px; width: min(1100px, 100%); max-height: 100%; color: #fff }
+/* rows: title bar / photo or video (shrinks to fit) / caption — so a tall
+   photo can never push its caption off a short or browser-chromed screen */
+.viewer-inner { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 12px; width: min(1100px, 100%); height: 100%; margin: 0 auto; color: #fff }
 .viewer-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px }
 .viewer-bar p { display: flex; gap: 14px; margin: 0; font-size: 15px; font-weight: 500 }
 .viewer-count { font-family: var(--mono); font-size: 13px; font-weight: 400; color: rgba(255, 255, 255, 0.7) }
-.viewer-stage { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 0; min-height: 0 }
-.viewer-stage img, .viewer-stage video { display: block; max-width: 100%; max-height: calc(100vh - 170px); border-radius: 12px; background: #000; object-fit: contain }
-.viewer-stage figcaption { max-width: 70ch; font-size: 14.5px; line-height: 1.55; color: rgba(255, 255, 255, 0.85); text-align: center }
+.viewer-stage { display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; gap: 12px; margin: 0; min-height: 0 }
+.viewer-stage img, .viewer-stage video { display: block; align-self: center; max-width: 100%; max-height: 100%; min-height: 0; border-radius: 12px; background: #000; object-fit: contain }
+.viewer-stage figcaption { max-width: 70ch; padding-bottom: 2px; font-size: 14.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.88); text-align: center }
 .viewer-btn {
   display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
   background: rgba(255, 255, 255, 0.12); color: #fff; cursor: pointer; transition: background 0.2s;
@@ -515,7 +518,7 @@ html.fish-cursor-on, html.fish-cursor-on * { cursor: none !important }
   .news-media img { max-height: 300px }
   .timeline { --date-w: 52px; --gap: 28px }
   .tl-range { display: none }
-  .section-label { margin-top: 56px }
+  .section-label { margin-top: 56px; font-size: 15px }
   .latest { flex-wrap: wrap; justify-content: center; border-radius: 16px; text-align: center }
   .latest-title { white-space: normal }
   .site-footer { padding: 22px 18px 30px }

@@ -6,14 +6,31 @@
   "status": "Open to collaboration — 2026",
   "nameLine1": "Olatoye",
   "nameLine2": "Dolapo Salim",
-  "tagline": "Leveraging AI and emerging imaging technologies to decode **biodiversity stability** in complex marine environments",
+  "tagline": "Leveraging AI and emerging technologies for monitoring **biodiversity** in complex marine habitats",
   "facts": [
-    { "label": "Thesis", "value": "Evaluating biodiversity stability in complex marine habitats using imaging technologies" },
-    { "label": "Supervisors", "value": "Benedetti-Cecchi · Bertocci" },
-    { "label": "Funded by", "value": "EU Horizon — BioEcoOcean, BioBoost+" }
+    {
+      "label": "Thesis",
+      "value": "Evaluating biodiversity stability in complex marine habitats using imaging technologies"
+    },
+    {
+      "label": "Supervisors",
+      "value": "Benedetti-Cecchi · Bertocci"
+    },
+    {
+      "label": "Funded by",
+      "value": "EU Horizon — BioEcoOcean, BioBoost+"
+    }
   ],
   "ctas": [
-    { "label": "View research", "url": "#research", "style": "fill" },
-    { "label": "Download CV", "url": "https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true", "style": "ghost" }
+    {
+      "label": "View research",
+      "url": "#research",
+      "style": "fill"
+    },
+    {
+      "label": "Download CV",
+      "url": "https://docs.google.com/document/d/1bJD5fpYmJRUO4sHkqxoPtVRsXzmbUO9k/edit?usp=drive_link&ouid=104299470332118088989&rtpof=true&sd=true",
+      "style": "ghost"
+    }
   ]
 }
