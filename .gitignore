@@ -23,3 +23,7 @@ dist-ssr
 /src/content/*.PNG
 /src/content/*.MP4
 /src/content/*.MOV
+
+# Local-only folder for personal images taken out of the published site
+# (and older raw uploads). Kept on this computer, never committed.
+/_personal-archive/

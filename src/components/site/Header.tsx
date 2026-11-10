@@ -88,7 +88,7 @@ export function Header({ path }: { path: Route }) {
     <header className="site-header">
       <div className="site-header-left">
         <Link to="/" className="avatar" aria-label="Home" aria-current={path === '/' ? 'page' : undefined}>
-          <img src="/assets/images/passport photo.jpg" width="38" height="38" alt="" />
+          <img src="/assets/images/passport-photo.jpg" width="38" height="38" alt="" />
         </Link>
         {path !== '/' && (
           <Link to={backTo} className="back-link" aria-keyshortcuts="Escape">

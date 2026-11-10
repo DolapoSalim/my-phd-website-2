@@ -30,7 +30,7 @@ const paperSheets: Sheet[] = publicationEntries
 
 const cvSheets: Sheet[] = [
   { kind: 'logo', src: '/assets/images/unipisa.png' },
-  { kind: 'logo', src: '/assets/images/UniSalento-Universita-del-Salento.svg.png' },
+  { kind: 'logo', src: '/assets/images/unisalento.png' },
   { kind: 'logo', src: '/assets/images/fuoye.png' },
 ]
 

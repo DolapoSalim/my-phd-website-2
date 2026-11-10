@@ -1,7 +1,3 @@
 {
-  "copy": "**I work at the intersection of marine ecology and machine intelligence**, applying AI and emerging imaging technologies — computer vision and deep learning — to evaluate **biodiversity stability in complex marine environments.** My work runs the whole pipeline: collecting and annotating underwater imagery, training detection and classification models, then folding their output back into ecological assessment. **Automated vision is how ocean monitoring keeps pace with the climate crisis.**",
-  "stats": [
-    { "value": "06", "label": "Honors & awards", "desc": "Pisa, Salento, Erasmus and FUOYE — 2017 to 2024." },
-    { "value": "04", "label": "Countries trained in", "desc": "Nigeria, Italy, Malta and Spain — field to model." }
-  ]
+  "copy": "**I work at the intersection of marine ecology and machine intelligence**, applying AI and emerging imaging technologies — computer vision and deep learning — to evaluate **biodiversity stability in complex marine environments.** My work runs the whole pipeline: collecting and annotating underwater imagery, training detection and classification models, then folding their output back into ecological assessment. **Automated vision is how ocean monitoring keeps pace with the climate crisis.**"
 }
