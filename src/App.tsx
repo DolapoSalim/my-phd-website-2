@@ -10,7 +10,7 @@ import { News } from '@/pages/News'
 import { About } from '@/pages/About'
 import { FishCursor } from '@/components/site/FishCursor'
 import { Sea } from '@/components/site/Sea'
-import { PalettePicker } from '@/components/site/PalettePicker'
+import { FontPicker } from '@/components/site/FontPicker'
 
 redirectLegacyHash()
 
@@ -45,7 +45,7 @@ function App() {
     <>
       {/* outside .site, so the large-screen zoom on .site doesn't offset it */}
       <FishCursor />
-      <PalettePicker />
+      <FontPicker />
       <div className={`site${path === '/' ? ' site-home' : ''}`}>
         {path === '/' && <Sea />}
         <a className="skip-link" href="#content">

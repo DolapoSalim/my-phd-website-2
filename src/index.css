@@ -3,57 +3,14 @@
 /* ════════════════════════════════════════
    FIELD STATION — design tokens
    A quiet, centred "portal" layout (after ehsandesigns.com) re-read as a
-   researcher's field station: manila record folders, specimen labels,
-   DM Mono for catalogue data, one ocean-teal accent. Light is default.
+   researcher's field station: record folders with specimen labels, mono
+   type for catalogue data. Palette: "Deep ocean" — cool sea-glass whites,
+   slate-blue folders and one cobalt accent, so the pages sit naturally
+   with the fish-tracking footage. Light is default. Every text colour
+   meets 4.5:1 on its background.
 ════════════════════════════════════════ */
 :root {
   color-scheme: light;
-  --bg: #f7f7f4;
-  --surface: #ffffff;
-  --surface-2: #f0f0eb;
-  --text: #1c1f20;
-  --text-2: #4a4f50;
-  --muted: #6a6f70;
-  --border: #e3e3dc;
-  --accent: #0b6b70;
-  --accent-soft: rgba(11, 107, 112, 0.09);
-  --folder-back: #d6c49b;
-  --folder-front: #e7d9b5;
-  --folder-shade: #cdb98c;
-  --label: #fffdf6;
-  --label-ink: #5a4e33;
-  --sheet: #ffffff;
-  --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(20, 24, 24, 0.04), 0 6px 16px rgba(20, 24, 24, 0.06);
-  --shadow-lift: 0 0 0 1px var(--border), 0 4px 8px rgba(20, 24, 24, 0.06), 0 14px 30px rgba(20, 24, 24, 0.09);
-  --radius: 18px;
-  --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0f1112;
-  --surface: #171a1b;
-  --surface-2: #202425;
-  --text: #eef0ef;
-  --text-2: #c3c8c8;
-  --muted: #8f9696;
-  --border: #2a2f30;
-  --accent: #5ec4c0;
-  --accent-soft: rgba(94, 196, 192, 0.1);
-  --folder-back: #5d523f;
-  --folder-front: #706349;
-  --folder-shade: #4f4535;
-  --label: #ece6d6;
-  --label-ink: #4a4030;
-  --sheet: #f4f4f1;
-  --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(0, 0, 0, 0.2), 0 6px 16px rgba(0, 0, 0, 0.28);
-  --shadow-lift: 0 0 0 1px #3a4041, 0 4px 8px rgba(0, 0, 0, 0.25), 0 14px 30px rgba(0, 0, 0, 0.35);
-}
-
-/* ── palette candidates (temporary: pick one, then it becomes the
-   :root default above and these blocks go). "field" is the default. ── */
-:root[data-palette="ocean"] {
   --bg: #f4f7fa;
   --surface: #ffffff;
   --surface-2: #e9eff5;
@@ -68,8 +25,25 @@
   --folder-shade: #93abc6;
   --label: #fbfdff;
   --label-ink: #23384f;
+  --sheet: #ffffff;
+  --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(15, 28, 43, 0.04), 0 6px 16px rgba(15, 28, 43, 0.06);
+  --shadow-lift: 0 0 0 1px var(--border), 0 4px 8px rgba(15, 28, 43, 0.06), 0 14px 30px rgba(15, 28, 43, 0.1);
+  --radius: 18px;
+  --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* headings: the body face unless a font pairing sets a display face */
+  --display: var(--sans);
+  --display-weight: 600;
+  --display-tracking: -0.035em;
+  --title-tracking: -0.02em;
+  /* card / entry titles: the display face unless a pairing opts out */
+  --title-font: var(--display);
+  --title-weight: var(--display-weight);
+  --display-scale: 1;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
-:root[data-palette="ocean"][data-theme="dark"] {
+:root[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #0a121c;
   --surface: #111c29;
   --surface-2: #172434;
@@ -84,117 +58,62 @@
   --folder-shade: #263a52;
   --label: #e3ebf5;
   --label-ink: #1d2f45;
-}
-:root[data-palette="coral"] {
-  --bg: #faf6f1;
-  --surface: #ffffff;
-  --surface-2: #f3ece4;
-  --text: #2a1d17;
-  --text-2: #5a4a42;
-  --muted: #76665e;
-  --border: #ebe1d6;
-  --accent: #b8432a;
-  --accent-soft: rgba(184, 67, 42, 0.09);
-  --folder-back: #e6b8a2;
-  --folder-front: #f1d2c2;
-  --folder-shade: #d9a58c;
-  --label: #fffaf6;
-  --label-ink: #6a3624;
-}
-:root[data-palette="coral"][data-theme="dark"] {
-  --bg: #16100d;
-  --surface: #1f1814;
-  --surface-2: #2a211c;
-  --text: #f5ece6;
-  --text-2: #d4c4ba;
-  --muted: #a08f84;
-  --border: #3a2e27;
-  --accent: #ff8a6b;
-  --accent-soft: rgba(255, 138, 107, 0.12);
-  --folder-back: #6b4434;
-  --folder-front: #825545;
-  --folder-shade: #5a392b;
-  --label: #f3e5dc;
-  --label-ink: #4a2a1c;
-}
-:root[data-palette="kelp"] {
-  --bg: #f5f6f0;
-  --surface: #ffffff;
-  --surface-2: #ebeee2;
-  --text: #1b2118;
-  --text-2: #47503f;
-  --muted: #646d5a;
-  --border: #dfe3d4;
-  --accent: #3d6b35;
-  --accent-soft: rgba(61, 107, 53, 0.09);
-  --folder-back: #c9cb9e;
-  --folder-front: #dedfba;
-  --folder-shade: #b6b888;
-  --label: #fdfdf6;
-  --label-ink: #4a4a24;
-}
-:root[data-palette="kelp"][data-theme="dark"] {
-  --bg: #0f120d;
-  --surface: #171b14;
-  --surface-2: #20251c;
-  --text: #eef1e8;
-  --text-2: #c3cab8;
-  --muted: #8f9884;
-  --border: #2b3125;
-  --accent: #9ccc7a;
-  --accent-soft: rgba(156, 204, 122, 0.12);
-  --folder-back: #4c5233;
-  --folder-front: #5f6640;
-  --folder-shade: #40452b;
-  --label: #ebeedd;
-  --label-ink: #3a3d22;
-}
-:root[data-palette="notebook"] {
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --surface-2: #f0f0f0;
-  --text: #1f1f1f;
-  --text-2: #4d4d4d;
-  --muted: #6b6b6b;
-  --border: #e3e3e3;
-  --accent: #bf3220;
-  --accent-soft: rgba(191, 50, 32, 0.08);
-  --folder-back: #dad5c8;
-  --folder-front: #e9e5d9;
-  --folder-shade: #cac4b4;
-  --label: #ffffff;
-  --label-ink: #3a3a3a;
-}
-:root[data-palette="notebook"][data-theme="dark"] {
-  --bg: #111111;
-  --surface: #1a1a1a;
-  --surface-2: #242424;
-  --text: #f2f2f2;
-  --text-2: #c4c4c4;
-  --muted: #8c8c8c;
-  --border: #2e2e2e;
-  --accent: #ff6b57;
-  --accent-soft: rgba(255, 107, 87, 0.12);
-  --folder-back: #4a463e;
-  --folder-front: #5b564c;
-  --folder-shade: #3d3a33;
-  --label: #ececec;
-  --label-ink: #333333;
+  --sheet: #f4f6f9;
+  --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(0, 0, 0, 0.22), 0 6px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lift: 0 0 0 1px #2e4260, 0 4px 8px rgba(0, 0, 0, 0.26), 0 14px 30px rgba(0, 0, 0, 0.38);
 }
 
-/* temporary palette switcher (PalettePicker.tsx, shown with ?palettes) */
-.palette-picker {
+/* ── font pairing candidates (temporary: pick one, then it becomes the
+   :root default above and these blocks go). Default: Inter + DM Mono. ── */
+:root[data-font="geist"] {
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --display-tracking: -0.04em;
+}
+:root[data-font="plex"] {
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --display-tracking: -0.02em;
+  --title-tracking: -0.01em;
+}
+:root[data-font="fraunces"] {
+  --display: "Fraunces", Georgia, serif;
+  --display-weight: 500;
+  --display-tracking: -0.02em;
+  --title-tracking: -0.005em;
+}
+:root[data-font="journal"] {
+  --sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Source Code Pro", ui-monospace, monospace;
+  --display: "Source Serif 4", Georgia, serif;
+  --display-weight: 600;
+  --display-tracking: -0.015em;
+  --title-tracking: -0.005em;
+}
+:root[data-font="instrument"] {
+  /* a narrow headline face: big headings only, card titles stay Inter */
+  --display: "Instrument Serif", Georgia, serif;
+  --display-weight: 400;
+  --display-tracking: -0.01em;
+  --display-scale: 1.22;
+  --title-font: var(--sans);
+  --title-weight: 600;
+}
+
+/* temporary font switcher (FontPicker.tsx, shown with ?fonts) */
+.preview-picker {
   position: fixed; left: 50%; bottom: 18px; z-index: 90; transform: translateX(-50%);
   display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px;
   background: var(--surface); box-shadow: var(--shadow-lift); font-size: 13px; max-width: calc(100vw - 24px); overflow-x: auto;
 }
-.palette-picker button {
+.preview-picker button {
+  font-family: var(--sans);
   display: inline-flex; align-items: center; gap: 7px; flex: none; padding: 7px 12px 7px 8px; border-radius: 999px;
   color: var(--text-2); cursor: pointer; white-space: nowrap;
 }
-.palette-picker button[aria-pressed="true"] { background: var(--text); color: var(--bg) }
-.palette-picker i { display: flex; width: 26px; height: 16px; border-radius: 999px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12) }
-.palette-picker i b { flex: 1 }
+.preview-picker button[aria-pressed="true"] { background: var(--text); color: var(--bg) }
+.preview-picker i { display: flex; width: 26px; height: 16px; border-radius: 999px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12) }
+.preview-picker i b { flex: 1 }
 
 html { background: var(--bg) }
 body {
@@ -246,7 +165,7 @@ a { color: inherit; text-decoration: none }
 .home { max-width: 960px; margin: 0 auto; padding: 48px 24px 40px; display: flex; flex-direction: column; align-items: center; text-align: center }
 .intro { max-width: 600px; display: flex; flex-direction: column; align-items: center }
 .kicker { margin: 0 0 18px; font-size: 12.5px; letter-spacing: 0.04em; color: var(--accent) }
-.intro h1 { margin: 0; font-size: clamp(34px, 6vw, 46px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.1 }
+.intro h1 { margin: 0; font-family: var(--display); font-size: calc(clamp(34px, 6vw, 46px) * var(--display-scale)); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); line-height: 1.1 }
 .bio { margin: 20px 0 0; font-size: 18px; line-height: 1.6; color: var(--text-2) }
 .bio strong { color: var(--text); font-weight: 600 }
 .status { margin: 18px 0 0; display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted) }
@@ -344,7 +263,7 @@ a { color: inherit; text-decoration: none }
 .page { max-width: 820px; margin: 0 auto; padding: 40px 24px 40px }
 .page-wide { max-width: 1060px }
 .page-head { max-width: 680px }
-.page-head h1 { margin: 0; font-size: clamp(32px, 5.4vw, 44px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.12 }
+.page-head h1 { margin: 0; font-family: var(--display); font-size: calc(clamp(32px, 5.4vw, 44px) * var(--display-scale)); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); line-height: 1.12 }
 .lead { margin-top: 18px; font-size: 17.5px; line-height: 1.65; color: var(--text-2) }
 .lead p { margin: 0 }
 .lead strong { color: var(--text); font-weight: 600 }
@@ -380,7 +299,7 @@ a.project-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-3p
 .project-media > img { width: 100%; height: 100%; object-fit: contain; background: #fff; transition: transform 0.6s var(--ease) }
 a.project-card:hover .project-media > img { transform: scale(1.03) }
 .project-copy { display: flex; flex-direction: column; gap: 10px; padding: 20px 22px 22px; flex: 1 }
-.project-copy h3 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em }
+.project-copy h3 { margin: 0; font-family: var(--title-font); font-size: 20px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking) }
 .project-copy p:not(.meta-row) { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-2) }
 .project-cta { margin-top: auto; padding-top: 6px; font-size: 14px; color: var(--muted) }
 .project-cta.is-link { color: var(--text) }
@@ -420,7 +339,7 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 /* ── publications ── */
 .pub-list { display: flex; flex-direction: column; gap: 18px; margin: 48px 0 0; padding: 0; list-style: none }
 .pub { padding: 24px 26px }
-.pub h3 { margin: 10px 0 0; font-size: 19.5px; font-weight: 600; line-height: 1.35; letter-spacing: -0.015em }
+.pub h3 { margin: 10px 0 0; font-family: var(--title-font); font-size: 19.5px; font-weight: var(--title-weight); line-height: 1.35; letter-spacing: var(--title-tracking) }
 .pub-desc { margin: 10px 0 0; font-size: 15px; color: var(--text-2) }
 .pub-authors { margin: 12px 0 0; font-size: 13.5px; color: var(--muted) }
 .pub-authors b { color: var(--text); font-weight: 600 }
@@ -443,7 +362,7 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
   border-radius: 50%; background: var(--bg); box-shadow: 0 0 0 1.5px var(--border); transition: background 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
 }
 .tl-entry.is-passed .tl-dot { background: var(--accent); box-shadow: 0 0 0 1.5px var(--accent), 0 0 0 5px var(--accent-soft); transform: scale(1.05) }
-.tl-body h3 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.35 }
+.tl-body h3 { margin: 0; font-family: var(--title-font); font-size: 18px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking); line-height: 1.35 }
 .tl-org { margin: 3px 0 0; font-size: 14.5px; color: var(--accent) }
 .tl-desc { margin: 8px 0 0; font-size: 15px; color: var(--text-2) }
 
@@ -460,7 +379,7 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 .news-media img { width: 100%; height: auto; max-height: 340px; object-fit: contain; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px var(--border) }
 .news:not(:has(.news-media)) { grid-template-columns: 1fr }
 .news-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px 26px }
-.news-copy h3 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3 }
+.news-copy h3 { margin: 0; font-family: var(--title-font); font-size: 20px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking); line-height: 1.3 }
 .news-body { margin: 0; font-size: 15px; line-height: 1.65; color: var(--text-2); white-space: pre-line }
 .news-body strong { color: var(--text) }
 .news-copy .pill-link { margin-top: 6px }
@@ -497,7 +416,7 @@ a.interest:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px) }
     repeating-linear-gradient(90deg, #fdfdfb 0 calc(14.2857% - 1px), #b9b9b4 calc(14.2857% - 1px) 14.2857%);
 }
 .interest-copy { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px 22px }
-.interest-copy h3 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.35 }
+.interest-copy h3 { margin: 0; font-family: var(--title-font); font-size: 18px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking); line-height: 1.35 }
 .interest-tagline { margin: 0; font-size: 15px; color: var(--text-2) }
 .interest-desc { margin: 6px 0 0; font-size: 14.5px; color: var(--text-2) }
 .interest-link { margin-top: 8px; font-size: 14px; color: var(--accent) }
