@@ -301,6 +301,7 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 .pub-authors { margin: 12px 0 0; font-size: 13.5px; color: var(--muted) }
 .pub-authors b { color: var(--text); font-weight: 600 }
 .pub-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border) }
+.pub-links { display: flex; flex-wrap: wrap; gap: 8px }
 .pub-venue { margin: 0; font-size: 14.5px; color: var(--text-2) }
 .pub-venue em { color: var(--text) }
 

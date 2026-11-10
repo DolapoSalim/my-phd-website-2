@@ -177,6 +177,7 @@ collections:
       - { name: "journalMeta", label: "Journal meta (volume/pages, or host organisation)", widget: "string", required: false }
       - { name: "doi", label: "DOI button label (e.g. \"DOI ↗\")", widget: "string", required: false }
       - { name: "doiUrl", label: "DOI URL", widget: "string", required: false }
+      - { name: "researchgateUrl", label: "ResearchGate link (optional — the publication's page on ResearchGate)", widget: "string", required: false }
 
   - name: "news"
     label: "News"

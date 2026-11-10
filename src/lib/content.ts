@@ -37,6 +37,8 @@ export interface PublicationEntry {
   journalMeta: string
   doi: string
   doiUrl: string
+  /** optional link to the item's ResearchGate page */
+  researchgateUrl?: string
 }
 export interface NewsEntry {
   order: number
