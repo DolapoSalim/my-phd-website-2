@@ -4,7 +4,12 @@
   "tagline": "Sharing what I learn about doing hard things well.",
   "desc": "",
   "artwork": "content",
-  "media": [],
+  "media": [
+    {
+      "file": "/assets/images/funded-phd-episode.jpg",
+      "caption": "After Graduation, Italy (Episode 3): How I got a funded PhD"
+    }
+  ],
   "url": "",
   "urlLabel": ""
 }

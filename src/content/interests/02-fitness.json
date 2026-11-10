@@ -4,7 +4,12 @@
   "tagline": "Training the body that carries the mind.",
   "desc": "",
   "artwork": "fitness",
-  "media": [],
+  "media": [
+    {
+      "file": "/assets/images/pisa-half-marathon-2026.jpg",
+      "caption": "Pisa Half Marathon start line, 11 October 2026"
+    }
+  ],
   "url": "",
   "urlLabel": ""
 }
