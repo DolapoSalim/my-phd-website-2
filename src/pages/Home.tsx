@@ -50,7 +50,8 @@ export function Home() {
   return (
     <main className="home" id="content">
       <section className="intro">
-        <p className="kicker rise">{hero.kicker}</p>
+        {/* keep a " | " separator on the line before, so wraps never start with it */}
+        <p className="kicker rise">{hero.kicker.replace(/ \| /g, '\u00a0| ')}</p>
         <h1 className="rise" style={{ '--d': 1 } as React.CSSProperties}>
           Hi, I’m Dolapo <span aria-hidden="true">👋🏾</span>
         </h1>

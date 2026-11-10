@@ -2,101 +2,88 @@ backend:
   name: git-gateway
   branch: adjusted
 
-# Enables `npx decap-server` for local testing before Netlify Identity
-# is wired up — see the "local_backend" flag docs. Harmless once deployed.
+# Enables `npx decap-server` for local testing. Harmless once deployed.
 local_backend: true
+
+site_url: "https://dolaposalim.com"
+display_url: "https://dolaposalim.com"
 
 media_folder: "public/assets/images"
 public_folder: "/assets/images"
 
-# Once the Netlify site exists, set site_url/display_url here to its
-# https://<name>.netlify.app (or custom domain) to enable CMS previews.
-
 collections:
   - name: "site"
-    label: "Site Content"
+    label: "Pages (text & settings)"
     files:
       - name: "hero"
-        label: "Hero"
+        label: "Home page"
         file: "src/content/site/hero.json"
         fields:
-          - { name: "navShortName", label: "Nav logo (short name)", widget: "string" }
-          - { name: "navTagline", label: "Nav tagline (italic, next to logo)", widget: "string" }
-          - { name: "email", label: "Contact email (mailto: nav button + contact section)", widget: "string" }
-          - { name: "kicker", label: "Kicker line (next to the 01 index)", widget: "string" }
-          - { name: "status", label: "Status line (e.g. \"Open to collaboration — 2026\")", widget: "string" }
-          - { name: "nameLine1", label: "Name — line 1", widget: "string" }
-          - { name: "nameLine2", label: "Name — line 2", widget: "string" }
-          - { name: "tagline", label: "Tagline paragraph", widget: "text", hint: "Use **text** for bold, _text_ for accent italic." }
-          - name: "facts"
-            label: "Fact table (Thesis / Supervisors / Funded by, etc.)"
-            widget: "list"
-            fields:
-              - { name: "label", widget: "string" }
-              - { name: "value", widget: "string" }
+          - { name: "kicker", label: "Small line above your name", widget: "string", hint: "e.g. PhD Candidate, Biology | University of Pisa" }
+          - { name: "tagline", label: "Line under “Hi, I’m Dolapo”", widget: "text", hint: "Use **text** for bold. A full stop is added automatically." }
+          - { name: "status", label: "Status next to the green dot", widget: "string", hint: "e.g. Open to collaboration" }
           - name: "ctas"
-            label: "Call-to-action buttons"
+            label: "Links"
+            hint: "The link labelled “CV” is used for the CV link on the home page and the Download CV button."
             widget: "list"
             fields:
               - { name: "label", widget: "string" }
               - { name: "url", widget: "string" }
-              - { name: "style", widget: "select", options: ["fill", "ghost"] }
+              - { name: "style", widget: "hidden", default: "ghost" }
+          - name: "facts"
+            label: "Research page — fact table (Thesis / Supervisors / Funded by)"
+            widget: "list"
+            fields:
+              - { name: "label", widget: "string" }
+              - { name: "value", widget: "string" }
 
       - name: "about"
-        label: "About"
+        label: "Research page — intro statement"
         file: "src/content/site/about.json"
         fields:
-          - { name: "copy", label: "Intro paragraph", widget: "text", hint: "Use **text** to highlight in full brightness against the dimmed base text." }
-          - name: "stats"
-            label: "Stat callouts"
-            widget: "list"
-            fields:
-              - { name: "value", label: "Big number (e.g. \"06\")", widget: "string" }
-              - { name: "label", widget: "string" }
-              - { name: "desc", widget: "string" }
-
-      - name: "expertise"
-        label: "Technical Expertise"
-        file: "src/content/site/expertise.json"
-        fields:
-          - { name: "heading", widget: "string" }
-          - { name: "sub", widget: "string" }
-          - { name: "githubUrl", widget: "string" }
-          - name: "built"
-            label: "Built & deployed"
-            widget: "list"
-            fields:
-              - { name: "kind", label: "Kind (e.g. \"Web app\", \"Open source\", \"Models\")", widget: "string" }
-              - { name: "meta", label: "Right-aligned meta (e.g. \"Streamlit\", \"GitHub\")", widget: "string" }
-              - { name: "title", widget: "string" }
-              - { name: "desc", widget: "text" }
-              - { name: "cta", label: "CTA label (e.g. \"Launch ↗\", \"In progress\")", widget: "string" }
-              - { name: "url", label: "URL (leave blank if not linked)", widget: "string", required: false }
-              - { name: "image", label: "Image (optional — a figure or screenshot; without one the card gets a drawn placeholder)", widget: "image", required: false }
+          - { name: "copy", label: "Intro paragraph", widget: "text", hint: "Use **text** for bold." }
 
       - name: "research"
-        label: "Research (page heading & interests)"
+        label: "Research page — heading & interests"
         file: "src/content/site/research.json"
         fields:
           - { name: "heading", widget: "string" }
           - { name: "interests", label: "Research interests (shown as tags)", widget: "list" }
 
+      - name: "expertise"
+        label: "Tools & skills page"
+        file: "src/content/site/expertise.json"
+        fields:
+          - { name: "sub", label: "Intro line", widget: "string" }
+          - { name: "githubUrl", label: "“More on GitHub” link", widget: "string" }
+          - name: "built"
+            label: "Built & deployed (cards)"
+            widget: "list"
+            fields:
+              - { name: "kind", label: "Kind (e.g. \"Web app\", \"Open source\", \"Models\")", widget: "string" }
+              - { name: "meta", label: "Second label (e.g. \"Streamlit\", \"GitHub\")", widget: "string" }
+              - { name: "title", widget: "string" }
+              - { name: "desc", widget: "text" }
+              - { name: "cta", label: "Button text (e.g. \"Launch\", \"In progress\")", widget: "string" }
+              - { name: "url", label: "URL (leave blank if not linked)", widget: "string", required: false }
+              - { name: "image", label: "Image (optional — a figure or screenshot; without one the card gets a drawn picture)", widget: "image", required: false }
+
       - name: "about-me"
-        label: "About me (intro)"
+        label: "Outside the lab — intro"
         file: "src/content/site/about-me.json"
         fields:
           - { name: "heading", widget: "string" }
           - { name: "copy", label: "Intro paragraph", widget: "text", hint: "Use **text** for bold." }
 
       - name: "love-notes"
-        label: "My love life (notes wall)"
+        label: "My love life — notes wall intro"
         file: "src/content/site/love-notes.json"
         fields:
           - { name: "heading", widget: "string" }
-          - { name: "intro", label: "Intro paragraph", widget: "text" }
+          - { name: "intro", label: "Intro paragraph", widget: "text", hint: "Notes themselves are managed at /admin/notes.html." }
 
       - name: "cv-schools"
-        label: "CV — Schools & training"
+        label: "CV page — Schools & training"
         file: "src/content/site/cv-schools.json"
         fields:
           - name: "items"
@@ -106,25 +93,25 @@ collections:
               - { name: "year", widget: "string" }
 
       - name: "contact"
-        label: "Contact"
+        label: "Contact & footer"
         file: "src/content/site/contact.json"
         fields:
-          - { name: "email", widget: "string" }
-          - { name: "officeHours", label: "Office hours", widget: "string" }
-          - { name: "officeLocation", label: "Office location", widget: "string" }
+          - { name: "email", label: "Email (home page links, CV page)", widget: "string" }
           - name: "elsewhere"
-            label: "Elsewhere (social/profile links)"
+            label: "Profile links (home page and footer: LinkedIn, ORCID, ResearchGate, GitHub…)"
             widget: "list"
             fields:
               - { name: "label", widget: "string" }
               - { name: "url", widget: "string" }
-          - { name: "affiliations", widget: "string" }
-          - { name: "openTo", label: "Open to", widget: "text" }
+          - { name: "officeHours", label: "CV page — office hours", widget: "string" }
+          - { name: "officeLocation", label: "CV page — office location", widget: "string" }
+          - { name: "openTo", label: "CV page — open to", widget: "text" }
+          - { name: "affiliations", label: "CV page — member of", widget: "string" }
           - { name: "footerLocation", label: "Footer — name & location", widget: "string" }
           - { name: "footerUpdated", label: "Footer — last updated line", widget: "string" }
 
   - name: "cv-education"
-    label: "CV — Education"
+    label: "CV page — Education"
     folder: "src/content/cv-education"
     create: true
     extension: "json"
@@ -141,7 +128,7 @@ collections:
       - { name: "desc", widget: "text" }
 
   - name: "cv-appointments"
-    label: "CV — Appointments"
+    label: "CV page — Appointments"
     folder: "src/content/cv-appointments"
     create: true
     extension: "json"
@@ -200,7 +187,7 @@ collections:
       - { name: "urlLabel", label: "Link label (e.g. \"Read more\")", widget: "string", required: false }
 
   - name: "awards"
-    label: "Awards & Grants"
+    label: "CV page — Awards & grants"
     folder: "src/content/awards"
     create: true
     extension: "json"
@@ -215,7 +202,7 @@ collections:
       - { name: "year", widget: "string" }
 
   - name: "skills"
-    label: "Expertise Stack"
+    label: "Tools & skills — toolkit groups"
     folder: "src/content/skills"
     create: true
     extension: "json"
@@ -229,7 +216,7 @@ collections:
       - { name: "tags", widget: "list" }
 
   - name: "research-projects"
-    label: "Research — Projects"
+    label: "Research page — projects"
     folder: "src/content/research-projects"
     create: true
     extension: "json"
@@ -247,7 +234,7 @@ collections:
       - { name: "urlLabel", label: "Link label (optional)", widget: "string", required: false }
 
   - name: "interests"
-    label: "About me — Interests"
+    label: "Outside the lab — interests"
     folder: "src/content/interests"
     create: true
     extension: "json"
@@ -260,7 +247,7 @@ collections:
       - { name: "title", widget: "string" }
       - { name: "tagline", label: "Tagline (one line under the title)", widget: "string" }
       - { name: "desc", label: "Longer description (optional)", widget: "text", required: false }
-      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design", "gaming", "love"] }
+      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "design", "gaming", "love", "growth"] }
       - name: "media"
         label: "Photos & videos (optional). The first three replace the drawn artwork on the card; clicking the card opens them all."
         widget: "list"
@@ -269,5 +256,5 @@ collections:
           - { name: "file", label: "Photo or video (JPG, PNG, WebP, MP4 or WebM — keep videos short, ideally under 10 MB)", widget: "file" }
           - { name: "caption", label: "Caption (optional — also read aloud to screen-reader users)", widget: "string", required: false }
           - { name: "poster", label: "Thumbnail for a video (optional image; shown on the card and before the video plays)", widget: "image", required: false }
-      - { name: "url", label: "Link URL (optional, e.g. your content channel; /notes opens the notes wall)", widget: "string", required: false }
+      - { name: "url", label: "Link URL (optional — e.g. Instagram or PlayStation profile; /notes opens the notes wall)", widget: "string", required: false }
       - { name: "urlLabel", label: "Link label (e.g. \"Watch on YouTube\")", widget: "string", required: false }

@@ -2,7 +2,7 @@
   "order": 6,
   "title": "Gaming",
   "tagline": "Where I switch off, and still try to win.",
-  "desc": "Add me on PlayStation: **@Ogbontarigi001**",
+  "desc": "",
   "artwork": "gaming",
   "media": [
     {
@@ -23,6 +23,6 @@
       "poster": "/assets/video/posters/gaming.jpg"
     }
   ],
-  "url": "",
-  "urlLabel": ""
+  "url": "https://profile.playstation.com/Ogbontarigi001",
+  "urlLabel": "Add me on PlayStation: @Ogbontarigi001"
 }

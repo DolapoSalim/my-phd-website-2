@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Olatoye Dolapo Salim — Computer Vision for Marine Ecology</title>
 <meta name="description" content="PhD Candidate, University of Pisa. AI and Computer Vision for marine biodiversity monitoring."/>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"/>
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 <link rel="manifest" href="/site.webmanifest"/>
 <meta name="theme-color" content="#f4f7fa" media="(prefers-color-scheme: light)"/>
@@ -14,6 +15,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script>
+  // home page: fetch the sea video's poster first so it paints immediately
+  if (location.pathname === '/') {
+    var pre = document.createElement('link');
+    pre.rel = 'preload'; pre.as = 'image'; pre.href = '/assets/video/posters/sea.jpg';
+    pre.setAttribute('fetchpriority', 'high');
+    document.head.appendChild(pre);
+  }
+</script>
 <script>
   try {
     var saved = localStorage.getItem('ods-theme-v2') || 'light';

@@ -110,6 +110,8 @@ a { color: inherit; text-decoration: none }
 /* ════════════ HOME ════════════ */
 .home { max-width: 960px; margin: 0 auto; padding: 48px 24px 40px; display: flex; flex-direction: column; align-items: center; text-align: center }
 .intro { max-width: 600px; display: flex; flex-direction: column; align-items: center }
+/* short centred lines wrap evenly instead of leaving one orphan word */
+.kicker, .intro h1, .bio, .page-head h1 { text-wrap: balance }
 .kicker { margin: 0 0 18px; font-size: 12.5px; letter-spacing: 0.04em; color: var(--accent) }
 .intro h1 { margin: 0; font-family: var(--display); font-size: calc(clamp(34px, 6vw, 46px) * var(--display-scale)); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); line-height: 1.1 }
 .bio { margin: 20px 0 0; font-size: 18px; line-height: 1.6; color: var(--text-2) }
@@ -119,8 +121,8 @@ a { color: inherit; text-decoration: none }
 @keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(47, 163, 107, 0) } 100% { box-shadow: 0 0 0 0 rgba(47, 163, 107, 0) } }
 
 .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; margin-top: 18px; font-size: 15px }
-.contact-links a { color: var(--text-2); background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.35s var(--ease), color 0.2s }
-.contact-links a:hover { color: var(--accent); background-size: 100% 1px }
+.contact-links a { color: var(--text-2); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: color 0.2s, text-decoration-color 0.2s }
+.contact-links a:hover { color: var(--accent); text-decoration-color: currentColor }
 
 /* ── field folders ── */
 /* six folders: one row on wide screens, then balanced 3 + 3 and 2 + 2 + 2 */
@@ -192,7 +194,7 @@ a { color: inherit; text-decoration: none }
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.3) 130px, rgba(0, 0, 0, 0.75) 250px, #000 360px);
   mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.3) 130px, rgba(0, 0, 0, 0.75) 250px, #000 360px);
 }
-.sea-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 78% }
+.sea-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 78%; background: #2b6f8f url("/assets/video/posters/sea.jpg") 50% 78% / cover no-repeat }
 .sea::after { content: ""; position: absolute; inset: auto 0 0 0; height: 230px; background: linear-gradient(to bottom, transparent, rgba(3, 18, 27, 0.5) 45%, rgba(3, 18, 27, 0.8)) }
 .sea-caption {
   position: absolute; right: 28px; bottom: 104px; z-index: 1; margin: 0;

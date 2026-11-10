@@ -33,7 +33,10 @@ export function Sea() {
 
   return (
     <div className="sea" ref={ref} aria-hidden="true">
-      <video className="sea-video" autoPlay muted loop playsInline preload="auto">
+      {/* the 20 KB poster paints at once (it's preloaded from index.html);
+          phones and tablets get a 540p encode at under half the size */}
+      <video className="sea-video" autoPlay muted loop playsInline preload="auto" poster="/assets/video/posters/sea.jpg">
+        <source src="/assets/video/sea-540.mp4" type="video/mp4" media="(max-width: 1100px)" />
         <source src="/assets/video/hero-bg.mp4" type="video/mp4" />
       </video>
       <p className="sea-caption">Underwater survey · automated fish tracking</p>
