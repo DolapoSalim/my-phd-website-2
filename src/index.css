@@ -447,7 +447,7 @@ html.fish-cursor-on [data-native-cursor], html.fish-cursor-on [data-native-curso
   display: block; width: 100%; aspect-ratio: 1; border-radius: 6px; touch-action: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 10px 26px rgba(15, 28, 43, 0.14);
 }
-.composer-full { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 32px; text-align: center; border-radius: 6px; background: rgba(244, 247, 250, 0.86); color: var(--text); font-size: 15px }
+.composer-full { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; margin: 0; padding: 32px; text-align: center; border-radius: 6px; background: rgba(244, 247, 250, 0.86); color: var(--text); font-size: 15px }
 :root[data-theme="dark"] .composer-full { background: rgba(10, 18, 28, 0.86) }
 .composer-tools { display: flex; flex-direction: column; align-items: flex-start; gap: 16px }
 .tool-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px }
@@ -478,8 +478,14 @@ html.fish-cursor-on [data-native-cursor], html.fish-cursor-on [data-native-curso
 }
 .wall-note.is-pending img { opacity: 0.55; filter: grayscale(0.4) }
 .wall-note.is-pending::before { background: radial-gradient(circle at 35% 35%, #cfd6de, #8394a7) }
-.wall-mine { position: absolute; left: 8px; bottom: 8px; padding: 2px 8px; border-radius: 999px; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; background: rgba(15, 28, 43, 0.78); color: #fff }
-.wall-delete { position: absolute; right: 8px; bottom: 8px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: rgba(15, 28, 43, 0.78); color: #fff; cursor: pointer }
+.wall-mine { position: absolute; left: 8px; top: 10px; padding: 2px 8px; border-radius: 999px; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; background: rgba(15, 28, 43, 0.78); color: #fff }
+.composer-full p { margin: 0 }
+.wall-confirm { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border-radius: 4px; background: rgba(15, 28, 43, 0.88); color: #fff; text-align: center }
+.wall-confirm p { margin: 0; font-size: 15px; font-weight: 500 }
+.wall-confirm div { display: flex; gap: 8px }
+.wall-confirm button { min-height: 40px; padding: 8px 16px; border-radius: 999px; font-size: 14px; color: #0f1c2b; background: #fff; cursor: pointer }
+.wall-confirm button.danger { background: #c2272d; color: #fff }
+.wall-delete { position: absolute; right: 8px; bottom: 8px; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(15, 28, 43, 0.78); color: #fff; cursor: pointer }
 .wall-delete:hover { background: #c2272d }
 @media (max-width: 760px) {
   .composer { grid-template-columns: 1fr }

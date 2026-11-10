@@ -168,12 +168,23 @@ export function Notes() {
     }
   }
 
+  // Deleting asks for confirmation on the note itself: in-app browsers
+  // (Instagram, LinkedIn, …) often block window.confirm(), which silently
+  // answered "no" and made deleting impossible there.
+  const [confirmId, setConfirmId] = useState<string | null>(null)
   const remove = async (id: string) => {
-    if (!window.confirm('Delete this note?')) return
-    const res = await fetch('/api/notes/' + id, { method: 'DELETE', headers: { 'x-note-owner': owner.current } })
-    if (res.ok) setNotes((list) => (list ?? []).filter((n) => n.id !== id))
-    else setStatus({ kind: 'error', text: 'Could not delete that note.' })
+    setConfirmId(null)
+    try {
+      const res = await fetch('/api/notes/' + id, { method: 'DELETE', headers: { 'x-note-owner': owner.current } })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Could not delete that note.')
+      setNotes((list) => (list ?? []).filter((n) => n.id !== id))
+      setStatus({ kind: 'ok', text: 'Note deleted.' })
+    } catch (err) {
+      setStatus({ kind: 'error', text: err instanceof Error ? err.message : 'Could not delete that note.' })
+    }
   }
+  const showMine = () => document.querySelector('.wall-note.is-mine')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
   return (
     <main className="page page-wide" id="content">
@@ -194,7 +205,14 @@ export function Notes() {
             onPointerUp={onUp}
             onPointerCancel={onUp}
           />
-          {left === 0 && notes && <p className="composer-full">You’ve used all {limit} notes. Delete one of yours to write another.</p>}
+          {left === 0 && notes && (
+            <div className="composer-full">
+              <p>You’ve used all {limit} notes. Delete one of yours to write another.</p>
+              <button type="button" className="pill-link" onClick={showMine}>
+                Show my notes ↓
+              </button>
+            </div>
+          )}
         </div>
         <div className="composer-tools">
           <div className="tool-group" role="radiogroup" aria-label="Note colour">
@@ -238,14 +256,27 @@ export function Notes() {
       {notes && notes.length === 0 && !status && <p className="wall-empty">No notes yet. Be the first.</p>}
       <ul className="wall">
         {(notes ?? []).map((n) => (
-          <li key={n.id} className={`wall-note${n.pending ? ' is-pending' : ''}`} style={{ '--tilt': `${tilt(n.id)}deg` } as React.CSSProperties}>
+          <li key={n.id} className={`wall-note${n.pending ? ' is-pending' : ''}${n.mine ? ' is-mine' : ''}`} style={{ '--tilt': `${tilt(n.id)}deg` } as React.CSSProperties}>
             <img src={n.src} alt="A hand-drawn note from a visitor" loading="lazy" width={SIZE} height={SIZE} />
             {n.mine && (
               <>
                 <span className="wall-mine">{n.pending ? 'Yours · pending' : 'Yours'}</span>
-                <button type="button" className="wall-delete" onClick={() => remove(n.id)} aria-label="Delete your note">
-                  <Trash2 size={15} strokeWidth={1.8} />
+                <button type="button" className="wall-delete" onClick={() => setConfirmId(n.id)} aria-label="Delete your note">
+                  <Trash2 size={16} strokeWidth={1.8} />
                 </button>
+                {confirmId === n.id && (
+                  <div className="wall-confirm" role="dialog" aria-label="Delete this note?">
+                    <p>Delete this note?</p>
+                    <div>
+                      <button type="button" className="danger" onClick={() => remove(n.id)} autoFocus>
+                        Delete
+                      </button>
+                      <button type="button" onClick={() => setConfirmId(null)}>
+                        Keep
+                      </button>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </li>
