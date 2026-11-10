@@ -3,7 +3,8 @@ import { Moon, Sun } from 'lucide-react'
 import { Link, type Route } from '@/lib/router'
 import { useTheme } from '@/hooks/useTheme'
 
-const localTime = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+const hhmm = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })
+const pad = (n: number) => String(n).padStart(2, '0')
 
 interface Place {
   city: string | null
@@ -65,13 +66,17 @@ function VisitorStation() {
 
   return (
     <p className="station" title="Your location and local time">
-      {place.city && <span>{place.city}</span>}
+      {place.city && <span className="station-city">{place.city}</span>}
       {place.latitude !== null && place.longitude !== null && (
         <span className="station-coords">
           {coord(place.latitude, 'N', 'S')} {coord(place.longitude, 'E', 'W')}
         </span>
       )}
-      <time dateTime={now.toISOString()}>{localTime.format(now)}</time>
+      {/* seconds are dropped on small screens (CSS), where space is tight */}
+      <time dateTime={now.toISOString()}>
+        {hhmm.format(now)}
+        <span className="station-sec">:{pad(now.getSeconds())}</span>
+      </time>
     </p>
   )
 }
