@@ -43,55 +43,40 @@ const aboutSheets: Sheet[] = interestEntries.slice(0, 3).map((it) => {
 export function Home() {
   const latest = newsEntries[0]
   return (
-    <>
-      <main className="home" id="content">
-        <section className="intro">
-          <p className="kicker rise">{hero.kicker}</p>
-          <h1 className="rise" style={{ '--d': 1 } as React.CSSProperties}>
-            Hi, I’m Dolapo <span aria-hidden="true">👋🏾</span>
-          </h1>
-          <p className="bio rise" style={{ '--d': 2 } as React.CSSProperties}>
-            {richText(hero.tagline)}.
-          </p>
-          <p className="status rise" style={{ '--d': 3 } as React.CSSProperties}>
-            <span className="status-dot" aria-hidden="true" />
-            {hero.status}
-          </p>
-          <div className="rise" style={{ '--d': 3 } as React.CSSProperties}>
-            <ContactLinks withCv />
-          </div>
-        </section>
+    <main className="home" id="content">
+      <section className="intro">
+        <p className="kicker rise">{hero.kicker}</p>
+        <h1 className="rise" style={{ '--d': 1 } as React.CSSProperties}>
+          Hi, I’m Dolapo <span aria-hidden="true">👋🏾</span>
+        </h1>
+        <p className="bio rise" style={{ '--d': 2 } as React.CSSProperties}>
+          {richText(hero.tagline)}.
+        </p>
+        <p className="status rise" style={{ '--d': 3 } as React.CSSProperties}>
+          <span className="status-dot" aria-hidden="true" />
+          {hero.status}
+        </p>
+        <div className="rise" style={{ '--d': 3 } as React.CSSProperties}>
+          <ContactLinks withCv />
+        </div>
+      </section>
 
-        <nav className="folders rise" style={{ '--d': 4 } as React.CSSProperties} aria-label="Sections">
-          <FieldFolder to="/research" no="01" label="Research" sheets={researchSheets} />
-          <FieldFolder to="/publications" no="02" label="Publications" sheets={paperSheets} />
-          <FieldFolder to="/cv" no="03" label="CV" sheets={cvSheets} />
-          <FieldFolder to="/news" no="04" label="News" sheets={newsSheets} />
-          <FieldFolder to="/about" no="05" label="About me" sheets={aboutSheets} />
-        </nav>
+      <nav className="folders rise" style={{ '--d': 4 } as React.CSSProperties} aria-label="Sections">
+        <FieldFolder to="/research" no="01" label="Research" sheets={researchSheets} />
+        <FieldFolder to="/publications" no="02" label="Publications" sheets={paperSheets} />
+        <FieldFolder to="/cv" no="03" label="CV" sheets={cvSheets} />
+        <FieldFolder to="/news" no="04" label="News" sheets={newsSheets} />
+        <FieldFolder to="/about" no="05" label="About me" sheets={aboutSheets} />
+      </nav>
 
-        {latest && (
-          <Link to="/news" className="latest rise" style={{ '--d': 5 } as React.CSSProperties}>
-            <span className="latest-label">Latest note</span>
-            <span className="latest-title">{latest.title}</span>
-            <span className="latest-date">{latest.date} →</span>
-          </Link>
-        )}
-      </main>
-      <Sea />
-    </>
+      {latest && (
+        <Link to="/news" className="latest rise" style={{ '--d': 5 } as React.CSSProperties}>
+          <span className="latest-label">Latest note</span>
+          <span className="latest-title">{latest.title}</span>
+          <span className="latest-date">{latest.date} →</span>
+        </Link>
+      )}
+    </main>
   )
 }
 
-/** Survey footage with live fish tracking, faded in from the top so it
- *  never competes with the text above — the fish only show lower down. */
-function Sea() {
-  return (
-    <div className="sea" aria-hidden="true">
-      <video className="sea-video" autoPlay muted loop playsInline preload="auto">
-        <source src="/assets/video/hero-bg.mp4" type="video/mp4" />
-      </video>
-      <p className="sea-caption">Underwater survey · automated fish tracking</p>
-    </div>
-  )
-}

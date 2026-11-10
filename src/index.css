@@ -170,23 +170,30 @@ a { color: inherit; text-decoration: none }
 .latest-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500 }
 .latest-date { flex: none; font-size: 12px; color: var(--muted) }
 
-/* ── the sea: fish-tracking footage under the home page, masked so it
-   fades in from the top and the information above stays clean ── */
+/* ── the sea: fish-tracking footage behind the lower half of the home
+   page (Sea.tsx sets `top` just above the folders). It always runs to the
+   bottom of the page, under the footer, and fades in from the top so the
+   intro stays clean. ── */
+.site { position: relative }
+.site > :not(.sea, .skip-link) { position: relative; z-index: 1 }
 .sea {
-  position: relative; height: clamp(340px, calc(64vh / var(--z)), 760px); margin-top: -24px; overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 20%, rgba(0, 0, 0, 0.7) 42%, #000 62%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 20%, rgba(0, 0, 0, 0.7) 42%, #000 62%);
+  position: absolute; left: 0; right: 0; top: 55%; bottom: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.3) 130px, rgba(0, 0, 0, 0.75) 250px, #000 360px);
+  mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 0.3) 130px, rgba(0, 0, 0, 0.75) 250px, #000 360px);
 }
-.sea-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 72% }
-.sea::after { content: ""; position: absolute; inset: auto 0 0 0; height: 220px; background: linear-gradient(to bottom, transparent, rgba(3, 18, 27, 0.5) 45%, rgba(3, 18, 27, 0.78)) }
+.sea-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 78% }
+.sea::after { content: ""; position: absolute; inset: auto 0 0 0; height: 230px; background: linear-gradient(to bottom, transparent, rgba(3, 18, 27, 0.5) 45%, rgba(3, 18, 27, 0.8)) }
 .sea-caption {
   position: absolute; right: 28px; bottom: 104px; z-index: 1; margin: 0;
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255, 255, 255, 0.82);
 }
-/* on the home page the footer floats over the bottom of the footage */
-.view:has(.sea) + .site-footer { position: relative; z-index: 1; margin-top: -96px; border-top-color: rgba(255, 255, 255, 0.18) }
-.view:has(.sea) + .site-footer .footer-name, .view:has(.sea) + .site-footer .footer-links a { color: rgba(255, 255, 255, 0.92) }
-.view:has(.sea) + .site-footer .footer-updated { color: rgba(255, 255, 255, 0.66) }
+/* the home page always fills the screen, so the sea reaches the bottom edge */
+.site-home .home { padding-bottom: 56px }
+.site-home .folder-caption { color: var(--text); font-weight: 500 }
+.site-home .site-footer { border-top-color: rgba(255, 255, 255, 0.18) }
+.site-home .footer-name, .site-home .footer-links a { color: rgba(255, 255, 255, 0.92) }
+.site-home .footer-links a:hover { color: #fff }
+.site-home .footer-updated { color: rgba(255, 255, 255, 0.66) }
 
 /* ════════════ INNER PAGES ════════════ */
 .page { max-width: 820px; margin: 0 auto; padding: 40px 24px 40px }
@@ -403,10 +410,8 @@ html.fish-cursor-on, html.fish-cursor-on * { cursor: none !important }
   .latest { flex-wrap: wrap; justify-content: center; border-radius: 16px; text-align: center }
   .latest-title { white-space: normal }
   .site-footer { padding: 22px 18px 30px }
-  .sea { height: clamp(380px, 62vh, 560px) }
   .sea::after { height: 260px }
   .sea-caption { display: none }
-  .view:has(.sea) + .site-footer { margin-top: -124px }
 }
 @media (max-width: 600px) {
   .interest-grid { grid-template-columns: 1fr }
