@@ -12,6 +12,8 @@
   try {
     var saved = localStorage.getItem('ods-theme-v2') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
+    var palette = localStorage.getItem('ods-palette');
+    if (palette) document.documentElement.setAttribute('data-palette', palette);
   } catch (e) {
     document.documentElement.setAttribute('data-theme', 'light');
   }

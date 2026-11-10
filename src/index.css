@@ -13,7 +13,7 @@
   --surface-2: #f0f0eb;
   --text: #1c1f20;
   --text-2: #4a4f50;
-  --muted: #74797a;
+  --muted: #6a6f70;
   --border: #e3e3dc;
   --accent: #0b6b70;
   --accent-soft: rgba(11, 107, 112, 0.09);
@@ -50,6 +50,151 @@
   --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(0, 0, 0, 0.2), 0 6px 16px rgba(0, 0, 0, 0.28);
   --shadow-lift: 0 0 0 1px #3a4041, 0 4px 8px rgba(0, 0, 0, 0.25), 0 14px 30px rgba(0, 0, 0, 0.35);
 }
+
+/* ── palette candidates (temporary: pick one, then it becomes the
+   :root default above and these blocks go). "field" is the default. ── */
+:root[data-palette="ocean"] {
+  --bg: #f4f7fa;
+  --surface: #ffffff;
+  --surface-2: #e9eff5;
+  --text: #0f1c2b;
+  --text-2: #3c4c5e;
+  --muted: #5c6d80;
+  --border: #dde5ee;
+  --accent: #1d5fb8;
+  --accent-soft: rgba(29, 95, 184, 0.09);
+  --folder-back: #a9bfd6;
+  --folder-front: #c9d8e8;
+  --folder-shade: #93abc6;
+  --label: #fbfdff;
+  --label-ink: #23384f;
+}
+:root[data-palette="ocean"][data-theme="dark"] {
+  --bg: #0a121c;
+  --surface: #111c29;
+  --surface-2: #172434;
+  --text: #e8eef5;
+  --text-2: #b9c6d4;
+  --muted: #8394a7;
+  --border: #22324a;
+  --accent: #6aa8ff;
+  --accent-soft: rgba(106, 168, 255, 0.12);
+  --folder-back: #2f4560;
+  --folder-front: #3d5878;
+  --folder-shade: #263a52;
+  --label: #e3ebf5;
+  --label-ink: #1d2f45;
+}
+:root[data-palette="coral"] {
+  --bg: #faf6f1;
+  --surface: #ffffff;
+  --surface-2: #f3ece4;
+  --text: #2a1d17;
+  --text-2: #5a4a42;
+  --muted: #76665e;
+  --border: #ebe1d6;
+  --accent: #b8432a;
+  --accent-soft: rgba(184, 67, 42, 0.09);
+  --folder-back: #e6b8a2;
+  --folder-front: #f1d2c2;
+  --folder-shade: #d9a58c;
+  --label: #fffaf6;
+  --label-ink: #6a3624;
+}
+:root[data-palette="coral"][data-theme="dark"] {
+  --bg: #16100d;
+  --surface: #1f1814;
+  --surface-2: #2a211c;
+  --text: #f5ece6;
+  --text-2: #d4c4ba;
+  --muted: #a08f84;
+  --border: #3a2e27;
+  --accent: #ff8a6b;
+  --accent-soft: rgba(255, 138, 107, 0.12);
+  --folder-back: #6b4434;
+  --folder-front: #825545;
+  --folder-shade: #5a392b;
+  --label: #f3e5dc;
+  --label-ink: #4a2a1c;
+}
+:root[data-palette="kelp"] {
+  --bg: #f5f6f0;
+  --surface: #ffffff;
+  --surface-2: #ebeee2;
+  --text: #1b2118;
+  --text-2: #47503f;
+  --muted: #646d5a;
+  --border: #dfe3d4;
+  --accent: #3d6b35;
+  --accent-soft: rgba(61, 107, 53, 0.09);
+  --folder-back: #c9cb9e;
+  --folder-front: #dedfba;
+  --folder-shade: #b6b888;
+  --label: #fdfdf6;
+  --label-ink: #4a4a24;
+}
+:root[data-palette="kelp"][data-theme="dark"] {
+  --bg: #0f120d;
+  --surface: #171b14;
+  --surface-2: #20251c;
+  --text: #eef1e8;
+  --text-2: #c3cab8;
+  --muted: #8f9884;
+  --border: #2b3125;
+  --accent: #9ccc7a;
+  --accent-soft: rgba(156, 204, 122, 0.12);
+  --folder-back: #4c5233;
+  --folder-front: #5f6640;
+  --folder-shade: #40452b;
+  --label: #ebeedd;
+  --label-ink: #3a3d22;
+}
+:root[data-palette="notebook"] {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f0f0f0;
+  --text: #1f1f1f;
+  --text-2: #4d4d4d;
+  --muted: #6b6b6b;
+  --border: #e3e3e3;
+  --accent: #bf3220;
+  --accent-soft: rgba(191, 50, 32, 0.08);
+  --folder-back: #dad5c8;
+  --folder-front: #e9e5d9;
+  --folder-shade: #cac4b4;
+  --label: #ffffff;
+  --label-ink: #3a3a3a;
+}
+:root[data-palette="notebook"][data-theme="dark"] {
+  --bg: #111111;
+  --surface: #1a1a1a;
+  --surface-2: #242424;
+  --text: #f2f2f2;
+  --text-2: #c4c4c4;
+  --muted: #8c8c8c;
+  --border: #2e2e2e;
+  --accent: #ff6b57;
+  --accent-soft: rgba(255, 107, 87, 0.12);
+  --folder-back: #4a463e;
+  --folder-front: #5b564c;
+  --folder-shade: #3d3a33;
+  --label: #ececec;
+  --label-ink: #333333;
+}
+
+/* temporary palette switcher (PalettePicker.tsx, shown with ?palettes) */
+.palette-picker {
+  position: fixed; left: 50%; bottom: 18px; z-index: 90; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px;
+  background: var(--surface); box-shadow: var(--shadow-lift); font-size: 13px; max-width: calc(100vw - 24px); overflow-x: auto;
+}
+.palette-picker button {
+  display: inline-flex; align-items: center; gap: 7px; flex: none; padding: 7px 12px 7px 8px; border-radius: 999px;
+  color: var(--text-2); cursor: pointer; white-space: nowrap;
+}
+.palette-picker button[aria-pressed="true"] { background: var(--text); color: var(--bg) }
+.palette-picker i { display: flex; width: 26px; height: 16px; border-radius: 999px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12) }
+.palette-picker i b { flex: 1 }
 
 html { background: var(--bg) }
 body {
