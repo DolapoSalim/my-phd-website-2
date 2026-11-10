@@ -82,6 +82,19 @@ collections:
           - { name: "heading", widget: "string" }
           - { name: "intro", label: "Intro paragraph", widget: "text", hint: "Notes themselves are managed at /admin/notes.html." }
 
+      - name: "privacy"
+        label: "Privacy page"
+        file: "src/content/site/privacy.json"
+        fields:
+          - { name: "heading", widget: "string" }
+          - { name: "updated", label: "Last updated (e.g. 10 November 2026)", widget: "string" }
+          - { name: "intro", label: "Intro paragraph", widget: "text", hint: "Use **text** for bold and [label](https://…) for links." }
+          - name: "sections"
+            widget: "list"
+            fields:
+              - { name: "title", widget: "string" }
+              - { name: "body", widget: "text", hint: "Use **text** for bold and [label](https://…) for links." }
+
       - name: "cv-schools"
         label: "CV page — Schools & training"
         file: "src/content/site/cv-schools.json"

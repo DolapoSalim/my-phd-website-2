@@ -1,11 +1,9 @@
 import type { ReactNode } from 'react'
 
-export function PageHead({ no, kicker, title, children }: { no: string; kicker: string; title: string; children?: ReactNode }) {
+export function PageHead({ no, kicker, title, children }: { no?: string; kicker: string; title: string; children?: ReactNode }) {
   return (
     <div className="page-head rise">
-      <p className="kicker">
-        Nº {no} — {kicker}
-      </p>
+      <p className="kicker">{no ? `Nº ${no} — ${kicker}` : kicker}</p>
       <h1>{title}</h1>
       {children && <div className="lead">{children}</div>}
     </div>

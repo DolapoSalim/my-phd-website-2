@@ -14,20 +14,23 @@
 // (secret salt + date + IP); the salt is random, generated once and kept only
 // in the store, so the hash can't be reversed by trying every IP. Hashes are
 // deleted once their day has passed.
+//
+// Moderation: new notes are saved as pending (approved: false). The public
+// wall shows approved notes, plus a visitor's own pending notes (labelled as
+// awaiting approval); Dolapo approves or deletes them from the admin page.
+// Notes saved before moderation existed have no flag and count as approved.
+import { secret, sha256 } from './store.mjs'
+export { blobsAdapter } from './store.mjs'
 
+export const REQUIRE_APPROVAL = true
 export const MAX_PER_OWNER = 3
 export const MAX_PER_IP_PER_DAY = 6
 export const MAX_NOTES = 400
 export const MAX_PNG_BYTES = 400 * 1024
 export const MAX_SIDE = 1600
 
-const enc = new TextEncoder()
 const DAY_MS = 24 * 60 * 60 * 1000
-
-async function sha256(text) {
-  const buf = await crypto.subtle.digest('SHA-256', enc.encode(text))
-  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('')
-}
+const isApproved = (m) => m.approved !== false
 
 const json = (body, status = 200, extra = {}) =>
   new Response(JSON.stringify(body), {
@@ -63,15 +66,6 @@ export function decodePng(dataUrl) {
   return bytes
 }
 
-/** Server-only random salt for IP hashing, created on first use. */
-async function salt(store) {
-  const existing = await store.getJSON('config/salt')
-  if (existing?.value) return existing.value
-  const value = [...crypto.getRandomValues(new Uint8Array(32))].map((b) => b.toString(16).padStart(2, '0')).join('')
-  await store.setJSON('config/salt', { value })
-  return value
-}
-
 async function allMeta(store) {
   const keys = await store.list('meta/')
   const metas = await Promise.all(keys.map((k) => store.getJSON(k)))
@@ -99,12 +93,16 @@ export async function handlePublic(req, store, { ip = '' } = {}) {
   // GET /api/notes
   if (req.method === 'GET' && rest === '') {
     const metas = await allMeta(store)
-    const notes = metas.map((m) => ({
-      id: m.id,
-      createdAt: m.createdAt,
-      src: `/api/notes/${m.id}.png`,
-      mine: !!ownerHash && m.ownerHash === ownerHash,
-    }))
+    const notes = metas
+      .map((m) => ({ m, mine: !!ownerHash && m.ownerHash === ownerHash }))
+      .filter(({ m, mine }) => isApproved(m) || mine)
+      .map(({ m, mine }) => ({
+        id: m.id,
+        createdAt: m.createdAt,
+        src: `/api/notes/${m.id}.png`,
+        mine,
+        pending: !isApproved(m),
+      }))
     const mine = notes.filter((n) => n.mine).length
     return json({ notes, mine, limit: MAX_PER_OWNER })
   }
@@ -126,7 +124,7 @@ export async function handlePublic(req, store, { ip = '' } = {}) {
     if (metas.filter((m) => m.ownerHash === ownerHash).length >= MAX_PER_OWNER)
       return json({ error: `You can leave up to ${MAX_PER_OWNER} notes. Delete one to add another.` }, 429)
     const day = new Date().toISOString().slice(0, 10)
-    const ipHash = ip ? await sha256(`ip:${await salt(store)}:${day}:${ip}`) : ''
+    const ipHash = ip ? await sha256(`ip:${await secret(store, 'config/salt')}:${day}:${ip}`) : ''
     // data minimisation: drop IP hashes once they can no longer count toward a daily cap
     await Promise.all(
       metas
@@ -137,10 +135,10 @@ export async function handlePublic(req, store, { ip = '' } = {}) {
       return json({ error: 'Too many notes from here today. Try again tomorrow.' }, 429)
 
     const id = newId()
-    const meta = { id, createdAt: Date.now(), ownerHash, ipHash, bytes: bytes.length }
+    const meta = { id, createdAt: Date.now(), ownerHash, ipHash, bytes: bytes.length, approved: !REQUIRE_APPROVAL }
     await store.setBytes('img/' + id, bytes)
     await store.setJSON('meta/' + id, meta)
-    return json({ note: { id, createdAt: meta.createdAt, src: `/api/notes/${id}.png`, mine: true } }, 201)
+    return json({ note: { id, createdAt: meta.createdAt, src: `/api/notes/${id}.png`, mine: true, pending: !meta.approved } }, 201)
   }
 
   // DELETE /api/notes/<id>
@@ -156,14 +154,24 @@ export async function handlePublic(req, store, { ip = '' } = {}) {
   return json({ error: 'Not found' }, 404)
 }
 
-/** Admin API (caller must already be authenticated): list, download, delete any. */
+/** Admin API (caller must already be authenticated): list, approve, download, delete any. */
 export async function handleAdmin(req, store) {
   const url = new URL(req.url)
   const rest = url.pathname.replace(/^\/api\/notes-admin\/?/, '')
 
   if (req.method === 'GET' && rest === '') {
     const metas = await allMeta(store)
-    return json({ notes: metas.map((m) => ({ id: m.id, createdAt: m.createdAt, bytes: m.bytes, src: `/api/notes/${m.id}.png` })) })
+    return json({
+      notes: metas.map((m) => ({ id: m.id, createdAt: m.createdAt, bytes: m.bytes, approved: isApproved(m), src: `/api/notes/${m.id}.png` })),
+    })
+  }
+  // POST /api/notes-admin/<id>/approve  ·  /<id>/hide
+  const action = /^([a-z0-9]{10,40})\/(approve|hide)$/.exec(rest)
+  if (req.method === 'POST' && action) {
+    const meta = await store.getJSON('meta/' + action[1])
+    if (!meta) return json({ error: 'Not found' }, 404)
+    await store.setJSON('meta/' + meta.id, { ...meta, approved: action[2] === 'approve' })
+    return json({ ok: true, approved: action[2] === 'approve' })
   }
   if (req.method === 'DELETE' && ID_RE.test(rest)) {
     await store.delete('img/' + rest)
@@ -171,22 +179,4 @@ export async function handleAdmin(req, store) {
     return json({ ok: true })
   }
   return json({ error: 'Not found' }, 404)
-}
-
-/** Adapts a Netlify Blobs store to the small interface used above. */
-export function blobsAdapter(blobStore) {
-  return {
-    async list(prefix) {
-      const { blobs } = await blobStore.list({ prefix })
-      return blobs.map((b) => b.key)
-    },
-    getJSON: (key) => blobStore.get(key, { type: 'json' }),
-    setJSON: (key, value) => blobStore.setJSON(key, value),
-    async getBytes(key) {
-      const buf = await blobStore.get(key, { type: 'arrayBuffer' })
-      return buf ? new Uint8Array(buf) : null
-    },
-    setBytes: (key, bytes) => blobStore.set(key, bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength)),
-    delete: (key) => blobStore.delete(key),
-  }
 }

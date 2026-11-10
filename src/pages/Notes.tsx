@@ -17,6 +17,8 @@ interface Note {
   createdAt: number
   src: string
   mine: boolean
+  /** your own note, not yet approved: only you can see it */
+  pending?: boolean
 }
 type Point = [number, number]
 interface Stroke {
@@ -78,6 +80,7 @@ export function Notes() {
   const [busy, setBusy] = useState(false)
 
   const mine = notes?.filter((n) => n.mine).length ?? 0
+  const publicCount = notes?.filter((n) => !n.pending).length ?? 0
   const left = Math.max(0, limit - mine)
 
   const redraw = useCallback(() => {
@@ -157,7 +160,7 @@ export function Notes() {
       if (!res.ok) throw new Error(data.error || 'Could not post your note.')
       setNotes((list) => [data.note, ...(list ?? [])])
       clear()
-      setStatus({ kind: 'ok', text: 'Pinned to the wall. Thank you!' })
+      setStatus({ kind: 'ok', text: data.note?.pending ? 'Thank you! Your note will appear on the wall once Dolapo approves it.' : 'Pinned to the wall. Thank you!' })
     } catch (err) {
       setStatus({ kind: 'error', text: err instanceof Error ? err.message : 'Could not post your note.' })
     } finally {
@@ -229,17 +232,17 @@ export function Notes() {
       </section>
 
       <h2 className="section-label rise">
-        <span>The wall{notes?.length ? ` · ${notes.length}` : ''}</span>
+        <span>The wall{publicCount ? ` · ${publicCount}` : ''}</span>
         <span className="rule" aria-hidden="true" />
       </h2>
       {notes && notes.length === 0 && !status && <p className="wall-empty">No notes yet. Be the first.</p>}
       <ul className="wall">
         {(notes ?? []).map((n) => (
-          <li key={n.id} className="wall-note" style={{ '--tilt': `${tilt(n.id)}deg` } as React.CSSProperties}>
+          <li key={n.id} className={`wall-note${n.pending ? ' is-pending' : ''}`} style={{ '--tilt': `${tilt(n.id)}deg` } as React.CSSProperties}>
             <img src={n.src} alt="A hand-drawn note from a visitor" loading="lazy" width={SIZE} height={SIZE} />
             {n.mine && (
               <>
-                <span className="wall-mine">Yours</span>
+                <span className="wall-mine">{n.pending ? 'Yours · pending' : 'Yours'}</span>
                 <button type="button" className="wall-delete" onClick={() => remove(n.id)} aria-label="Delete your note">
                   <Trash2 size={15} strokeWidth={1.8} />
                 </button>

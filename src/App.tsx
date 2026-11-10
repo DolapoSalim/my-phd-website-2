@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { navigate, redirectLegacyHash, usePath, type Route } from '@/lib/router'
+import { countView } from '@/lib/analytics'
 import { Header } from '@/components/site/Header'
 import { Footer } from '@/components/site/Footer'
 import { Home } from '@/pages/Home'
@@ -10,6 +11,7 @@ import { Cv } from '@/pages/Cv'
 import { News } from '@/pages/News'
 import { About } from '@/pages/About'
 import { Notes } from '@/pages/Notes'
+import { Privacy } from '@/pages/Privacy'
 import { FishCursor } from '@/components/site/FishCursor'
 import { Sea } from '@/components/site/Sea'
 
@@ -24,6 +26,7 @@ const PAGES: Record<Route, { title: string; render: () => React.ReactNode }> = {
   '/news': { title: 'News — Olatoye Dolapo Salim', render: () => <News /> },
   '/about': { title: 'Outside the lab — Olatoye Dolapo Salim', render: () => <About /> },
   '/notes': { title: 'My love life — notes for Dolapo', render: () => <Notes /> },
+  '/privacy': { title: 'Privacy — Olatoye Dolapo Salim', render: () => <Privacy /> },
 }
 
 function App() {
@@ -34,6 +37,10 @@ function App() {
     document.title = page.title
     window.scrollTo(0, 0)
   }, [page])
+
+  useEffect(() => {
+    countView(path)
+  }, [path])
 
   useEffect(() => {
     if (path === '/') return

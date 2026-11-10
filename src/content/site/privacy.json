@@ -1,0 +1,39 @@
+{
+  "heading": "Privacy",
+  "updated": "10 November 2026",
+  "intro": "This is a personal academic website. It sets **no cookies**, shows no ads and uses no third-party tracking. This page explains the little data it does handle, and why.",
+  "sections": [
+    {
+      "title": "Who runs this site",
+      "body": "Olatoye Dolapo Salim, PhD candidate at the University of Pisa. For any question or request about your data, email [dolaposalim.olatoye@phd.unipi.it](mailto:dolaposalim.olatoye@phd.unipi.it)."
+    },
+    {
+      "title": "No cookies, no third parties",
+      "body": "The site sets no cookies. Its fonts and scripts are served from this website itself, so while you browse here your browser does not contact Google or other third parties. Links to LinkedIn, ORCID, ResearchGate, GitHub, YouTube, Instagram or PlayStation take you to those services, and their own privacy policies apply there."
+    },
+    {
+      "title": "Hosting",
+      "body": "The site is hosted by Netlify, Inc. Like any web host, Netlify processes the technical data needed to deliver pages, such as your IP address, browser type and the time of each request, in its server logs. See [Netlify's privacy policy](https://www.netlify.com/privacy/)."
+    },
+    {
+      "title": "Your location in the header",
+      "body": "The header shows your approximate city and local time. Netlify estimates them from your IP address for that request only; nothing is stored on the server. Your browser remembers the city until you close the tab."
+    },
+    {
+      "title": "Visitor statistics",
+      "body": "To see how many people visit and which pages they read, the site counts page views itself, **without cookies**. For each view it records the page, the website you came from (only its name, for example linkedin.com) and an anonymous visitor code. That code is made from your IP address and browser type mixed with a random value that changes every day, so visits can't be linked across days or traced back to you, and your IP address itself is never stored. After each day the views are combined into daily totals; the individual records and that day's random value are deleted. Totals are kept for up to 13 months. Views are not counted if your browser sends a Do Not Track or Global Privacy Control signal."
+    },
+    {
+      "title": "The notes wall",
+      "body": "If you draw a note on [My love life](/notes), the site stores the drawing as an image, together with a random ID kept in your browser so that you, and only you, can delete your own notes. New notes appear on the wall only after Dolapo approves them. To limit spam, the site also keeps, for two days, a code derived from your IP address and a secret random value; your IP address itself is never stored. Notes stay until you delete them or Dolapo removes them. Please don't put personal information in a drawing."
+    },
+    {
+      "title": "Saved in your browser",
+      "body": "A few small settings are saved in your own browser and are not sent to anyone: your light or dark theme choice, your notes-wall ID (only if you open the notes wall), and your approximate location (until you close the tab). You can clear them at any time in your browser settings."
+    },
+    {
+      "title": "Legal basis and your rights",
+      "body": "Statistics, the location display and spam protection rely on a legitimate interest in running and securing a personal website (Article 6(1)(f) GDPR); notes rely on your choice to post one. Under the GDPR you can ask what data relates to you and ask for it to be corrected or deleted, for example a note you drew, by emailing [dolaposalim.olatoye@phd.unipi.it](mailto:dolaposalim.olatoye@phd.unipi.it). You can also complain to the Italian data protection authority, the [Garante per la protezione dei dati personali](https://www.garanteprivacy.it)."
+    }
+  ]
+}

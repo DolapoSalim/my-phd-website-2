@@ -26,6 +26,8 @@
     .card .meta { padding: 10px 12px; font-size: 13px }
     .card .actions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 12px }
     .card .actions > * { padding: 5px 11px; font-size: 13px }
+    .card.pending { box-shadow: 0 0 0 2px #e0a100 }
+    .card.pending .meta { color: #8a5a00; font-weight: 600 }
     #msg { margin: 0 0 16px }
   </style>
 </head>
@@ -33,7 +35,7 @@
   <header>
     <div>
       <h1>Love notes</h1>
-      <div class="muted">Notes visitors pinned on the “My love life” wall.</div>
+      <div class="muted">Notes visitors pinned on the “My love life” wall. New notes stay hidden until you approve them.</div>
     </div>
     <div class="bar" style="margin:0">
       <a class="btn" href="/notes" target="_blank" rel="noreferrer">Open the wall ↗</a>
@@ -117,7 +119,11 @@
 
     function render() {
       $('#tools').hidden = !notes.length
-      $('#count').textContent = notes.length + (notes.length === 1 ? ' note' : ' notes')
+      const pending = notes.filter((n) => !n.approved).length
+      $('#count').textContent = notes.length + (notes.length === 1 ? ' note' : ' notes') + (pending ? ` · ${pending} awaiting approval` : '')
+      document.title = (pending ? `(${pending}) ` : '') + 'Love notes · admin'
+      // pending first, then newest
+      notes.sort((a, b) => (a.approved === b.approved ? b.createdAt - a.createdAt : a.approved ? 1 : -1))
       $('#msg').textContent = notes.length ? '' : 'No notes yet.'
       const grid = $('#grid')
       grid.innerHTML = ''
@@ -126,12 +132,19 @@
         card.className = 'card'
         // static markup only; note data is set through properties, never parsed as HTML
         card.innerHTML = `<img loading="lazy"><div class="meta muted"></div><div class="actions">
+          <button class="primary" data-a="approve">Approve</button><button data-a="hide">Hide</button>
           <button data-a="png">PNG</button><button data-a="jpg">JPG</button><button class="danger" data-a="del">Delete</button></div>`
+        if (!n.approved) card.classList.add('pending')
+        card.querySelector(n.approved ? '[data-a="approve"]' : '[data-a="hide"]').remove()
         card.querySelector('img').alt = 'Note ' + n.id
         card.querySelector('img').src = n.src
-        card.querySelector('.meta').textContent = new Date(n.createdAt).toLocaleString()
+        card.querySelector('.meta').textContent = (n.approved ? 'On the wall · ' : 'Awaiting approval · ') + new Date(n.createdAt).toLocaleString()
         card.addEventListener('click', async (e) => {
           const a = e.target.closest('button')?.dataset.a
+          if (a === 'approve' || a === 'hide') {
+            try { await api('/' + n.id + '/' + a, { method: 'POST' }); n.approved = a === 'approve'; render() }
+            catch (err) { $('#msg').textContent = err.message }
+          }
           if (a === 'png') saveBlob(await pngBlob(n), fileName(n, 'png'))
           if (a === 'jpg') saveBlob(await jpgBlob(n), fileName(n, 'jpg'))
           if (a === 'del' && confirm('Delete this note from the wall for everyone?')) {

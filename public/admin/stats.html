@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Visitor stats · admin</title>
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <script src="/vendor/netlify-identity-widget-1.9.2.js"></script>
+  <style>
+    :root { --bg: #f4f7fa; --surface: #fff; --text: #0f1c2b; --text-2: #3c4c5e; --muted: #5c6d80; --border: #dde5ee; --accent: #1d5fb8 }
+    * { box-sizing: border-box }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif }
+    header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--surface) }
+    h1 { margin: 0; font-size: 20px }
+    h2 { margin: 0 0 12px; font-size: 15px }
+    .muted { color: var(--muted) }
+    button, a.btn { font: inherit; border: 0; border-radius: 999px; padding: 8px 15px; cursor: pointer; background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--border); text-decoration: none; display: inline-flex; align-items: center; gap: 6px }
+    button[aria-pressed="true"] { background: var(--text); color: #fff; box-shadow: none }
+    main { padding: 24px; max-width: 1100px; margin: 0 auto; display: grid; gap: 18px }
+    .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+    .card { background: var(--surface); border-radius: 14px; box-shadow: 0 0 0 1px var(--border); padding: 18px 20px }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px }
+    .tile .value { font-size: 34px; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums }
+    .tile .label { color: var(--muted); font-size: 13px }
+    /* single-series column chart: thin bars, 4px rounded tops on the baseline, 2px gaps */
+    .chart { position: relative; display: flex; align-items: flex-end; gap: 2px; height: 180px; padding-bottom: 1px; border-bottom: 1px solid var(--border) }
+    .chart .col { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; cursor: default }
+    .chart .col span { display: block; width: 100%; min-height: 0; border-radius: 4px 4px 0 0; background: var(--accent) }
+    .chart .col:hover span, .chart .col:focus-visible span { background: #144a91 }
+    .chart .col:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+    .axis { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums }
+    .tip { position: fixed; z-index: 10; pointer-events: none; padding: 7px 10px; border-radius: 8px; background: var(--text); color: #fff; font-size: 13px; line-height: 1.4; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,.18) }
+    .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px }
+    table { width: 100%; border-collapse: collapse; font-size: 14px }
+    td, th { padding: 7px 0; border-bottom: 1px solid var(--border); text-align: left }
+    th { font-weight: 500; color: var(--muted); font-size: 12.5px }
+    td.n, th.n { text-align: right; font-variant-numeric: tabular-nums }
+    details summary { cursor: pointer; color: var(--accent); font-size: 14px; margin-top: 10px }
+    label.opt { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--text-2) }
+    #msg { margin: 0 }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Visitor stats</h1>
+      <div class="muted">Cookieless page views counted by the site itself. No IP addresses are stored.</div>
+    </div>
+    <div class="bar">
+      <a class="btn" href="/" target="_blank" rel="noreferrer">Open the site ↗</a>
+      <a class="btn" href="/admin/notes.html">Love notes</a>
+      <a class="btn" href="/admin/">CMS</a>
+      <button id="auth">Log in</button>
+    </div>
+  </header>
+  <main>
+    <p id="msg" class="muted">Log in with your site account (the same one as the CMS) to see the stats.</p>
+    <div id="view" hidden>
+      <div class="bar" role="group" aria-label="Time range" style="margin-bottom:18px">
+        <button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
+      </div>
+      <div class="tiles" style="margin-bottom:18px">
+        <div class="card tile"><div class="value" id="views">–</div><div class="label">Page views</div></div>
+        <div class="card tile"><div class="value" id="visitors">–</div><div class="label">Visitors (each counted once per day)</div></div>
+        <div class="card tile"><div class="value" id="today">–</div><div class="label">Page views today</div></div>
+      </div>
+      <div class="card" style="margin-bottom:18px">
+        <h2>Page views per day</h2>
+        <div class="chart" id="chart" role="img"></div>
+        <div class="axis"><span id="from"></span><span id="to"></span></div>
+        <details>
+          <summary>Show as a table</summary>
+          <table><thead><tr><th>Day</th><th class="n">Page views</th><th class="n">Visitors</th></tr></thead><tbody id="daytable"></tbody></table>
+        </details>
+      </div>
+      <div class="grid2" style="margin-bottom:18px">
+        <div class="card"><h2>Top pages</h2><table><thead><tr><th>Page</th><th class="n">Views</th></tr></thead><tbody id="pages"></tbody></table></div>
+        <div class="card"><h2>Where visitors came from</h2><table><thead><tr><th>Site</th><th class="n">Visits</th></tr></thead><tbody id="refs"></tbody></table></div>
+      </div>
+      <div class="card">
+        <label class="opt"><input type="checkbox" id="nocount" /> <span>Don’t count my own visits on this browser. Tick this on each device you use, so your own browsing doesn’t inflate the numbers.</span></label>
+      </div>
+    </div>
+  </main>
+  <div class="tip" id="tip" hidden></div>
+
+  <script>
+    const id = window.netlifyIdentity
+    const $ = (s) => document.querySelector(s)
+    let days = 30
+    const fmt = new Intl.NumberFormat('en-GB')
+    const dayLabel = (d) => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+    const PAGE_NAMES = { '/': 'Home', '/research': 'Research', '/tools': 'Tools & skills', '/publications': 'Publications', '/cv': 'CV', '/news': 'News', '/about': 'Outside the lab', '/notes': 'My love life', '/privacy': 'Privacy' }
+
+    async function api(path) {
+      const user = id && id.currentUser()
+      if (!user) throw new Error('Please log in.')
+      const res = await fetch('/api/stats-admin' + path, { headers: { authorization: 'Bearer ' + (await user.jwt()) } })
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Request failed (' + res.status + ')')
+      return res.json()
+    }
+
+    function row(cells) {
+      const tr = document.createElement('tr')
+      cells.forEach(([text, cls]) => { const td = document.createElement('td'); td.textContent = text; if (cls) td.className = cls; tr.appendChild(td) })
+      return tr
+    }
+
+    function render(s) {
+      $('#views').textContent = fmt.format(s.views)
+      $('#visitors').textContent = fmt.format(s.visitors)
+      $('#today').textContent = fmt.format(s.days[s.days.length - 1]?.views || 0)
+      const max = Math.max(1, ...s.days.map((d) => d.views))
+      const chart = $('#chart')
+      chart.replaceChildren()
+      chart.setAttribute('aria-label', `Page views per day over the last ${s.days.length} days, up to ${max} a day. A table version follows.`)
+      for (const d of s.days) {
+        const col = document.createElement('div')
+        col.className = 'col'
+        col.tabIndex = 0
+        const bar = document.createElement('span')
+        bar.style.height = (d.views / max) * 100 + '%'
+        col.appendChild(bar)
+        const text = `${dayLabel(d.day)}: ${fmt.format(d.views)} views · ${fmt.format(d.visitors)} visitors`
+        col.setAttribute('aria-label', text)
+        const show = (x, y) => { const t = $('#tip'); t.textContent = text; t.hidden = false; t.style.left = Math.min(x + 12, innerWidth - t.offsetWidth - 8) + 'px'; t.style.top = y - 40 + 'px' }
+        col.addEventListener('mousemove', (e) => show(e.clientX, e.clientY))
+        col.addEventListener('focus', () => { const r = col.getBoundingClientRect(); show(r.left, r.top) })
+        col.addEventListener('mouseleave', () => ($('#tip').hidden = true))
+        col.addEventListener('blur', () => ($('#tip').hidden = true))
+        chart.appendChild(col)
+      }
+      $('#from').textContent = dayLabel(s.days[0].day)
+      $('#to').textContent = 'Today'
+      $('#daytable').replaceChildren(...[...s.days].reverse().map((d) => row([[dayLabel(d.day)], [fmt.format(d.views), 'n'], [fmt.format(d.visitors), 'n']])))
+      $('#pages').replaceChildren(...(s.pages.length ? s.pages.map(([p, n]) => row([[PAGE_NAMES[p] || p], [fmt.format(n), 'n']])) : [row([['No views yet'], ['', 'n']])]))
+      $('#refs').replaceChildren(...(s.referrers.length ? s.referrers.map(([h, n]) => row([[h], [fmt.format(n), 'n']])) : [row([['Direct visits and unknown sources are not listed'], ['', 'n']])]))
+    }
+
+    async function load() {
+      $('#msg').textContent = 'Loading…'
+      try { render(await api('?days=' + days)); $('#msg').textContent = ''; $('#view').hidden = false }
+      catch (err) { $('#msg').textContent = err.message; $('#view').hidden = true }
+    }
+
+    document.querySelectorAll('[data-days]').forEach((b) => b.addEventListener('click', () => {
+      days = Number(b.dataset.days)
+      document.querySelectorAll('[data-days]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)))
+      load()
+    }))
+
+    try { $('#nocount').checked = localStorage.getItem('ods-no-count') === '1' } catch (e) {}
+    $('#nocount').addEventListener('change', (e) => {
+      try { e.target.checked ? localStorage.setItem('ods-no-count', '1') : localStorage.removeItem('ods-no-count') } catch (err) {}
+    })
+
+    function syncAuth() {
+      const user = id && id.currentUser()
+      $('#auth').textContent = user ? 'Log out' : 'Log in'
+      if (user) load()
+      else { $('#view').hidden = true; $('#msg').textContent = 'Log in with your site account (the same one as the CMS) to see the stats.' }
+    }
+    $('#auth').addEventListener('click', () => (id.currentUser() ? id.logout() : id.open('login')))
+    if (id) {
+      id.on('init', syncAuth)
+      id.on('login', () => { id.close(); syncAuth() })
+      id.on('logout', syncAuth) // the widget initialises itself on page load
+    }
+  </script>
+</body>
+</html>
