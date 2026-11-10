@@ -69,8 +69,10 @@ export function FishCursor() {
       fish.classList.remove('active')
     }
     const onOver = (e: Event) => {
-      hovering = !!(e.target as Element | null)?.closest?.(HOT)
+      const el = e.target as Element | null
+      hovering = !!el?.closest?.(HOT)
       fish.classList.toggle('hover', hovering)
+      fish.classList.toggle('away', !!el?.closest?.('[data-native-cursor]'))
     }
 
     const tick = (now: number) => {

@@ -14,6 +14,7 @@
     "cms": "npx decap-server"
   },
   "dependencies": {
+    "@netlify/blobs": "11.1.4",
     "@tailwindcss/vite": "^4.3.3",
     "lucide-react": "^1.33.0",
     "react": "^19.2.8",

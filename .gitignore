@@ -11,3 +11,15 @@ dist-ssr
 # env
 .env
 .env.local
+# Raw photos/videos dropped into src/content for the site are resized into
+# public/assets/... — keep the full-size originals out of git.
+/src/content/*.jpg
+/src/content/*.jpeg
+/src/content/*.png
+/src/content/*.mp4
+/src/content/*.mov
+/src/content/*.JPG
+/src/content/*.JPEG
+/src/content/*.PNG
+/src/content/*.MP4
+/src/content/*.MOV

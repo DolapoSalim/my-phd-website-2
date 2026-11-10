@@ -6,6 +6,30 @@
   "artwork": "content",
   "media": [
     {
+      "file": "/assets/images/interests/podcast-consistency.jpg",
+      "caption": "Podcast episode: Consistency"
+    },
+    {
+      "file": "/assets/images/interests/podcast-crab-mentality.jpg",
+      "caption": "Podcast episode: Crab mentality"
+    },
+    {
+      "file": "/assets/images/interests/podcast-paradox-of-choices.jpg",
+      "caption": "Podcast episode: Paradox of choices"
+    },
+    {
+      "file": "/assets/images/interests/podcast-procrastination.jpg",
+      "caption": "Podcast episode: Procrastination"
+    },
+    {
+      "file": "/assets/images/interests/podcast-see-finish.jpg",
+      "caption": "Podcast episode: See-finish"
+    },
+    {
+      "file": "/assets/images/interests/podcast-narrowed-mindset.jpg",
+      "caption": "Podcast episode: Narrowed mindset"
+    },
+    {
       "file": "/assets/images/funded-phd-episode.jpg",
       "caption": "After Graduation, Italy (Episode 3): How I got a funded PhD"
     }

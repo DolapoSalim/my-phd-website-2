@@ -65,7 +65,7 @@ export function MediaViewer({
         </div>
         <figure className="viewer-stage">
           {isVideo(item.file) ? (
-            <video key={item.file} src={item.file} controls autoPlay playsInline aria-label={item.caption || title} />
+            <video key={item.file} src={item.file} poster={item.poster} controls autoPlay playsInline aria-label={item.caption || title} />
           ) : (
             <img key={item.file} src={item.file} alt={item.caption || title} />
           )}

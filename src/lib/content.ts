@@ -71,10 +71,12 @@ export const awardEntries = loadCollection<AwardEntry>(awardModules)
 export interface InterestMedia {
   file: string
   caption?: string
+  /** still image for a video (covers show it; the viewer uses it before playback) */
+  poster?: string
 }
 export const isVideo = (file: string) => /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(file)
 
-export type InterestArtwork = 'reading' | 'fitness' | 'content' | 'piano' | 'growth' | 'design' | 'gaming'
+export type InterestArtwork = 'reading' | 'fitness' | 'content' | 'piano' | 'growth' | 'design' | 'gaming' | 'love'
 export interface InterestEntry {
   order: number
   title: string

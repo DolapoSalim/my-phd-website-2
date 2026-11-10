@@ -88,6 +88,13 @@ collections:
           - { name: "heading", widget: "string" }
           - { name: "copy", label: "Intro paragraph", widget: "text", hint: "Use **text** for bold." }
 
+      - name: "love-notes"
+        label: "My love life (notes wall)"
+        file: "src/content/site/love-notes.json"
+        fields:
+          - { name: "heading", widget: "string" }
+          - { name: "intro", label: "Intro paragraph", widget: "text" }
+
       - name: "cv-schools"
         label: "CV — Schools & training"
         file: "src/content/site/cv-schools.json"
@@ -252,7 +259,7 @@ collections:
       - { name: "title", widget: "string" }
       - { name: "tagline", label: "Tagline (one line under the title)", widget: "string" }
       - { name: "desc", label: "Longer description (optional)", widget: "text", required: false }
-      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design", "gaming"] }
+      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design", "gaming", "love"] }
       - name: "media"
         label: "Photos & videos (optional). The first three replace the drawn artwork on the card; clicking the card opens them all."
         widget: "list"
@@ -260,5 +267,6 @@ collections:
         fields:
           - { name: "file", label: "Photo or video (JPG, PNG, WebP, MP4 or WebM — keep videos short, ideally under 10 MB)", widget: "file" }
           - { name: "caption", label: "Caption (optional — also read aloud to screen-reader users)", widget: "string", required: false }
-      - { name: "url", label: "Link URL (optional, e.g. your content channel)", widget: "string", required: false }
+          - { name: "poster", label: "Thumbnail for a video (optional image; shown on the card and before the video plays)", widget: "image", required: false }
+      - { name: "url", label: "Link URL (optional, e.g. your content channel; /notes opens the notes wall)", widget: "string", required: false }
       - { name: "urlLabel", label: "Link label (e.g. \"Watch on YouTube\")", widget: "string", required: false }

@@ -7,11 +7,13 @@
   "media": [
     {
       "file": "/assets/video/piano-1.mp4",
-      "caption": "Piano practice"
+      "caption": "Piano practice",
+      "poster": "/assets/video/posters/piano-1.jpg"
     },
     {
       "file": "/assets/video/piano-2.mp4",
-      "caption": "Piano practice"
+      "caption": "Piano practice",
+      "poster": "/assets/video/posters/piano-2.jpg"
     }
   ],
   "url": "",

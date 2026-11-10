@@ -43,7 +43,7 @@ export function Header({ path }: { path: Route }) {
       </div>
       <div className="site-header-right">
         {path !== '/' && (
-          <Link to="/" className="back-link" aria-keyshortcuts="Escape">
+          <Link to={path === '/notes' ? '/about' : '/'} className="back-link" aria-keyshortcuts="Escape">
             ← Back
           </Link>
         )}

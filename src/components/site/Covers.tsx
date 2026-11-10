@@ -6,10 +6,13 @@ import {
   Compass,
   Dumbbell,
   Gamepad2,
+  Heart,
   Joystick,
   HeartPulse,
   Library,
   Lightbulb,
+  Mail,
+  MessageCircleHeart,
   Mic,
   Music,
   Palette,
@@ -65,6 +68,11 @@ const ARTWORK: Record<InterestArtwork, DrawnCover[]> = {
     { icon: Joystick, bg: '#5b4bd6', fg: '#efeaff' },
     { icon: Gamepad2, bg: '#15171c', fg: '#9ef0c2' },
   ],
+  love: [
+    { icon: Mail, bg: '#fde2e7', fg: '#8a1f3d' },
+    { icon: MessageCircleHeart, bg: '#fff1a8', fg: '#7a4b00' },
+    { icon: Heart, bg: '#e4405f', fg: '#fff0f3' },
+  ],
   design: [
     { icon: Shapes, bg: '#f3d9c4', fg: '#5d3524' },
     { icon: PenTool, bg: '#23395d', fg: '#e5ecf7' },
@@ -90,8 +98,10 @@ export function frontCover(artwork: InterestArtwork): DrawnCover {
   return set[set.length - 1]
 }
 
-/** A photo or a short looping clip, filling its cover/sheet. */
-export function MediaThumb({ file }: { file: string }) {
+/** A photo or a short looping clip, filling its cover/sheet. Videos with a
+ *  poster show the still instead (lighter, and no black first frames). */
+export function MediaThumb({ file, poster }: { file: string; poster?: string }) {
+  if (poster) return <img src={poster} alt="" loading="lazy" decoding="async" />
   return isVideo(file) ? (
     <video src={file} muted autoPlay loop playsInline preload="metadata" />
   ) : (
@@ -116,7 +126,7 @@ export function InterestCovers({ interest }: { interest: InterestEntry }) {
         .reverse()
         .map((m) => (
           <span className="cover" key={m.file}>
-            <MediaThumb file={m.file} />
+            <MediaThumb file={m.file} poster={m.poster} />
           </span>
         ))}
     </div>

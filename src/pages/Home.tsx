@@ -41,8 +41,8 @@ const newsSheets = stack(
 )
 
 const aboutSheets: Sheet[] = interestEntries.slice(0, 3).map((it) => {
-  const first = it.media?.find((m) => m.file)?.file
-  return { kind: 'custom', node: first ? <MediaThumb file={first} /> : <DrawnCoverFace cover={frontCover(it.artwork)} /> }
+  const first = it.media?.find((m) => m.file)
+  return { kind: 'custom', node: first ? <MediaThumb file={first.file} poster={first.poster} /> : <DrawnCoverFace cover={frontCover(it.artwork)} /> }
 })
 
 export function Home() {

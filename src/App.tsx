@@ -9,6 +9,7 @@ import { Publications } from '@/pages/Publications'
 import { Cv } from '@/pages/Cv'
 import { News } from '@/pages/News'
 import { About } from '@/pages/About'
+import { Notes } from '@/pages/Notes'
 import { FishCursor } from '@/components/site/FishCursor'
 import { Sea } from '@/components/site/Sea'
 
@@ -21,7 +22,8 @@ const PAGES: Record<Route, { title: string; render: () => React.ReactNode }> = {
   '/publications': { title: 'Publications — Olatoye Dolapo Salim', render: () => <Publications /> },
   '/cv': { title: 'CV — Olatoye Dolapo Salim', render: () => <Cv /> },
   '/news': { title: 'News — Olatoye Dolapo Salim', render: () => <News /> },
-  '/about': { title: 'About me — Olatoye Dolapo Salim', render: () => <About /> },
+  '/about': { title: 'Outside the lab — Olatoye Dolapo Salim', render: () => <About /> },
+  '/notes': { title: 'My love life — notes for Dolapo', render: () => <Notes /> },
 }
 
 function App() {
@@ -36,7 +38,7 @@ function App() {
   useEffect(() => {
     if (path === '/') return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') navigate('/')
+      if (e.key === 'Escape') navigate(path === '/notes' ? '/about' : '/')
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)

@@ -4,7 +4,20 @@
   "tagline": "Long-form attention in a short-form world.",
   "desc": "",
   "artwork": "reading",
-  "media": [],
+  "media": [
+    {
+      "file": "/assets/images/interests/book-psychology-of-money.jpg",
+      "caption": "The Psychology of Money, Morgan Housel"
+    },
+    {
+      "file": "/assets/images/interests/book-march-of-folly.jpg",
+      "caption": "The March of Folly, Barbara W. Tuchman"
+    },
+    {
+      "file": "/assets/images/interests/book-48-laws-of-power.jpg",
+      "caption": "The 48 Laws of Power, Robert Greene"
+    }
+  ],
   "url": "",
   "urlLabel": ""
 }

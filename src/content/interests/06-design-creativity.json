@@ -1,10 +1,27 @@
 {
-  "order": 6,
+  "order": 5,
   "title": "Design & creativity",
   "tagline": "Making ideas clear enough to see.",
   "desc": "",
   "artwork": "design",
-  "media": [],
+  "media": [
+    {
+      "file": "/assets/images/interests/art-dunk.jpg",
+      "caption": "Digital painting: the dunk"
+    },
+    {
+      "file": "/assets/images/interests/art-danfo.jpg",
+      "caption": "Digital illustration: yellow danfo bus"
+    },
+    {
+      "file": "/assets/images/interests/art-afro-portrait.jpg",
+      "caption": "Digital portrait"
+    },
+    {
+      "file": "/assets/images/interests/art-portrait-red.jpg",
+      "caption": "Digital portrait in red and yellow"
+    }
+  ],
   "url": "",
   "urlLabel": ""
 }

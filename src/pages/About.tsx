@@ -5,6 +5,7 @@ import { richText } from '@/lib/richtext'
 import { PageHead } from '@/components/site/PageHead'
 import { InterestCovers } from '@/components/site/Covers'
 import { MediaViewer } from '@/components/site/MediaViewer'
+import { Link, ROUTES, type Route } from '@/lib/router'
 
 function countLabel(files: string[]) {
   const videos = files.filter(isVideo).length
@@ -19,9 +20,15 @@ function InterestCard({ interest, index }: { interest: InterestEntry; index: num
   const media = (interest.media ?? []).filter((m) => m.file)
   const hasMedia = media.length > 0
 
+  const internal = (ROUTES as readonly string[]).includes(interest.url) ? (interest.url as Route) : null
+
   return (
-    <article className="interest card rise" style={{ '--d': index + 1 } as React.CSSProperties}>
-      {hasMedia ? (
+    <article className={`interest card rise${internal ? ' interest-wide' : ''}`} style={{ '--d': index + 1 } as React.CSSProperties}>
+      {internal ? (
+        <Link to={internal} className="interest-open" aria-label={`${interest.title}: ${interest.urlLabel || 'open'}`}>
+          <InterestCovers interest={interest} />
+        </Link>
+      ) : hasMedia ? (
         <button type="button" className="interest-open" onClick={() => setOpen(true)} aria-label={`Open ${interest.title}: ${countLabel(media.map((m) => m.file))}`}>
           <InterestCovers interest={interest} />
         </button>
@@ -39,10 +46,16 @@ function InterestCard({ interest, index }: { interest: InterestEntry; index: num
                 View {countLabel(media.map((m) => m.file))}
               </button>
             )}
-            {interest.url && (
-              <a className="interest-link" href={interest.url} target="_blank" rel="noreferrer">
-                {interest.urlLabel || 'Take a look'} ↗
-              </a>
+            {internal ? (
+              <Link to={internal} className="interest-link">
+                {interest.urlLabel || 'Open'} →
+              </Link>
+            ) : (
+              interest.url && (
+                <a className="interest-link" href={interest.url} target="_blank" rel="noreferrer">
+                  {interest.urlLabel || 'Take a look'} ↗
+                </a>
+              )
             )}
           </div>
         )}
