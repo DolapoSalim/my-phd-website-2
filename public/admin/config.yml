@@ -1,6 +1,11 @@
+# Log in with GitHub (OAuth handled by Netlify's GitHub provider). Edits are
+# committed straight to the repo as your GitHub account. Replaced the
+# deprecated git-gateway + Netlify Identity login in November 2026.
 backend:
-  name: git-gateway
+  name: github
+  repo: DolapoSalim/my-phd-website-2
   branch: adjusted
+  site_domain: dolaposalim.com
 
 # Enables `npx decap-server` for local testing. Harmless once deployed.
 local_backend: true
