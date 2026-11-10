@@ -3,8 +3,8 @@
 /* ════════════════════════════════════════
    FIELD STATION — design tokens
    A quiet, centred "portal" layout (after ehsandesigns.com) re-read as a
-   researcher's field station: record folders with specimen labels, mono
-   type for catalogue data. Palette: "Deep ocean" — cool sea-glass whites,
+   researcher's field station: record folders with specimen labels, Geist
+   for text and Geist Mono for catalogue data (dates, labels, the clock). Palette: "Deep ocean" — cool sea-glass whites,
    slate-blue folders and one cobalt accent, so the pages sit naturally
    with the fish-tracking footage. Light is default. Every text colour
    meets 4.5:1 on its background.
@@ -29,14 +29,13 @@
   --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(15, 28, 43, 0.04), 0 6px 16px rgba(15, 28, 43, 0.06);
   --shadow-lift: 0 0 0 1px var(--border), 0 4px 8px rgba(15, 28, 43, 0.06), 0 14px 30px rgba(15, 28, 43, 0.1);
   --radius: 18px;
-  --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  /* headings: the body face unless a font pairing sets a display face */
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* headings share the body face; kept as tokens so they can diverge later */
   --display: var(--sans);
   --display-weight: 600;
-  --display-tracking: -0.035em;
+  --display-tracking: -0.04em;
   --title-tracking: -0.02em;
-  /* card / entry titles: the display face unless a pairing opts out */
   --title-font: var(--display);
   --title-weight: var(--display-weight);
   --display-scale: 1;
@@ -62,58 +61,6 @@
   --shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(0, 0, 0, 0.22), 0 6px 16px rgba(0, 0, 0, 0.3);
   --shadow-lift: 0 0 0 1px #2e4260, 0 4px 8px rgba(0, 0, 0, 0.26), 0 14px 30px rgba(0, 0, 0, 0.38);
 }
-
-/* ── font pairing candidates (temporary: pick one, then it becomes the
-   :root default above and these blocks go). Default: Inter + DM Mono. ── */
-:root[data-font="geist"] {
-  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --mono: "Geist Mono", ui-monospace, monospace;
-  --display-tracking: -0.04em;
-}
-:root[data-font="plex"] {
-  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
-  --display-tracking: -0.02em;
-  --title-tracking: -0.01em;
-}
-:root[data-font="fraunces"] {
-  --display: "Fraunces", Georgia, serif;
-  --display-weight: 500;
-  --display-tracking: -0.02em;
-  --title-tracking: -0.005em;
-}
-:root[data-font="journal"] {
-  --sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
-  --mono: "Source Code Pro", ui-monospace, monospace;
-  --display: "Source Serif 4", Georgia, serif;
-  --display-weight: 600;
-  --display-tracking: -0.015em;
-  --title-tracking: -0.005em;
-}
-:root[data-font="instrument"] {
-  /* a narrow headline face: big headings only, card titles stay Inter */
-  --display: "Instrument Serif", Georgia, serif;
-  --display-weight: 400;
-  --display-tracking: -0.01em;
-  --display-scale: 1.22;
-  --title-font: var(--sans);
-  --title-weight: 600;
-}
-
-/* temporary font switcher (FontPicker.tsx, shown with ?fonts) */
-.preview-picker {
-  position: fixed; left: 50%; bottom: 18px; z-index: 90; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px;
-  background: var(--surface); box-shadow: var(--shadow-lift); font-size: 13px; max-width: calc(100vw - 24px); overflow-x: auto;
-}
-.preview-picker button {
-  font-family: var(--sans);
-  display: inline-flex; align-items: center; gap: 7px; flex: none; padding: 7px 12px 7px 8px; border-radius: 999px;
-  color: var(--text-2); cursor: pointer; white-space: nowrap;
-}
-.preview-picker button[aria-pressed="true"] { background: var(--text); color: var(--bg) }
-.preview-picker i { display: flex; width: 26px; height: 16px; border-radius: 999px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12) }
-.preview-picker i b { flex: 1 }
 
 html { background: var(--bg) }
 body {
