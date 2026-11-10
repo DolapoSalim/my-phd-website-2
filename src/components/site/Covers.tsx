@@ -19,7 +19,7 @@ import {
   Timer,
   type LucideIcon,
 } from 'lucide-react'
-import type { InterestArtwork, InterestEntry } from '@/lib/content'
+import { isVideo, type InterestArtwork, type InterestEntry } from '@/lib/content'
 
 interface DrawnCover {
   icon?: LucideIcon
@@ -82,22 +82,35 @@ export function frontCover(artwork: InterestArtwork): DrawnCover {
   return set[set.length - 1]
 }
 
-/** Three fanned covers: the interest's photos if it has any, else its artwork. */
+/** A photo or a short looping clip, filling its cover/sheet. */
+export function MediaThumb({ file }: { file: string }) {
+  return isVideo(file) ? (
+    <video src={file} muted autoPlay loop playsInline preload="metadata" />
+  ) : (
+    <img src={file} alt="" loading="lazy" decoding="async" />
+  )
+}
+
+/** Three fanned covers. Added photos/videos sit on top (front first);
+ *  any gap behind them is filled with the interest's drawn artwork. */
 export function InterestCovers({ interest }: { interest: InterestEntry }) {
-  const photos = (interest.images ?? []).map((i) => i.image).filter(Boolean).slice(0, 3)
+  const media = (interest.media ?? []).filter((m) => m.file).slice(0, 3)
+  const art = (ARTWORK[interest.artwork] ?? ARTWORK.reading).slice(0, 3 - media.length)
   return (
     <div className="covers" aria-hidden="true">
-      {photos.length
-        ? photos.map((src) => (
-            <span className="cover" key={src}>
-              <img src={src} alt="" loading="lazy" />
-            </span>
-          ))
-        : (ARTWORK[interest.artwork] ?? ARTWORK.reading).map((c, i) => (
-            <span className="cover" key={i}>
-              <DrawnCoverFace cover={c} />
-            </span>
-          ))}
+      {art.map((c, i) => (
+        <span className="cover" key={`art-${i}`}>
+          <DrawnCoverFace cover={c} />
+        </span>
+      ))}
+      {media
+        .slice()
+        .reverse()
+        .map((m) => (
+          <span className="cover" key={m.file}>
+            <MediaThumb file={m.file} />
+          </span>
+        ))}
     </div>
   )
 }

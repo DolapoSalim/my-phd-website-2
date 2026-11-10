@@ -4,7 +4,7 @@ import { richText } from '@/lib/richtext'
 import { Link } from '@/lib/router'
 import { ContactLinks } from '@/components/site/ContactLinks'
 import { FieldFolder, type Sheet } from '@/components/site/FieldFolder'
-import { DrawnCoverFace, frontCover } from '@/components/site/Covers'
+import { DrawnCoverFace, MediaThumb, frontCover } from '@/components/site/Covers'
 
 /** The folder shows three sheets and the last one sits on top, so pick
  *  text-only sheets for the back and put pictures (or the newest) in front. */
@@ -36,8 +36,8 @@ const newsSheets = stack(
 )
 
 const aboutSheets: Sheet[] = interestEntries.slice(0, 3).map((it) => {
-  const photo = it.images?.[0]?.image
-  return photo ? { kind: 'image', src: photo } : { kind: 'custom', node: <DrawnCoverFace cover={frontCover(it.artwork)} /> }
+  const first = it.media?.find((m) => m.file)?.file
+  return { kind: 'custom', node: first ? <MediaThumb file={first} /> : <DrawnCoverFace cover={frontCover(it.artwork)} /> }
 })
 
 export function Home() {
@@ -66,7 +66,7 @@ export function Home() {
         <FieldFolder to="/publications" no="02" label="Publications" sheets={paperSheets} />
         <FieldFolder to="/cv" no="03" label="CV" sheets={cvSheets} />
         <FieldFolder to="/news" no="04" label="News" sheets={newsSheets} />
-        <FieldFolder to="/about" no="05" label="About me" sheets={aboutSheets} />
+        <FieldFolder to="/about" no="05" label="Outside the lab" sheets={aboutSheets} />
       </nav>
 
       {latest && (

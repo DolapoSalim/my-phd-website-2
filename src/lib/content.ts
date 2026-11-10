@@ -67,6 +67,12 @@ export const newsEntries = loadCollection<NewsEntry>(newsModules)
 export const skillGroupEntries = loadCollection<SkillGroupEntry>(skillModules)
 export const awardEntries = loadCollection<AwardEntry>(awardModules)
 
+export interface InterestMedia {
+  file: string
+  caption?: string
+}
+export const isVideo = (file: string) => /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(file)
+
 export type InterestArtwork = 'reading' | 'fitness' | 'content' | 'piano' | 'growth' | 'design'
 export interface InterestEntry {
   order: number
@@ -74,7 +80,7 @@ export interface InterestEntry {
   tagline: string
   desc: string
   artwork: InterestArtwork
-  images: { image: string }[]
+  media: InterestMedia[]
   url: string
   urlLabel: string
 }

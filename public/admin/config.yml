@@ -55,12 +55,6 @@ collections:
               - { name: "label", widget: "string" }
               - { name: "desc", widget: "string" }
 
-      - name: "marquee"
-        label: "Marquee ticker"
-        file: "src/content/site/marquee.json"
-        fields:
-          - { name: "items", label: "Keywords (scrolling ticker band)", widget: "list" }
-
       - name: "expertise"
         label: "Technical Expertise"
         file: "src/content/site/expertise.json"
@@ -234,12 +228,12 @@ collections:
       - { name: "tagline", label: "Tagline (one line under the title)", widget: "string" }
       - { name: "desc", label: "Longer description (optional)", widget: "text", required: false }
       - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design"] }
-      - name: "images"
-        label: "Photos (optional, up to 3 — e.g. book covers, gym, piano). Replace the drawn artwork."
+      - name: "media"
+        label: "Photos & videos (optional). The first three replace the drawn artwork on the card; clicking the card opens them all."
         widget: "list"
         required: false
-        max: 3
         fields:
-          - { name: "image", widget: "image" }
+          - { name: "file", label: "Photo or video (JPG, PNG, WebP, MP4 or WebM — keep videos short, ideally under 10 MB)", widget: "file" }
+          - { name: "caption", label: "Caption (optional — also read aloud to screen-reader users)", widget: "string", required: false }
       - { name: "url", label: "Link URL (optional, e.g. your content channel)", widget: "string", required: false }
       - { name: "urlLabel", label: "Link label (e.g. \"Watch on YouTube\")", widget: "string", required: false }

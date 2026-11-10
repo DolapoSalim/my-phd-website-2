@@ -334,7 +334,8 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 /* ── about me: interests with fanned covers ── */
 .interest-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 48px }
 .interest { display: flex; flex-direction: column; overflow: hidden; transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease) }
-a.interest:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px) }
+.interest:has(.interest-open):hover { box-shadow: var(--shadow-lift); transform: translateY(-3px) }
+.interest-open { display: block; width: 100%; padding: 0; cursor: zoom-in; text-align: inherit }
 .covers { position: relative; height: 212px; background: var(--surface-2); border-bottom: 1px solid var(--border); overflow: hidden }
 .cover {
   --o: 0px; --a: 0deg; --y: 0px;
@@ -348,7 +349,7 @@ a.interest:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px) }
 .interest:hover .cover:nth-child(1) { --o: -74px; --a: -12deg; --y: 2px }
 .interest:hover .cover:nth-child(2) { --o: 74px; --a: 12deg; --y: 2px }
 .interest:hover .cover:nth-child(3) { --y: -8px }
-.cover img { width: 100%; height: 100%; object-fit: cover }
+.cover img, .cover video, .sheet-custom video, .sheet-custom img { display: block; width: 100%; height: 100%; object-fit: cover }
 .cover-face { position: relative; display: grid; place-items: center; width: 100%; height: 100%; background: var(--cover-bg); color: var(--cover-fg) }
 .cover-face svg { width: 36%; height: auto }
 .cover-book::before { content: ""; position: absolute; left: 9%; top: 0; bottom: 0; width: 2px; background: rgba(0, 0, 0, 0.16) }
@@ -366,7 +367,36 @@ a.interest:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px) }
 .interest-copy h3 { margin: 0; font-family: var(--title-font); font-size: 18px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking); line-height: 1.35 }
 .interest-tagline { margin: 0; font-size: 15px; color: var(--text-2) }
 .interest-desc { margin: 6px 0 0; font-size: 14.5px; color: var(--text-2) }
-.interest-link { margin-top: 8px; font-size: 14px; color: var(--accent) }
+.interest-actions { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 8px }
+.interest-link { padding: 0; font-size: 14px; color: var(--accent); cursor: pointer; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.35s var(--ease) }
+.interest-link:hover { background-size: 100% 1px }
+
+/* ── full-size photo / video viewer (MediaViewer.tsx) ── */
+.viewer {
+  position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 24px;
+  background: rgba(6, 12, 20, 0.86); backdrop-filter: blur(6px); animation: fade 0.25s var(--ease) both;
+}
+@keyframes fade { from { opacity: 0 } }
+.viewer-inner { position: relative; display: flex; flex-direction: column; gap: 12px; width: min(1100px, 100%); max-height: 100%; color: #fff }
+.viewer-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px }
+.viewer-bar p { display: flex; gap: 14px; margin: 0; font-size: 15px; font-weight: 500 }
+.viewer-count { font-family: var(--mono); font-size: 13px; font-weight: 400; color: rgba(255, 255, 255, 0.7) }
+.viewer-stage { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 0; min-height: 0 }
+.viewer-stage img, .viewer-stage video { display: block; max-width: 100%; max-height: calc(100vh - 170px); border-radius: 12px; background: #000; object-fit: contain }
+.viewer-stage figcaption { max-width: 70ch; font-size: 14.5px; line-height: 1.55; color: rgba(255, 255, 255, 0.85); text-align: center }
+.viewer-btn {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12); color: #fff; cursor: pointer; transition: background 0.2s;
+}
+.viewer-btn:hover { background: rgba(255, 255, 255, 0.24) }
+.viewer-prev, .viewer-next { position: absolute; top: 50%; transform: translateY(-50%) }
+.viewer-prev { left: -56px }
+.viewer-next { right: -56px }
+@media (max-width: 1240px) {
+  .viewer-prev { left: 10px }
+  .viewer-next { right: 10px }
+  .viewer-prev, .viewer-next { background: rgba(0, 0, 0, 0.45) }
+}
 
 /* ════════════ FISH CURSOR ════════════ */
 html.fish-cursor-on, html.fish-cursor-on * { cursor: none !important }
