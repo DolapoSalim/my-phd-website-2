@@ -8,7 +8,9 @@ import { blobsAdapter, handleAdmin } from '../lib/notes-core.mjs'
 async function isSignedIn(req) {
   const auth = req.headers.get('authorization') || ''
   if (!/^Bearer\s+\S+/.test(auth)) return false
-  const origin = new URL(req.url).origin
+  // ask this site's own Identity service (its primary URL, set by Netlify),
+  // never a host taken from the incoming request
+  const origin = process.env.URL || new URL(req.url).origin
   const res = await fetch(`${origin}/.netlify/identity/user`, { headers: { authorization: auth } })
   return res.ok
 }

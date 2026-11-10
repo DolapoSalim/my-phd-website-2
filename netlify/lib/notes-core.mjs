@@ -9,6 +9,11 @@
 // own notes. Someone clearing their browser could post more, so there's also
 // a per-IP daily cap and a wall-wide cap; Dolapo can delete any note from the
 // admin page.
+//
+// IP addresses are never stored. For the daily cap the server keeps a hash of
+// (secret salt + date + IP); the salt is random, generated once and kept only
+// in the store, so the hash can't be reversed by trying every IP. Hashes are
+// deleted once their day has passed.
 
 export const MAX_PER_OWNER = 3
 export const MAX_PER_IP_PER_DAY = 6
@@ -17,6 +22,7 @@ export const MAX_PNG_BYTES = 400 * 1024
 export const MAX_SIDE = 1600
 
 const enc = new TextEncoder()
+const DAY_MS = 24 * 60 * 60 * 1000
 
 async function sha256(text) {
   const buf = await crypto.subtle.digest('SHA-256', enc.encode(text))
@@ -55,6 +61,15 @@ export function decodePng(dataUrl) {
   if (!w || !h || w > MAX_SIDE || h > MAX_SIDE) return 'Unexpected image size.'
   if (bytes.length > MAX_PNG_BYTES) return 'That note is too large.'
   return bytes
+}
+
+/** Server-only random salt for IP hashing, created on first use. */
+async function salt(store) {
+  const existing = await store.getJSON('config/salt')
+  if (existing?.value) return existing.value
+  const value = [...crypto.getRandomValues(new Uint8Array(32))].map((b) => b.toString(16).padStart(2, '0')).join('')
+  await store.setJSON('config/salt', { value })
+  return value
 }
 
 async function allMeta(store) {
@@ -111,7 +126,13 @@ export async function handlePublic(req, store, { ip = '' } = {}) {
     if (metas.filter((m) => m.ownerHash === ownerHash).length >= MAX_PER_OWNER)
       return json({ error: `You can leave up to ${MAX_PER_OWNER} notes. Delete one to add another.` }, 429)
     const day = new Date().toISOString().slice(0, 10)
-    const ipHash = ip ? await sha256(`ip:${day}:${ip}`) : ''
+    const ipHash = ip ? await sha256(`ip:${await salt(store)}:${day}:${ip}`) : ''
+    // data minimisation: drop IP hashes once they can no longer count toward a daily cap
+    await Promise.all(
+      metas
+        .filter((m) => m.ipHash && Date.now() - m.createdAt > 2 * DAY_MS)
+        .map(({ ipHash: _drop, ...rest }) => store.setJSON('meta/' + rest.id, rest)),
+    )
     if (ipHash && metas.filter((m) => m.ipHash === ipHash).length >= MAX_PER_IP_PER_DAY)
       return json({ error: 'Too many notes from here today. Try again tomorrow.' }, 429)
 

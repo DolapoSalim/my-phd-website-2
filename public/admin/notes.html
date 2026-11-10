@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex" />
   <title>Love notes · admin</title>
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="/vendor/netlify-identity-widget-1.9.2.js"></script>
   <style>
     :root { --bg: #f4f7fa; --surface: #fff; --text: #0f1c2b; --muted: #5c6d80; --border: #dde5ee; --accent: #1d5fb8; --danger: #c2272d }
     * { box-sizing: border-box }
@@ -124,8 +124,10 @@
       for (const n of notes) {
         const card = document.createElement('div')
         card.className = 'card'
-        card.innerHTML = `<img alt="Note ${n.id}" loading="lazy"><div class="meta muted"></div><div class="actions">
+        // static markup only; note data is set through properties, never parsed as HTML
+        card.innerHTML = `<img loading="lazy"><div class="meta muted"></div><div class="actions">
           <button data-a="png">PNG</button><button data-a="jpg">JPG</button><button class="danger" data-a="del">Delete</button></div>`
+        card.querySelector('img').alt = 'Note ' + n.id
         card.querySelector('img').src = n.src
         card.querySelector('.meta').textContent = new Date(n.createdAt).toLocaleString()
         card.addEventListener('click', async (e) => {
