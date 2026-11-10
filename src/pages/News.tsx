@@ -8,7 +8,7 @@ const tidyTag = (tag: string) => tag.replace(/"/g, '').trim()
 export function News() {
   return (
     <main className="page" id="content">
-      <PageHead no="04" kicker="News" title="Notes & updates">
+      <PageHead no="05" kicker="News" title="Notes & updates">
         <p>Short updates on new tools, papers and conferences, posted as they happen.</p>
       </PageHead>
       <div className="news-list">

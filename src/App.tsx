@@ -4,6 +4,7 @@ import { Header } from '@/components/site/Header'
 import { Footer } from '@/components/site/Footer'
 import { Home } from '@/pages/Home'
 import { Research } from '@/pages/Research'
+import { Tools } from '@/pages/Tools'
 import { Publications } from '@/pages/Publications'
 import { Cv } from '@/pages/Cv'
 import { News } from '@/pages/News'
@@ -15,7 +16,8 @@ redirectLegacyHash()
 
 const PAGES: Record<Route, { title: string; render: () => React.ReactNode }> = {
   '/': { title: 'Olatoye Dolapo Salim — Computer Vision for Marine Ecology', render: () => <Home /> },
-  '/research': { title: 'Research & tools — Olatoye Dolapo Salim', render: () => <Research /> },
+  '/research': { title: 'Research — Olatoye Dolapo Salim', render: () => <Research /> },
+  '/tools': { title: 'Tools & skills — Olatoye Dolapo Salim', render: () => <Tools /> },
   '/publications': { title: 'Publications — Olatoye Dolapo Salim', render: () => <Publications /> },
   '/cv': { title: 'CV — Olatoye Dolapo Salim', render: () => <Cv /> },
   '/news': { title: 'News — Olatoye Dolapo Salim', render: () => <News /> },

@@ -74,6 +74,13 @@ collections:
               - { name: "url", label: "URL (leave blank if not linked)", widget: "string", required: false }
               - { name: "image", label: "Image (optional — a figure or screenshot; without one the card gets a drawn placeholder)", widget: "image", required: false }
 
+      - name: "research"
+        label: "Research (page heading & interests)"
+        file: "src/content/site/research.json"
+        fields:
+          - { name: "heading", widget: "string" }
+          - { name: "interests", label: "Research interests (shown as tags)", widget: "list" }
+
       - name: "about-me"
         label: "About me (intro)"
         file: "src/content/site/about-me.json"
@@ -213,6 +220,24 @@ collections:
       - { name: "title", label: "Group title", widget: "string" }
       - { name: "tags", widget: "list" }
 
+  - name: "research-projects"
+    label: "Research — Projects"
+    folder: "src/content/research-projects"
+    create: true
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    slug: "{{order}}-{{slug}}"
+    summary: "{{order}} — {{title}}"
+    fields:
+      - { name: "order", label: "Order (lowest = shown first)", widget: "number" }
+      - { name: "years", label: "Years (e.g. \"2024 – present\")", widget: "string" }
+      - { name: "title", widget: "string" }
+      - { name: "role", label: "Role / context line", widget: "string" }
+      - { name: "desc", widget: "text" }
+      - { name: "url", label: "Link URL (optional)", widget: "string", required: false }
+      - { name: "urlLabel", label: "Link label (optional)", widget: "string", required: false }
+
   - name: "interests"
     label: "About me — Interests"
     folder: "src/content/interests"
@@ -227,7 +252,7 @@ collections:
       - { name: "title", widget: "string" }
       - { name: "tagline", label: "Tagline (one line under the title)", widget: "string" }
       - { name: "desc", label: "Longer description (optional)", widget: "text", required: false }
-      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design"] }
+      - { name: "artwork", label: "Drawn artwork (used when no photos are added)", widget: "select", options: ["reading", "fitness", "content", "piano", "growth", "design", "gaming"] }
       - name: "media"
         label: "Photos & videos (optional). The first three replace the drawn artwork on the card; clicking the card opens them all."
         widget: "list"

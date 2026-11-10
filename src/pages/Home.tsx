@@ -1,5 +1,5 @@
 import hero from '@/content/site/hero.json'
-import { builtItems, interestEntries, newsEntries, publicationEntries } from '@/lib/content'
+import { builtItems, interestEntries, newsEntries, publicationEntries, researchProjectEntries } from '@/lib/content'
 import { richText } from '@/lib/richtext'
 import { Link } from '@/lib/router'
 import { ContactLinks } from '@/components/site/ContactLinks'
@@ -14,6 +14,11 @@ function stack(back: Sheet[], front: Sheet[]): Sheet[] {
 }
 
 const researchSheets = stack(
+  researchProjectEntries.map((p) => ({ kind: 'paper', title: p.title, meta: p.years })),
+  [{ kind: 'image', src: '/assets/images/fish-tracking.jpg' }],
+)
+
+const toolSheets = stack(
   builtItems.filter((b) => !b.image).map((b) => ({ kind: 'paper', title: b.title, meta: b.kind })),
   builtItems.filter((b) => b.image).map((b) => ({ kind: 'image', src: b.image! })),
 )
@@ -63,10 +68,11 @@ export function Home() {
 
       <nav className="folders rise" style={{ '--d': 4 } as React.CSSProperties} aria-label="Sections">
         <FieldFolder to="/research" no="01" label="Research" sheets={researchSheets} />
-        <FieldFolder to="/publications" no="02" label="Publications" sheets={paperSheets} />
-        <FieldFolder to="/cv" no="03" label="CV" sheets={cvSheets} />
-        <FieldFolder to="/news" no="04" label="News" sheets={newsSheets} />
-        <FieldFolder to="/about" no="05" label="Outside the lab" sheets={aboutSheets} />
+        <FieldFolder to="/tools" no="02" label="Tools & skills" sheets={toolSheets} />
+        <FieldFolder to="/publications" no="03" label="Publications" sheets={paperSheets} />
+        <FieldFolder to="/cv" no="04" label="CV" sheets={cvSheets} />
+        <FieldFolder to="/news" no="05" label="News" sheets={newsSheets} />
+        <FieldFolder to="/about" no="06" label="Outside the lab" sheets={aboutSheets} />
       </nav>
 
       {latest && (

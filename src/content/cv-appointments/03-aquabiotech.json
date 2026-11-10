@@ -1,6 +1,7 @@
 {
+  "order": 5,
   "dateStart": "2023",
-  "dateEnd": "",
+  "dateEnd": "2023",
   "title": "R&D Intern / Marine Biologist",
   "org": "AquaBioTech Group, Mosta, Malta",
   "desc": "SMARTPOL autonomous multi-sensor pollution monitoring; benthic identification for computer vision surveys; ROV seabed footage at depth. Erasmus traineeship."

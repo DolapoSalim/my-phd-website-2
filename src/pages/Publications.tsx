@@ -5,7 +5,7 @@ import { PageHead } from '@/components/site/PageHead'
 export function Publications() {
   return (
     <main className="page" id="content">
-      <PageHead no="02" kicker="Publications" title="Publications">
+      <PageHead no="03" kicker="Publications" title="Publications">
         <p>Papers, posters and talks, newest first.</p>
       </PageHead>
       <ol className="pub-list">

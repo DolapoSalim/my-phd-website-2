@@ -5,6 +5,8 @@ import {
   Clapperboard,
   Compass,
   Dumbbell,
+  Gamepad2,
+  Joystick,
   HeartPulse,
   Library,
   Lightbulb,
@@ -17,6 +19,7 @@ import {
   Shapes,
   Sprout,
   Timer,
+  Trophy,
   type LucideIcon,
 } from 'lucide-react'
 import { isVideo, type InterestArtwork, type InterestEntry } from '@/lib/content'
@@ -56,6 +59,11 @@ const ARTWORK: Record<InterestArtwork, DrawnCover[]> = {
     { icon: Compass, bg: '#7fb7a3', fg: '#10302a' },
     { icon: Lightbulb, bg: '#f1e7c7', fg: '#4e4320' },
     { icon: Sprout, bg: '#2f5d46', fg: '#e6f3ea' },
+  ],
+  gaming: [
+    { icon: Trophy, bg: '#f4c95d', fg: '#3b2a05' },
+    { icon: Joystick, bg: '#5b4bd6', fg: '#efeaff' },
+    { icon: Gamepad2, bg: '#15171c', fg: '#9ef0c2' },
   ],
   design: [
     { icon: Shapes, bg: '#f3d9c4', fg: '#5d3524' },

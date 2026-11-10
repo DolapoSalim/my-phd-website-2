@@ -1,0 +1,15 @@
+{
+  "order": 7,
+  "title": "Gaming",
+  "tagline": "Where I switch off, and still try to win.",
+  "desc": "",
+  "artwork": "gaming",
+  "media": [
+    {
+      "file": "/assets/video/gaming.mp4",
+      "caption": "Gameplay clip"
+    }
+  ],
+  "url": "",
+  "urlLabel": ""
+}

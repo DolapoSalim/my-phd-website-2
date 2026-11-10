@@ -1,6 +1,7 @@
 {
+  "order": 6,
   "dateStart": "2022",
-  "dateEnd": "",
+  "dateEnd": "2022",
   "title": "Research Assistant — Bio4U Laboratory",
   "org": "University of Salento, Lecce",
   "desc": "Oximetry setup and data acquisition for invertebrate metabolism experiments."

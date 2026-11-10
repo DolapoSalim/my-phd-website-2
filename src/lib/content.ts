@@ -16,6 +16,7 @@ const newsModules = import.meta.glob('../content/news/*.json', { eager: true })
 const skillModules = import.meta.glob('../content/skills/*.json', { eager: true })
 const awardModules = import.meta.glob('../content/awards/*.json', { eager: true })
 const interestModules = import.meta.glob('../content/interests/*.json', { eager: true })
+const researchProjectModules = import.meta.glob('../content/research-projects/*.json', { eager: true })
 
 export interface CvEntry {
   order: number
@@ -73,7 +74,7 @@ export interface InterestMedia {
 }
 export const isVideo = (file: string) => /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(file)
 
-export type InterestArtwork = 'reading' | 'fitness' | 'content' | 'piano' | 'growth' | 'design'
+export type InterestArtwork = 'reading' | 'fitness' | 'content' | 'piano' | 'growth' | 'design' | 'gaming'
 export interface InterestEntry {
   order: number
   title: string
@@ -85,6 +86,17 @@ export interface InterestEntry {
   urlLabel: string
 }
 export const interestEntries = loadCollection<InterestEntry>(interestModules)
+
+export interface ResearchProjectEntry {
+  order: number
+  years: string
+  title: string
+  role: string
+  desc: string
+  url: string
+  urlLabel: string
+}
+export const researchProjectEntries = loadCollection<ResearchProjectEntry>(researchProjectModules)
 
 /** "Built & deployed" cards (site/expertise.json). `image` is optional, so
  *  JSON inference can't type it — declare the shape once here. */

@@ -55,7 +55,7 @@ function InterestCard({ interest, index }: { interest: InterestEntry; index: num
 export function About() {
   return (
     <main className="page page-wide" id="content">
-      <PageHead no="05" kicker="About me" title={aboutMe.heading}>
+      <PageHead no="06" kicker="About me" title={aboutMe.heading}>
         <p>{richText(aboutMe.copy)}</p>
       </PageHead>
       <div className="interest-grid">

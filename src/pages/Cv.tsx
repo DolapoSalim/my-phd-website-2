@@ -74,7 +74,7 @@ function Timeline({ entries }: { entries: CvEntry[] }) {
 export function Cv() {
   return (
     <main className="page" id="content">
-      <PageHead no="03" kicker="Curriculum vitae" title="Experience & education">
+      <PageHead no="04" kicker="Curriculum vitae" title="Experience & education">
         <p>Field to model: hatcheries in Nigeria, metabolism labs in Lecce, ROV surveys in Malta and computer vision in Pisa.</p>
         {cvUrl && (
           <a className="pill-link solid" href={cvUrl} target="_blank" rel="noreferrer">

@@ -6,6 +6,14 @@
   "artwork": "fitness",
   "media": [
     {
+      "file": "/assets/images/running-medal.jpg",
+      "caption": "With the medal after the 10K, Pisa, October 2026"
+    },
+    {
+      "file": "/assets/images/running.jpg",
+      "caption": "On the course in Pisa, October 2026"
+    },
+    {
       "file": "/assets/images/pisa-half-marathon-2026.jpg",
       "caption": "Pisa Half Marathon start line, 11 October 2026"
     }
