@@ -37,9 +37,9 @@ const cvSheets: Sheet[] = [
 const usedElsewhere = new Set(builtItems.map((b) => b.image).filter(Boolean))
 const newsSheets = stack(
   newsEntries.filter((n) => !n.image).map((n) => ({ kind: 'paper', title: n.title, meta: n.date })),
-  // the three newest pictures, newest on top (skipping figures other folders already show)
+  // the three newest photos, newest on top (logos/figures and pictures other folders show are skipped)
   newsEntries
-    .filter((n) => n.image && !usedElsewhere.has(n.image))
+    .filter((n) => n.image && n.imageFit !== 'contain' && !usedElsewhere.has(n.image))
     .slice(0, 3)
     .reverse()
     .map((n) => ({ kind: 'image', src: n.image })),

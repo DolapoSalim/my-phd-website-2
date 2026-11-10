@@ -6,6 +6,8 @@
   "tag": "Research, Release",
   "image": "/assets/images/coral-reef-basins-3d.png",
   "imageAlt": "3D surface plot of the \"tolerance wall\" at grazing 0.19: the maximum seaweed cover a reef can carry and still recover, across coral cover and herbivore levels. It is highest with many herbivores and little coral, and falls towards zero as coral cover rises and herbivores decline.",
+  "imageFit": "contain",
+  "imagePosition": "",
   "url": "https://github.com/DolapoSalim/macroalgae_analysis_advance",
   "urlLabel": "View on GitHub"
 }

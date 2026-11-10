@@ -6,6 +6,8 @@
   "tag": "Personal, Video",
   "image": "/assets/images/funded-phd-episode.jpg",
   "imageAlt": "Thumbnail of the YouTube episode 'How I got a funded PhD' with Arike and Dolapo",
+  "imageFit": "contain",
+  "imagePosition": "",
   "url": "https://youtu.be/lv83w_dPmsg",
   "urlLabel": "Watch on YouTube"
 }

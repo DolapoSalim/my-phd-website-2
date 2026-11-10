@@ -6,6 +6,8 @@
   "tag": "Research, Poster",
   "image": "/assets/images/poster-day.jpg",
   "imageAlt": "image of dolapo standing next to his poster",
+  "imageFit": "cover",
+  "imagePosition": "50% 38%",
   "url": "",
   "urlLabel": ""
 }

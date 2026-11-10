@@ -2,10 +2,12 @@
   "order": 3,
   "date": "October 2026",
   "title": "Finished the 10K at the Pisa Half Marathon",
-  "body": "On 11 October I completed the 10K race at the 20th Pisa Half Marathon. Medal collected.",
+  "body": "On 11 October I completed the 10K race at the 20th Pisa Half Marathon. Around the 7 km mark I was close to crashing out, but I pushed through to the finish. Medal collected.",
   "tag": "Personal, Fitness",
   "image": "/assets/images/running-medal.jpg",
   "imageAlt": "Dolapo holding a finisher medal after the 10K at the Pisa Half Marathon, with the Leaning Tower in the background",
+  "imageFit": "cover",
+  "imagePosition": "50% 64%",
   "url": "",
   "urlLabel": ""
 }

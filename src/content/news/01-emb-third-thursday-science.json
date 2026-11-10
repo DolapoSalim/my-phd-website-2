@@ -4,8 +4,10 @@
   "title": "A December date with the European Marine Board?",
   "body": "We might be speaking at the **European Marine Board (EMB) Third Thursday Science** webinar series this December. Nothing is final yet, so call it a save-the-maybe-date.\n\nMore details are coming as soon as it's confirmed: the topic, the date and how to join.",
   "tag": "Research, Upcoming talk",
-  "image": "",
-  "imageAlt": "",
+  "image": "/assets/images/news/european-marine-board-logo.png",
+  "imageAlt": "European Marine Board logo",
+  "imageFit": "contain",
+  "imagePosition": "",
   "url": "",
   "urlLabel": ""
 }

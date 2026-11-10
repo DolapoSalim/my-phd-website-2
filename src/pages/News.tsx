@@ -40,7 +40,15 @@ export function News() {
             <article className="news card rise" key={n.title} style={{ '--d': i + 1 } as React.CSSProperties}>
               {n.image && (
                 <div className="news-media">
-                  <img src={n.image} alt={n.imageAlt || n.title} loading="lazy" />
+                  {/* every post gets the same 4:3 frame; logos/figures are shown whole */}
+                  <div className={`news-frame fit-${n.imageFit === 'contain' ? 'contain' : 'cover'}`}>
+                    <img
+                      src={n.image}
+                      alt={n.imageAlt || n.title}
+                      loading="lazy"
+                      style={n.imagePosition ? { objectPosition: n.imagePosition } : undefined}
+                    />
+                  </div>
                 </div>
               )}
               <div className="news-copy">

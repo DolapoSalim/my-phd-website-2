@@ -6,6 +6,8 @@
   "tag": "Research, Publication",
   "image": "/assets/images/news/ecological-indicators-2026-chart.png",
   "imageAlt": "Bar chart: projected average increase in invertebrate standard metabolic rate by 2100 in the Adriatic Sea, +7.8% under RCP2.6 and +27.3% under RCP8.5",
+  "imageFit": "contain",
+  "imagePosition": "",
   "url": "https://doi.org/10.1016/j.ecolind.2026.114622",
   "urlLabel": "Read the paper"
 }

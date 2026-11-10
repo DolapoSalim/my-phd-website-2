@@ -6,6 +6,8 @@
   "tag": "Personal, Gaming",
   "image": "/assets/images/news/ea-sports-fc-26.jpg",
   "imageAlt": "EA Sports FC 26 cover art",
+  "imageFit": "contain",
+  "imagePosition": "",
   "url": "",
   "urlLabel": ""
 }

@@ -183,6 +183,8 @@ collections:
       - { name: "tag", label: "Tags (comma-separated; start with Research or Personal, e.g. \"Research, Publication\")", widget: "string", hint: "The first tag decides which filter (Research / Personal) the post appears under." }
       - { name: "image", label: "Image (optional)", widget: "image", required: false }
       - { name: "imageAlt", label: "Image alt text (for screen readers)", widget: "string", required: false }
+      - { name: "imageFit", label: "Image fit", widget: "select", options: [{ label: "Fill the frame (photos)", value: "cover" }, { label: "Show the whole image (logos, figures, thumbnails with text)", value: "contain" }], default: "cover", required: false }
+      - { name: "imagePosition", label: "Image focus (optional, for photos)", widget: "string", required: false, hint: "Which part stays in view when the photo is cropped, as \"x% y%\": 50% 20% keeps the top, 50% 80% the bottom." }
       - { name: "url", label: "Link URL (leave blank if not linked)", widget: "string", required: false }
       - { name: "urlLabel", label: "Link label (e.g. \"Read more\")", widget: "string", required: false }
 

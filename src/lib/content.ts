@@ -48,6 +48,10 @@ export interface NewsEntry {
   tag: string
   image: string
   imageAlt: string
+  /** cover = photo fills the frame; contain = whole image shown (logos, figures) */
+  imageFit?: 'cover' | 'contain'
+  /** CSS object-position for cover, e.g. "50% 30%" — which part stays in view */
+  imagePosition?: string
   url: string
   urlLabel: string
 }
