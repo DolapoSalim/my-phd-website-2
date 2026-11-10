@@ -180,7 +180,7 @@ collections:
       - { name: "date", label: "Date (e.g. \"August 2026\")", widget: "string" }
       - { name: "title", widget: "string" }
       - { name: "body", label: "Post text", widget: "text", hint: "Use **text** for bold, _text_ for accent italic." }
-      - { name: "tag", label: "Tag (e.g. \"Update\", \"Conference\", \"Release\")", widget: "string", required: false }
+      - { name: "tag", label: "Tags (comma-separated; start with Research or Personal, e.g. \"Research, Publication\")", widget: "string", hint: "The first tag decides which filter (Research / Personal) the post appears under." }
       - { name: "image", label: "Image (optional)", widget: "image", required: false }
       - { name: "imageAlt", label: "Image alt text (for screen readers)", widget: "string", required: false }
       - { name: "url", label: "Link URL (leave blank if not linked)", widget: "string", required: false }

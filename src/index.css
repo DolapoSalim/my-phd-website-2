@@ -333,7 +333,15 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 .row-year { flex: none; font-size: 13px; color: var(--muted) }
 
 /* ── news ── */
-.news-list { display: flex; flex-direction: column; gap: 22px; margin-top: 48px }
+.news-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px }
+.news-filter { padding: 7px 16px; border-radius: 999px; font-size: 14px; color: var(--text-2); cursor: pointer; box-shadow: 0 0 0 1px var(--border); transition: color 0.2s, box-shadow 0.2s, background 0.2s }
+.news-filter:hover { color: var(--accent); box-shadow: 0 0 0 1px var(--accent) }
+.news-filter[aria-pressed="true"] { background: var(--text); color: var(--bg); box-shadow: none }
+.news-list { display: flex; flex-direction: column; gap: 22px; margin-top: 24px }
+.news-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase }
+.news-date { color: var(--accent); margin-right: 4px }
+.news-tag { padding: 2px 9px; border-radius: 999px; color: var(--muted); box-shadow: 0 0 0 1px var(--border) }
+.news-tag.is-main { color: var(--accent); background: var(--accent-soft); box-shadow: none }
 .news { overflow: hidden; display: grid; grid-template-columns: 260px 1fr }
 .news-media { padding: 18px 0 18px 18px }
 .news-media img { width: 100%; height: auto; max-height: 340px; object-fit: contain; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px var(--border) }

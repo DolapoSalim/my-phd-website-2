@@ -34,10 +34,15 @@ const cvSheets: Sheet[] = [
   { kind: 'logo', src: '/assets/images/fuoye.png' },
 ]
 
+const usedElsewhere = new Set(builtItems.map((b) => b.image).filter(Boolean))
 const newsSheets = stack(
   newsEntries.filter((n) => !n.image).map((n) => ({ kind: 'paper', title: n.title, meta: n.date })),
-  // older pictures on top, so News doesn't open on the same figure as Research
-  newsEntries.filter((n) => n.image).map((n) => ({ kind: 'image', src: n.image })),
+  // the three newest pictures, newest on top (skipping figures other folders already show)
+  newsEntries
+    .filter((n) => n.image && !usedElsewhere.has(n.image))
+    .slice(0, 3)
+    .reverse()
+    .map((n) => ({ kind: 'image', src: n.image })),
 )
 
 const aboutSheets: Sheet[] = interestEntries.slice(0, 3).map((it) => {
