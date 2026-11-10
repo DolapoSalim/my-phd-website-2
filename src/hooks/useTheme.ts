@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 
 export type Theme = 'dark' | 'light'
-const STORAGE_KEY = 'ods-theme'
+// v2: the redesign defaults to light, so ignore choices saved under the old dark-first key
+const STORAGE_KEY = 'ods-theme-v2'
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof document === 'undefined') return 'dark'
+    if (typeof document === 'undefined') return 'light'
     const attr = document.documentElement.getAttribute('data-theme')
-    return attr === 'light' ? 'light' : 'dark'
+    return attr === 'dark' ? 'dark' : 'light'
   })
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export function useTheme() {
     const el = document.documentElement
     const observer = new MutationObserver(() => {
       const attr = el.getAttribute('data-theme')
-      const next: Theme = attr === 'light' ? 'light' : 'dark'
+      const next: Theme = attr === 'dark' ? 'dark' : 'light'
       setThemeState((prev) => (prev === next ? prev : next))
     })
     observer.observe(el, { attributes: true, attributeFilter: ['data-theme'] })

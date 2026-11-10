@@ -1,33 +1,53 @@
-import marquee from '@/content/site/marquee.json'
-import { Nav } from '@/components/layout/Nav'
-import { CustomCursor } from '@/components/effects/CustomCursor'
-import { SmoothScroll } from '@/components/effects/SmoothScroll'
-import { MarqueeBand } from '@/components/effects/MarqueeBand'
-import { Hero } from '@/components/sections/Hero'
-import { About } from '@/components/sections/About'
-import { News } from '@/components/sections/News'
-import { Publications } from '@/components/sections/Publications'
-import { Cv } from '@/components/sections/Cv'
-import { Awards } from '@/components/sections/Awards'
-import { Expertise } from '@/components/sections/Expertise'
-import { Contact } from '@/components/sections/Contact'
+import { useEffect } from 'react'
+import { navigate, redirectLegacyHash, usePath, type Route } from '@/lib/router'
+import { Header } from '@/components/site/Header'
+import { Footer } from '@/components/site/Footer'
+import { Home } from '@/pages/Home'
+import { Research } from '@/pages/Research'
+import { Publications } from '@/pages/Publications'
+import { Cv } from '@/pages/Cv'
+import { News } from '@/pages/News'
+
+redirectLegacyHash()
+
+const PAGES: Record<Route, { title: string; render: () => React.ReactNode }> = {
+  '/': { title: 'Olatoye Dolapo Salim — Computer Vision for Marine Ecology', render: () => <Home /> },
+  '/research': { title: 'Research & tools — Olatoye Dolapo Salim', render: () => <Research /> },
+  '/publications': { title: 'Publications — Olatoye Dolapo Salim', render: () => <Publications /> },
+  '/cv': { title: 'CV — Olatoye Dolapo Salim', render: () => <Cv /> },
+  '/news': { title: 'News — Olatoye Dolapo Salim', render: () => <News /> },
+}
 
 function App() {
+  const path = usePath()
+  const page = PAGES[path]
+
+  useEffect(() => {
+    document.title = page.title
+    window.scrollTo(0, 0)
+  }, [page])
+
+  useEffect(() => {
+    if (path === '/') return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') navigate('/')
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [path])
+
   return (
-    <>
-      <SmoothScroll />
-      <CustomCursor />
-      <Nav />
-      <Hero />
-      <About />
-      <MarqueeBand items={marquee.items} />
-      <News />
-      <Publications />
-      <Cv />
-      <Awards />
-      <Expertise />
-      <Contact />
-    </>
+    <div className="site">
+      <a className="skip-link" href="#content">
+        Skip to content
+      </a>
+      <Header path={path} />
+      {/* keyed so each page replays its entrance */}
+      <div className="view" key={path}>
+        {page.render()}
+      </div>
+      <Footer />
+    </div>
   )
 }
 

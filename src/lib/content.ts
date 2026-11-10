@@ -1,3 +1,5 @@
+import expertise from '@/content/site/expertise.json'
+
 /** Loads a Decap-CMS-managed folder collection (one JSON file per entry
  *  under src/content/<folder>/) and returns the entries sorted by their
  *  `order` field, ascending. */
@@ -63,3 +65,16 @@ export const publicationEntries = loadCollection<PublicationEntry>(publicationMo
 export const newsEntries = loadCollection<NewsEntry>(newsModules)
 export const skillGroupEntries = loadCollection<SkillGroupEntry>(skillModules)
 export const awardEntries = loadCollection<AwardEntry>(awardModules)
+
+/** "Built & deployed" cards (site/expertise.json). `image` is optional, so
+ *  JSON inference can't type it — declare the shape once here. */
+export interface BuiltItem {
+  kind: string
+  meta: string
+  title: string
+  desc: string
+  cta: string
+  url: string | null
+  image?: string
+}
+export const builtItems = expertise.built as BuiltItem[]

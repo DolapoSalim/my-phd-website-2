@@ -78,6 +78,7 @@ collections:
               - { name: "desc", widget: "text" }
               - { name: "cta", label: "CTA label (e.g. \"Launch ↗\", \"In progress\")", widget: "string" }
               - { name: "url", label: "URL (leave blank if not linked)", widget: "string", required: false }
+              - { name: "image", label: "Image (optional — a figure or screenshot; without one the card gets a drawn placeholder)", widget: "image", required: false }
 
       - name: "cv-schools"
         label: "CV — Schools & training"

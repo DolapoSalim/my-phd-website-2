@@ -9,7 +9,8 @@
       "title": "Coral reef tipping points",
       "desc": "A coral–seaweed–herbivore model built on synthetic data to test reef-resilience methods — tipping points, recovery zones, early-warning signals and management scenarios. Run it in your browser.",
       "cta": "Explore the model",
-      "url": "https://dolaposalim.github.io/macroalgae_analysis_advance/"
+      "url": "https://dolaposalim.github.io/macroalgae_analysis_advance/",
+      "image": "/assets/images/coral-reef-basins-3d.png"
     },
     {
       "kind": "Web app",
