@@ -345,18 +345,41 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 .news-date { color: var(--accent); margin-right: 4px }
 .news-tag { padding: 2px 9px; border-radius: 999px; color: var(--muted); box-shadow: 0 0 0 1px var(--border) }
 .news-tag.is-main { color: var(--accent); background: var(--accent-soft); box-shadow: none }
-.news { overflow: hidden; display: grid; grid-template-columns: 260px 1fr }
-.news-media { padding: 18px 0 18px 18px }
-.news-frame { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 12px; background: var(--surface-2); box-shadow: 0 0 0 1px var(--border) }
+/* every news card has the same height; long text fades and "Read more" opens it in full */
+.news { --news-h: 300px; overflow: hidden; display: grid; grid-template-columns: 260px minmax(0, 1fr); height: var(--news-h) }
+.news-media { display: flex; padding: 18px 0 18px 18px; min-height: 0 }
+.news-frame { flex: 1; min-height: 0; overflow: hidden; border-radius: 12px; background: var(--surface-2); box-shadow: 0 0 0 1px var(--border) }
 .news-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50% }
 .news-frame.fit-contain { background: #fff }
 .news-frame.fit-contain img { object-fit: contain; padding: 12px }
-.news:not(:has(.news-media)) { grid-template-columns: 1fr }
-.news-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px 26px }
-.news-copy h3 { margin: 0; font-family: var(--title-font); font-size: 20px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking); line-height: 1.3 }
+.news:not(:has(.news-media)) { grid-template-columns: minmax(0, 1fr) }
+.news-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-height: 0; padding: 22px 26px }
+.news-copy .news-meta, .news-copy h3 { flex: none }
+.news-copy .news-meta { flex-wrap: nowrap; max-width: 100%; overflow: hidden; mask-image: linear-gradient(to right, #000 85%, transparent) }
+.news-copy .news-meta > * { flex: none }
+.news-copy h3 { margin: 0; font-family: var(--title-font); font-size: 20px; font-weight: var(--title-weight); letter-spacing: var(--title-tracking); line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
+.news-excerpt { flex: 1 1 auto; min-height: 0; overflow: hidden }
+.news.is-cut .news-excerpt { mask-image: linear-gradient(to bottom, #000 55%, transparent) }
 .news-body { margin: 0; font-size: 15px; line-height: 1.65; color: var(--text-2); white-space: pre-line }
 .news-body strong { color: var(--text) }
-.news-copy .pill-link { margin-top: 6px }
+.news-actions { display: flex; flex-wrap: wrap; gap: 8px; flex: none }
+.news-actions button.pill-link { border: 0; cursor: pointer; font: inherit; font-size: 14px }
+
+/* ── full post pop-up (NewsReader.tsx) ── */
+.reader { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 20px; background: rgba(6, 12, 20, 0.6); backdrop-filter: blur(4px); animation: fade 0.2s var(--ease) both }
+.reader-card { position: relative; width: min(760px, 100%); max-height: min(88vh, 100%); max-height: min(88dvh, 100%); overflow-y: auto; overscroll-behavior: contain;
+  border-radius: 18px; background: var(--surface); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); animation: rise 0.3s var(--ease) both }
+.reader-close { position: sticky; top: 12px; float: right; margin: 12px 12px -48px 0; z-index: 1; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+  background: var(--surface); color: var(--text); box-shadow: var(--shadow); cursor: pointer }
+.reader-media { aspect-ratio: 16 / 9; background: var(--surface-2); border-bottom: 1px solid var(--border) }
+.reader-media.fit-contain { background: #fff }
+.reader-media img { display: block; width: 100%; height: 100%; object-fit: cover }
+.reader-media.fit-contain img { object-fit: contain; padding: 16px }
+.reader-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 26px 30px 30px }
+.reader-copy h2 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3 }
+.reader-body { margin: 0; font-size: 16px; line-height: 1.75; color: var(--text-2); white-space: pre-line }
+.reader-body strong { color: var(--text) }
 
 /* ── about me: interests with fanned covers ── */
 .interest-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 48px }
@@ -547,8 +570,19 @@ html.fish-cursor-on, html.fish-cursor-on * { cursor: none !important }
   .project-grid { grid-template-columns: 1fr }
   .toolkit-row { grid-template-columns: 1fr; gap: 10px }
   .facts > div { grid-template-columns: 1fr; gap: 4px }
-  .news { grid-template-columns: 1fr }
+  /* stacked: same-size image band on top, same-size text block below */
+  .news { --news-h: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 260px }
+  .news:not(:has(.news-media)) { grid-template-rows: 260px }
   .news-media { padding: 16px 16px 0 }
+  .news-media { display: block }
+  .news-frame { position: relative; aspect-ratio: 16 / 10 }
+  .news-frame img { position: absolute; inset: 0 }
+  .news-copy { padding: 18px 20px 20px }
+  .news-copy h3 { font-size: 18px }
+  .reader { padding: 0; place-items: end center }
+  .reader-card { width: 100%; max-height: 92dvh; border-radius: 18px 18px 0 0 }
+  .reader-copy { padding: 22px 20px 28px }
+  .reader-copy h2 { font-size: 21px }
   .timeline { --date-w: 52px; --gap: 28px }
   .tl-range { display: none }
   .section-label { margin-top: 56px; font-size: 15px }
