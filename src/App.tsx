@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { navigate, redirectLegacyHash, usePath, type Route } from '@/lib/router'
+import { navigate, redirectLegacyHash, useNewsSlug, usePath, type Route } from '@/lib/router'
+import { newsEntries } from '@/lib/content'
 import { countView } from '@/lib/analytics'
 import { Header } from '@/components/site/Header'
 import { Footer } from '@/components/site/Footer'
@@ -34,9 +35,15 @@ function App() {
   const page = PAGES[path]
 
   useEffect(() => {
-    document.title = page.title
     window.scrollTo(0, 0)
   }, [page])
+
+  // tab title: the page's, or an open news post's own title (/news/<slug>)
+  const slug = useNewsSlug()
+  useEffect(() => {
+    const post = path === '/news' && slug ? newsEntries.find((n) => n.slug === slug) : undefined
+    document.title = post ? `${post.title} — Olatoye Dolapo Salim` : page.title
+  }, [page, path, slug])
 
   useEffect(() => {
     countView(path)

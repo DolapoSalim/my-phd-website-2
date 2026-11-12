@@ -1,8 +1,9 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { newsEntries, type NewsEntry } from '@/lib/content'
 import { richText } from '@/lib/richtext'
 import { PageHead } from '@/components/site/PageHead'
 import { NewsReader } from '@/components/site/NewsReader'
+import { setNewsSlug, useNewsSlug } from '@/lib/router'
 
 /** CMS tags are a comma-separated string ("Research, Publication"); the
  *  first is the post's category. Stray quotes from older entries are tidied. */
@@ -87,8 +88,17 @@ function NewsCard({ post, index, onOpen }: { post: NewsEntry; index: number; onO
 
 export function News() {
   const [filter, setFilter] = useState<Filter>('All')
-  const [open, setOpen] = useState<NewsEntry | null>(null)
-  const close = useCallback(() => setOpen(null), [])
+  // the open post comes from the address: /news/<slug> is that post's own link
+  const slug = useNewsSlug()
+  const open = slug ? (newsEntries.find((n) => n.slug === slug) ?? null) : null
+  useEffect(() => {
+    if (slug && !open) setNewsSlug(null, { replace: true }) // unknown or renamed post: plain News page
+  }, [slug, open])
+  const close = useCallback(() => {
+    // opened from the list: go back (so the browser's Back button and this agree); opened from a shared link: stay on News
+    if ((window.history.state as { fromList?: boolean } | null)?.fromList) window.history.back()
+    else setNewsSlug(null, { replace: true })
+  }, [])
   const shown = newsEntries.filter((n) => filter === 'All' || tagsOf(n.tag)[0]?.toLowerCase() === filter.toLowerCase())
 
   return (
@@ -107,7 +117,7 @@ export function News() {
 
       <div className="news-list">
         {shown.map((n, i) => (
-          <NewsCard key={n.title} post={n} index={i} onOpen={() => setOpen(n)} />
+          <NewsCard key={n.title} post={n} index={i} onOpen={() => setNewsSlug(n.slug ?? null)} />
         ))}
       </div>
 

@@ -9,7 +9,7 @@ export type Route = (typeof ROUTES)[number]
 const listeners = new Set<() => void>()
 
 function normalize(pathname: string): Route {
-  const clean = pathname.replace(/\/+$/, '') || '/'
+  const clean = (pathname.replace(/\/+$/, '') || '/').replace(/^\/news\/[a-z0-9-]+$/, '/news')
   return (ROUTES as readonly string[]).includes(clean) ? (clean as Route) : '/'
 }
 
@@ -24,6 +24,19 @@ function subscribe(cb: () => void) {
 
 export function usePath(): Route {
   return useSyncExternalStore(subscribe, () => normalize(window.location.pathname))
+}
+
+/** For /news/<slug> links: the post's slug, or null on the plain News page. */
+export function useNewsSlug(): string | null {
+  return useSyncExternalStore(subscribe, () => /^\/news\/([a-z0-9-]+)\/?$/.exec(window.location.pathname)?.[1] ?? null)
+}
+
+/** Opens or closes a news post's own link (/news/<slug>) without leaving the page. */
+export function setNewsSlug(slug: string | null, { replace = false } = {}) {
+  const to = slug ? `/news/${slug}` : '/news'
+  if (window.location.pathname === to) return
+  window.history[replace ? 'replaceState' : 'pushState']({ fromList: !replace && !!slug }, '', to)
+  listeners.forEach((l) => l())
 }
 
 export function navigate(to: Route) {

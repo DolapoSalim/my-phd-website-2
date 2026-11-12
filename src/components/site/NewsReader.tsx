@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { X } from 'lucide-react'
+import { Check, Link2, Share2, X } from 'lucide-react'
 import type { NewsEntry } from '@/lib/content'
 import { richText } from '@/lib/richtext'
 
@@ -9,6 +9,28 @@ import { richText } from '@/lib/richtext'
  *  doesn't also trigger the site-wide "Escape goes back" shortcut). */
 export function NewsReader({ post, tags, onClose }: { post: NewsEntry; tags: string[]; onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement | null>(null)
+  const [copied, setCopied] = useState(false)
+  const link = `${window.location.origin}/news/${post.slug}`
+  const canShare = typeof navigator.share === 'function' && matchMedia('(pointer: coarse)').matches
+
+  const share = async () => {
+    if (canShare) {
+      try {
+        await navigator.share({ title: post.title, url: link })
+      } catch {
+        /* cancelled */
+      }
+      return
+    }
+    try {
+      await navigator.clipboard.writeText(link)
+    } catch {
+      window.prompt('Copy this link:', link)
+      return
+    }
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 2000)
+  }
 
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null
@@ -51,11 +73,19 @@ export function NewsReader({ post, tags, onClose }: { post: NewsEntry; tags: str
           </p>
           <h2 id="reader-title">{post.title}</h2>
           <p className="reader-body">{richText(post.body)}</p>
-          {post.url && (
-            <a className="pill-link" href={post.url} target="_blank" rel="noreferrer">
-              {post.urlLabel || 'Open link'} ↗
-            </a>
-          )}
+          <div className="reader-actions">
+            {post.url && (
+              <a className="pill-link" href={post.url} target="_blank" rel="noreferrer">
+                {post.urlLabel || 'Open link'} ↗
+              </a>
+            )}
+            {post.slug && (
+              <button type="button" className="pill-link" onClick={share} aria-live="polite">
+                {copied ? <Check size={15} strokeWidth={2} /> : canShare ? <Share2 size={15} strokeWidth={1.8} /> : <Link2 size={15} strokeWidth={1.8} />}
+                {copied ? 'Link copied' : canShare ? 'Share' : 'Copy link'}
+              </button>
+            )}
+          </div>
         </div>
       </article>
     </div>,

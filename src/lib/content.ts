@@ -48,6 +48,8 @@ export interface NewsEntry {
   tag: string
   image: string
   imageAlt: string
+  /** set from the file name (see newsEntries) */
+  slug?: string
   /** cover = photo fills the frame; contain = whole image shown (logos, figures) */
   imageFit?: 'cover' | 'contain'
   /** CSS object-position for cover, e.g. "50% 30%" — which part stays in view */
@@ -70,7 +72,12 @@ export interface AwardEntry {
 export const cvEducationEntries = loadCollection<CvEntry>(cvEducationModules)
 export const cvAppointmentEntries = loadCollection<CvEntry>(cvAppointmentModules)
 export const publicationEntries = loadCollection<PublicationEntry>(publicationModules)
-export const newsEntries = loadCollection<NewsEntry>(newsModules)
+/** News posts also get a `slug` for their own link (/news/<slug>), taken
+ *  from the file name without its leading order number, so it stays the
+ *  same when the title or order is edited. */
+export const newsEntries: NewsEntry[] = Object.entries(newsModules)
+  .map(([file, m]) => ({ ...(m as { default: NewsEntry }).default, slug: file.split('/').pop()!.replace(/\.json$/, '').replace(/^\d+-/, '') }))
+  .sort((a, b) => a.order - b.order)
 export const skillGroupEntries = loadCollection<SkillGroupEntry>(skillModules)
 export const awardEntries = loadCollection<AwardEntry>(awardModules)
 

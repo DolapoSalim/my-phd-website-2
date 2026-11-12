@@ -380,6 +380,8 @@ a.project-card:hover .project-media > img { transform: scale(1.03) }
 .reader-copy h2 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3 }
 .reader-body { margin: 0; font-size: 16px; line-height: 1.75; color: var(--text-2); white-space: pre-line }
 .reader-body strong { color: var(--text) }
+.reader-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px }
+.reader-actions button.pill-link { border: 0; background: none; cursor: pointer; font: inherit; font-size: 14px }
 
 /* ── about me: interests with fanned covers ── */
 .interest-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 48px }
