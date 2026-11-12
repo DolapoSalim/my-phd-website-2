@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex" />
   <title>Love notes · admin</title>
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
-  <script src="/vendor/netlify-identity-widget-1.9.2.js"></script>
+  <script src="/admin/github-auth.js"></script>
   <style>
     :root { --bg: #f4f7fa; --surface: #fff; --text: #0f1c2b; --muted: #5c6d80; --border: #dde5ee; --accent: #1d5fb8; --danger: #c2272d }
     * { box-sizing: border-box }
@@ -44,7 +44,7 @@
     </div>
   </header>
   <main>
-    <p id="msg" class="muted">Log in with your site account (the same one as the CMS) to see the notes.</p>
+    <p id="msg" class="muted">Log in with GitHub (the same login as the CMS) to see the notes.</p>
     <div class="bar" id="tools" hidden>
       <button class="primary" id="zip">Download all as ZIP (PNG)</button>
       <span class="muted" id="count"></span>
@@ -53,23 +53,14 @@
   </main>
 
   <script>
-    const id = window.netlifyIdentity
     const $ = (s) => document.querySelector(s)
     let notes = []
 
     const stamp = (t) => new Date(t).toISOString().replace(/[:T]/g, '-').slice(0, 19)
     const fileName = (n, ext) => `love-note-${stamp(n.createdAt)}-${n.id.slice(-6)}.${ext}`
 
-    async function token() {
-      const user = id && id.currentUser()
-      return user ? user.jwt() : null
-    }
     async function api(path, opts = {}) {
-      const t = await token()
-      if (!t) throw new Error('Please log in.')
-      const res = await fetch('/api/notes-admin' + path, { ...opts, headers: { authorization: 'Bearer ' + t } })
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Request failed (' + res.status + ')')
-      return res.json()
+      return (await githubAuth.fetch('/api/notes-admin' + path, opts)).json()
     }
 
     function saveBlob(blob, name) {
@@ -172,18 +163,16 @@
       } finally { btn.disabled = false; btn.textContent = 'Download all as ZIP (PNG)' }
     })
 
-    function syncAuth() {
-      const user = id && id.currentUser()
-      $('#auth').textContent = user ? 'Log out' : 'Log in'
-      if (user) load()
-      else { notes = []; $('#grid').innerHTML = ''; $('#tools').hidden = true; $('#msg').textContent = 'Log in with your site account (the same one as the CMS) to see the notes.' }
+    function syncAuth(loggedIn) {
+      $('#auth').textContent = loggedIn ? 'Log out' : 'Log in with GitHub'
+      if (loggedIn) load()
+      else { notes = []; $('#grid').innerHTML = ''; $('#tools').hidden = true; $('#msg').textContent = 'Log in with GitHub (the same login as the CMS) to see the notes.' }
     }
-    $('#auth').addEventListener('click', () => (id.currentUser() ? id.logout() : id.open('login')))
-    if (id) {
-      id.on('init', syncAuth)
-      id.on('login', () => { id.close(); syncAuth() })
-      id.on('logout', syncAuth) // the widget initialises itself on page load
-    }
+    $('#auth').addEventListener('click', async () => {
+      if (githubAuth.isLoggedIn()) return githubAuth.logout()
+      try { await githubAuth.login() } catch (err) { $('#msg').textContent = err.message }
+    })
+    githubAuth.onChange(syncAuth)
   </script>
 </body>
 </html>

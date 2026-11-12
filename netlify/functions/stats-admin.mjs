@@ -6,7 +6,7 @@ import { getStats } from '../lib/stats-core.mjs'
 
 export default async (req) => {
   try {
-    if (!(await isSignedIn(req))) return Response.json({ error: 'Please log in.' }, { status: 401 })
+    if (!(await isSignedIn(req))) return Response.json({ error: 'Please log in with GitHub (only the site owner can see this).' }, { status: 401 })
     const days = Math.min(90, Math.max(7, Number(new URL(req.url).searchParams.get('days')) || 30))
     const store = blobsAdapter(getStore({ name: 'visitor-stats', consistency: 'strong' }))
     return Response.json(await getStats(store, days), { headers: { 'cache-control': 'no-store' } })

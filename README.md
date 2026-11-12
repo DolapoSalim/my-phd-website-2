@@ -23,13 +23,13 @@ netlify/
 public/
   admin/           CMS (index.html, config.yml) and owner pages (stats.html, notes.html)
   assets/          images and videos used by the site
-  fonts/, vendor/  self-hosted fonts and the Netlify Identity widget
+  fonts/           self-hosted fonts
 ```
 
 ## Editing content
 
 - **Text, news, publications, CV, Outside the lab:** [dolaposalim.com/admin](https://dolaposalim.com/admin), log in with GitHub. Every save is a commit to this repository, and Netlify redeploys within a minute or two.
-- **Visitor stats** (`/admin/stats.html`) and **love notes** (`/admin/notes.html`): log in with the site email and password (Netlify Identity, invite-only).
+- **Visitor stats** (`/admin/stats.html`) and **love notes** (`/admin/notes.html`): the same GitHub login. Only the GitHub accounts allowed in `netlify/lib/auth.mjs` (or the `ADMIN_GITHUB_LOGINS` environment variable) can open them.
 
 ## Running locally
 

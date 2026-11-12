@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex" />
   <title>Visitor stats · admin</title>
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
-  <script src="/vendor/netlify-identity-widget-1.9.2.js"></script>
+  <script src="/admin/github-auth.js"></script>
   <style>
     :root { --bg: #f4f7fa; --surface: #fff; --text: #0f1c2b; --text-2: #3c4c5e; --muted: #5c6d80; --border: #dde5ee; --accent: #1d5fb8 }
     * { box-sizing: border-box }
@@ -55,7 +55,7 @@
     </div>
   </header>
   <main>
-    <p id="msg" class="muted">Log in with your site account (the same one as the CMS) to see the stats.</p>
+    <p id="msg" class="muted">Log in with GitHub (the same login as the CMS) to see the stats.</p>
     <div id="view" hidden>
       <div class="bar" role="group" aria-label="Time range" style="margin-bottom:18px">
         <button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
@@ -86,7 +86,6 @@
   <div class="tip" id="tip" hidden></div>
 
   <script>
-    const id = window.netlifyIdentity
     const $ = (s) => document.querySelector(s)
     let days = 30
     const fmt = new Intl.NumberFormat('en-GB')
@@ -94,11 +93,7 @@
     const PAGE_NAMES = { '/': 'Home', '/research': 'Research', '/tools': 'Tools & skills', '/publications': 'Publications', '/cv': 'CV', '/news': 'News', '/about': 'Outside the lab', '/notes': 'My love life', '/privacy': 'Privacy' }
 
     async function api(path) {
-      const user = id && id.currentUser()
-      if (!user) throw new Error('Please log in.')
-      const res = await fetch('/api/stats-admin' + path, { headers: { authorization: 'Bearer ' + (await user.jwt()) } })
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Request failed (' + res.status + ')')
-      return res.json()
+      return (await githubAuth.fetch('/api/stats-admin' + path)).json()
     }
 
     function row(cells) {
@@ -155,18 +150,16 @@
       try { e.target.checked ? localStorage.setItem('ods-no-count', '1') : localStorage.removeItem('ods-no-count') } catch (err) {}
     })
 
-    function syncAuth() {
-      const user = id && id.currentUser()
-      $('#auth').textContent = user ? 'Log out' : 'Log in'
-      if (user) load()
-      else { $('#view').hidden = true; $('#msg').textContent = 'Log in with your site account (the same one as the CMS) to see the stats.' }
+    function syncAuth(loggedIn) {
+      $('#auth').textContent = loggedIn ? 'Log out' : 'Log in with GitHub'
+      if (loggedIn) load()
+      else { $('#view').hidden = true; $('#msg').textContent = 'Log in with GitHub (the same login as the CMS) to see the stats.' }
     }
-    $('#auth').addEventListener('click', () => (id.currentUser() ? id.logout() : id.open('login')))
-    if (id) {
-      id.on('init', syncAuth)
-      id.on('login', () => { id.close(); syncAuth() })
-      id.on('logout', syncAuth) // the widget initialises itself on page load
-    }
+    $('#auth').addEventListener('click', async () => {
+      if (githubAuth.isLoggedIn()) return githubAuth.logout()
+      try { await githubAuth.login() } catch (err) { $('#msg').textContent = err.message }
+    })
+    githubAuth.onChange(syncAuth)
   </script>
 </body>
 </html>

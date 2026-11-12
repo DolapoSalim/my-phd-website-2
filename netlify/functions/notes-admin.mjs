@@ -8,7 +8,7 @@ import { blobsAdapter, handleAdmin } from '../lib/notes-core.mjs'
 
 export default async (req) => {
   try {
-    if (!(await isSignedIn(req))) return Response.json({ error: 'Please log in.' }, { status: 401 })
+    if (!(await isSignedIn(req))) return Response.json({ error: 'Please log in with GitHub (only the site owner can see this).' }, { status: 401 })
     const store = blobsAdapter(getStore({ name: 'love-notes', consistency: 'strong' }))
     return await handleAdmin(req, store)
   } catch (err) {
